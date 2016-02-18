@@ -1,0 +1,353 @@
+<html>
+<body>
+<h1>Monster Challenge Rating Calculator</h1>
+
+Base CR (Choose a base CR to give your monster some starting values)
+<table>
+<tr>
+	<td><button onclick="setBaseCR(0)">0</button></td>
+	<td><button onclick="setBaseCR(1/8)">1/8</button></td>
+	<td><button onclick="setBaseCR(1/4)">1/4</button></td>
+	<td><button onclick="setBaseCR(1/2)">1/2</button></td>
+	<td><button onclick="setBaseCR(1)">1</button></td>
+	<td><button onclick="setBaseCR(2)">2</button></td>
+	<td><button onclick="setBaseCR(3)">3</button></td>
+	<td><button onclick="setBaseCR(4)">4</button></td>
+	<td><button onclick="setBaseCR(5)">5</button></td>
+	<td><button onclick="setBaseCR(6)">6</button></td>
+	<td><button onclick="setBaseCR(7)">7</button></td>
+	<td><button onclick="setBaseCR(8)">8</button></td>
+	<td><button onclick="setBaseCR(9)">9</button></td>
+	<td><button onclick="setBaseCR(10)">10</button></td>
+	<td><button onclick="setBaseCR(11)">11</button></td>
+	<td><button onclick="setBaseCR(12)">12</button></td>
+	<td><button onclick="setBaseCR(13)">13</button></td>
+	<td><button onclick="setBaseCR(14)">14</button></td>
+	<td><button onclick="setBaseCR(15)">15</button></td>
+</tr>
+</table>
+
+<table>
+  
+  <tr>
+	<td>Armor Class:</td>
+	<td><input type="text" id="armorClass"		value=13	onchange="recalcDefensiveCR()"></td>
+	<td><button onclick="addValue(document.getElementById('armorClass'), 1)">+</button></td>
+	<td><button onclick="addValue(document.getElementById('armorClass'), -1)">-</button></td>	
+</tr>
+  <tr>
+	<td>Hit Points:</td>
+	<td><input type="text" id="hitPoints"		value=5		onchange="recalcDefensiveCR()"></td>
+	<td><button onclick="addValue(document.getElementById('hitPoints'), 1)">+</button></td>
+	<td><button onclick="addValue(document.getElementById('hitPoints'), -1)">-</button></td>
+  </tr>
+  <tr>
+	<td>Attack Bonus:</td>
+	<td><input type="text" id="attackBonus"		value=3		onchange="recalcOffensiveCR()"></td>
+	<td><button onclick="addValue(document.getElementById('attackBonus'), 1)">+</button></td>
+	<td><button onclick="addValue(document.getElementById('attackBonus'), -1)">-</button></td>	
+  </tr>
+  <tr>
+	<td>Damage per Round:</td>
+	<td><input type="text" id="damagePerRound"	value=1		onchange="recalcOffensiveCR()"></td>
+	<td><button onclick="addValue(document.getElementById('damagePerRound'), 1)">+</button></td>
+	<td><button onclick="addValue(document.getElementById('damagePerRound'), -1)">-</button></td>	
+  </tr>
+  <tr>
+	<td>Save DC:</td>
+	<td><input type="text" id="saveDC"			value=13></td>
+	<td><button onclick="addValue(document.getElementById('saveDC'), 1)">+</button></td>
+	<td><button onclick="addValue(document.getElementById('saveDC'), -1)">-</button></td>	
+  </tr>
+  <tr>
+    <td>Proficiency Bonus:</td>
+	<td><input type="text" id="proficiencyBonus" value=2></td>
+	<td><button onclick="addValue(document.getElementById('proficiencyBonus'), 1)">+</button></td>
+	<td><button onclick="addValue(document.getElementById('proficiencyBonus'), -1)">-</button></td>	
+  </tr>
+</table>
+
+<table>
+<tr>
+	<td><input type="checkbox" id="featAvoidance" value="test" onchange="recalcDefensiveCR()">Avoidance</input></td>
+	<td><input type="checkbox" value="test">Test1</input></td>
+	<td><input type="checkbox" value="test">Test1</input></td>
+	<td><input type="checkbox" value="test">Test1</input></td>
+	<td><input type="checkbox" value="test">Test1</input></td>
+</tr>
+<tr>
+	<td><input type="checkbox" value="test">Test1</input></td>
+	<td><input type="checkbox" value="test">Test1</input></td>
+	<td><input type="checkbox" value="test">Test1</input></td>
+	<td><input type="checkbox" value="test">Test1</input></td>
+	<td><input type="checkbox" value="test">Test1</input></td>
+</tr>
+</table>
+
+Defensive CR: <span id="defensiveCRDisplay">Unknown</span> <br>
+Offensive CR: <span id="offensiveCRDisplay">Unknown</span> <br>
+<b>Total CR: <span id="totalCRDisplay">Unknown</span></b>
+ 
+<script>
+	var defensiveCR = 0;
+	var offensiveCR = 0;
+	var totalCR = 0;
+	
+	//Estimated Armor Class at each level
+	var ACLevels = {};
+	ACLevels[0] = 13;
+	ACLevels[1/8] = 13;
+	ACLevels[1/4] = 13;
+	ACLevels[1/2] = 13;
+	ACLevels[1] = 13;
+	ACLevels[2] = 13;
+	ACLevels[3] = 13;
+	ACLevels[4] = 14;
+	ACLevels[5] = 15;
+	ACLevels[6] = 15;
+	ACLevels[7] = 15;
+	ACLevels[8] = 16;
+	ACLevels[9] = 16;
+	ACLevels[10] = 17;
+	ACLevels[11] = 17;
+	ACLevels[12] = 17;
+	ACLevels[13] = 18;
+	ACLevels[14] = 18;
+	ACLevels[15] = 18;
+	//more
+	
+	//Estimated Hit Points at each level
+	var HPLevels = {};
+	HPLevels[0] = 6;
+	HPLevels[1/8] = 35;
+	HPLevels[1/4] = 49;
+	HPLevels[1/2] = 70;
+	HPLevels[1] = 85;
+	HPLevels[2] = 100;
+	HPLevels[3] = 115;
+	HPLevels[4] = 130;
+	HPLevels[5] = 145;
+	HPLevels[6] = 160;
+	HPLevels[7] = 175;
+	HPLevels[8] = 190;
+	HPLevels[9] = 205;
+	HPLevels[10] = 220;
+	HPLevels[11] = 235;
+	HPLevels[12] = 250;
+	HPLevels[13] = 265;
+	HPLevels[14] = 280;
+	HPLevels[15] = 295;
+	//more
+	
+	//Estimated Attack Bonus at each level
+	var ABLevels = {};
+	ABLevels[0] = 3;
+	ABLevels[1/8] = 3;
+	ABLevels[1/4] = 3;
+	ABLevels[1/2] = 3;
+	ABLevels[1] = 3;
+	ABLevels[2] = 3;
+	ABLevels[3] = 4;
+	ABLevels[4] = 5;
+	ABLevels[5] = 6;
+	ABLevels[6] = 6;
+	ABLevels[7] = 6;
+	ABLevels[8] = 7;
+	ABLevels[9] = 7;
+	ABLevels[10] = 7;
+	ABLevels[11] = 8;
+	ABLevels[12] = 8;
+	ABLevels[13] = 8;
+	ABLevels[14] = 8;
+	ABLevels[15] = 8;
+	//more
+	
+	//Estimated Damage per Round at each level
+	var DPRLevels = {};
+	DPRLevels[0] = 1;
+	DPRLevels[1/8] = 3;
+	DPRLevels[1/4] = 5;
+	DPRLevels[1/2] = 8;
+	DPRLevels[1] = 14;
+	DPRLevels[2] = 20;
+	DPRLevels[3] = 26;
+	DPRLevels[4] = 32;
+	DPRLevels[5] = 38;
+	DPRLevels[6] = 44;
+	DPRLevels[7] = 50;
+	DPRLevels[8] = 56;
+	DPRLevels[9] = 62;
+	DPRLevels[10] = 68;
+	DPRLevels[11] = 74;
+	DPRLevels[12] = 80;
+	DPRLevels[13] = 86;
+	DPRLevels[14] = 92;
+	DPRLevels[15] = 98;
+	//more
+	
+	//Estimated Save DC at each level
+	var SDCLevels = {};
+	SDCLevels[0] = 13;
+	SDCLevels[1/8] = 13;
+	SDCLevels[1/4] = 13;
+	SDCLevels[1/2] = 13;
+	SDCLevels[1] = 13;
+	SDCLevels[2] = 13;
+	SDCLevels[3] = 13;
+	SDCLevels[4] = 14;
+	SDCLevels[5] = 15;
+	SDCLevels[6] = 15;
+	SDCLevels[7] = 15;
+	SDCLevels[8] = 16;
+	SDCLevels[9] = 16;
+	SDCLevels[10] = 16;
+	SDCLevels[11] = 17;
+	SDCLevels[12] = 17;
+	SDCLevels[13] = 18;
+	SDCLevels[14] = 18;
+	SDCLevels[15] = 18;
+	//more
+	
+	//Estimated Proficiency Bonus at each level
+	var PBLevels = {};
+	PBLevels[0] = 2;
+	PBLevels[1/8] = 2;
+	PBLevels[1/4] = 2;
+	PBLevels[1/2] = 2;
+	PBLevels[1] = 2;
+	PBLevels[2] = 2;
+	PBLevels[3] = 2;
+	PBLevels[4] = 2;
+	PBLevels[5] = 3;
+	PBLevels[6] = 3;
+	PBLevels[7] = 3;
+	PBLevels[8] = 3;
+	PBLevels[9] = 4;
+	PBLevels[10] = 4;
+	PBLevels[11] = 4;
+	PBLevels[12] = 4;
+	PBLevels[13] = 5;
+	PBLevels[14] = 5;
+	PBLevels[15] = 5;
+	//more
+
+	function addValue(element, value) {
+		element.value = parseInt(element.value) + value;
+		element.onchange();
+	}
+	
+	function setBaseCR(val) {
+		document.getElementById("armorClass").value = ACLevels[val];
+		document.getElementById("hitPoints").value = HPLevels[val];
+		document.getElementById("attackBonus").value = ABLevels[val];
+		document.getElementById("damagePerRound").value = DPRLevels[val];
+		document.getElementById("saveDC").value = SDCLevels[val];
+		document.getElementById("proficiencyBonus").value = PBLevels[val];
+		recalcDefensiveCR();
+		recalcOffensiveCR();
+	}
+	
+	function recalcDefensiveCR() {
+		
+		var HP = parseInt(document.getElementById("hitPoints").value);
+		var AC = parseInt(document.getElementById("armorClass").value);
+		
+		if(document.getElementById("featAvoidance").checked)
+			AC += 1;
+		
+		var HPCR = 0;	//HPCR is the CR based solely on the Hit Points
+		var ACCR = 0;	//HPCR is the CR based solely on the Armor Class
+		
+		//Determine defensive CR based first on Hit Points
+		if	   (1   <= HP && HP <= 6)   HPCR = 0;
+		else if(7   <= HP && HP <= 35)  HPCR = 1/8;
+		else if(36  <= HP && HP <= 49)  HPCR = 1/4;
+		else if(50  <= HP && HP <= 70)  HPCR = 1/2;
+		else if(71  <= HP && HP <= 85)  HPCR = 1;
+		else if(86  <= HP && HP <= 100) HPCR = 2;
+		else if(101 <= HP && HP <= 115) HPCR = 3;
+		else if(116 <= HP && HP <= 130) HPCR = 4;
+		else if(131 <= HP && HP <= 145) HPCR = 5;
+		else if(146 <= HP && HP <= 160) HPCR = 6;
+		else if(161 <= HP && HP <= 175) HPCR = 7;
+		else if(176 <= HP && HP <= 190) HPCR = 8;
+		else if(191 <= HP && HP <= 205) HPCR = 9;
+		//ADD MORE FOR HIGHER LEVELS
+
+		//Adjust defensive CR based on Armor Class
+		var expectedAC = ACLevels[HPCR];
+		defensiveCR = HPCR + ((AC - expectedAC)/2 | 0);
+
+		//Display Result
+		display = document.getElementById("defensiveCRDisplay");
+
+		
+		if(defensiveCR == 0.125) display.innerHTML = "1/8";
+		else if(defensiveCR == 0.25) display.innerHTML = "1/4";
+		else if(defensiveCR == 0.5) display.innerHTML = "1/2";
+		else display.innerHTML = defensiveCR;
+		
+		recalcTotalCR();
+	}
+	
+	function recalcOffensiveCR() {
+		var DPR = parseInt(document.getElementById("damagePerRound").value);
+		var AB = parseInt(document.getElementById("attackBonus").value);
+		
+		//Determine offensive CR based first on Damage per Round
+		if	   (0  <= DPR && DPR <= 1)  DPRCR = 0;
+		else if(2  <= DPR && DPR <= 3)  DPRCR = 1/8;
+		else if(4  <= DPR && DPR <= 5)  DPRCR = 1/4;
+		else if(6  <= DPR && DPR <= 8)  DPRCR = 1/2;
+		else if(9  <= DPR && DPR <= 14) DPRCR = 1;
+		else if(15 <= DPR && DPR <= 20) DPRCR = 2;
+		else if(21 <= DPR && DPR <= 26) DPRCR = 3;
+		else if(27 <= DPR && DPR <= 32) DPRCR = 4;
+		else if(33 <= DPR && DPR <= 38) DPRCR = 5;
+		else if(39 <= DPR && DPR <= 44) DPRCR = 6;
+		else if(45 <= DPR && DPR <= 50) DPRCR = 7;
+		else if(51 <= DPR && DPR <= 56) DPRCR = 8;
+		else if(57 <= DPR && DPR <= 62) DPRCR = 9;
+		//ADD MORE FOR HIGHER LEVELS
+		
+		//Adjust offensive CR based on Attack Bonus
+		var expectedAB = ABLevels[DPRCR];
+		offensiveCR = DPRCR + ((AB - expectedAB)/2 | 0);
+
+		//Display Result
+		display = document.getElementById("offensiveCRDisplay");
+		
+		if(offensiveCR == 0.125) display.innerHTML = "1/8";
+		else if(offensiveCR == 0.25) display.innerHTML = "1/4";
+		else if(offensiveCR == 0.5) display.innerHTML = "1/2";
+		else display.innerHTML = offensiveCR;
+		
+		recalcTotalCR();
+	}
+	
+	function recalcTotalCR()
+	{
+		totalCR = (defensiveCR + offensiveCR)/2;
+		
+	//Handle cases when totalCR is around the fractional CRs
+		if	   (0 	 <= totalCR && totalCR < 1/16)	totalCR = 0;
+		else if(1/16 <= totalCR && totalCR < 3/16)	totalCR = 1/8;
+		else if(3/16 <= totalCR && totalCR < 6/16)	totalCR = 1/4;
+		else if(6/16 <= totalCR && totalCR < 12/16)	totalCR = 1/2;
+		else totalCR = Math.round(totalCR);
+		
+	//Display Result	
+		display = document.getElementById("totalCRDisplay");
+		if(totalCR == 0.125) display.innerHTML = "1/8";
+		else if(totalCR == 0.25) display.innerHTML = "1/4";
+		else if(totalCR == 0.5) display.innerHTML = "1/2";
+		else display.innerHTML = totalCR;
+	}
+	
+	//http://stackoverflow.com/questions/702165/how-do-i-implement-press-and-hold-button-javascript
+</script>
+
+
+
+</body>
+</html>

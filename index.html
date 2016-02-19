@@ -1,5 +1,5 @@
 <html>
-<body>
+<body onload="setupPage()">
 <h1>Monster Challenge Rating Calculator</h1>
 
 Base CR (Choose a base CR to give your monster some starting values)
@@ -28,13 +28,20 @@ Base CR (Choose a base CR to give your monster some starting values)
 </table>
 
 <table>
-  
+  <tr>
+	<td>Monster Name:</td>
+	<td><input type="text" id="monsterName"		value="Name"></td>
+  </tr>
+</table>
+
+<h3>Monster Statistics</h3>
+<table>
   <tr>
 	<td>Armor Class:</td>
 	<td><input type="text" id="armorClass"		value=13	onchange="recalcDefensiveCR()"></td>
 	<td><button onclick="addValue(document.getElementById('armorClass'), 1)">+</button></td>
 	<td><button onclick="addValue(document.getElementById('armorClass'), -1)">-</button></td>	
-</tr>
+  </tr>
   <tr>
 	<td>Hit Points:</td>
 	<td><input type="text" id="hitPoints"		value=5		onchange="recalcDefensiveCR()"></td>
@@ -67,6 +74,7 @@ Base CR (Choose a base CR to give your monster some starting values)
   </tr>
 </table>
 
+<h3>Monster Features</h3>
 <table>
 <tr>
 	<td><input type="checkbox" id="featAvoidance" value="test" onchange="recalcDefensiveCR()">Avoidance</input></td>
@@ -84,14 +92,62 @@ Base CR (Choose a base CR to give your monster some starting values)
 </tr>
 </table>
 
+<br>
+<button onclick="saveMonster()">Save</button>
+
 Defensive CR: <span id="defensiveCRDisplay">Unknown</span> <br>
 Offensive CR: <span id="offensiveCRDisplay">Unknown</span> <br>
 <b>Total CR: <span id="totalCRDisplay">Unknown</span></b>
- 
+
+<h3>Monster List</h3>
+<table id="monsterList"></table>
+
+<h3>Encounter</h3>
+<b>Encounter CR: <span id="encounterCRDisplay">0</span></b><br>
+<b>Encounter XP: <span id="encounterXPDisplay">0</span>  Adjusted XP: <span id="adjustedXPDisplay">0</span></b>
+<table id="encounterList"></table>
+
 <script>
 	var defensiveCR = 0;
 	var offensiveCR = 0;
 	var totalCR = 0;
+	
+	//XP at each level
+	var XPLevels = {};
+	XPLevels[0] = 0;
+	XPLevels[1/8] = 25;
+	XPLevels[1/4] = 50;
+	XPLevels[1/2] = 100;
+	XPLevels[1] = 200;
+	XPLevels[2] = 450;
+	XPLevels[3] = 700;
+	XPLevels[4] = 1100;
+	XPLevels[5] = 1800;
+	XPLevels[6] = 2300;
+	XPLevels[7] = 2900;
+	XPLevels[8] = 3900;
+	XPLevels[9] = 5000;
+	XPLevels[10] = 5900;
+	XPLevels[11] = 7200;
+	XPLevels[12] = 8400;
+	XPLevels[13] = 10000;
+	XPLevels[14] = 11500;
+	XPLevels[15] = 13000;
+	XPLevels[16] = 15000;
+	XPLevels[17] = 18000;
+	XPLevels[18] = 20000;
+	XPLevels[19] = 22000;
+	XPLevels[20] = 25000;
+	XPLevels[21] = 33000;
+	XPLevels[22] = 41000;
+	XPLevels[23] = 50000;
+	XPLevels[24] = 62000;
+	XPLevels[25] = 75000;
+	XPLevels[26] = 90000;
+	XPLevels[27] = 105000;
+	XPLevels[28] = 120000;
+	XPLevels[29] = 135000;
+	XPLevels[30] = 155000;
 	
 	//Estimated Armor Class at each level
 	var ACLevels = {};
@@ -231,6 +287,8 @@ Offensive CR: <span id="offensiveCRDisplay">Unknown</span> <br>
 	PBLevels[15] = 5;
 	//more
 
+	
+	
 	function addValue(element, value) {
 		element.value = parseInt(element.value) + value;
 		element.onchange();
@@ -342,6 +400,131 @@ Offensive CR: <span id="offensiveCRDisplay">Unknown</span> <br>
 		else if(totalCR == 0.25) display.innerHTML = "1/4";
 		else if(totalCR == 0.5) display.innerHTML = "1/2";
 		else display.innerHTML = totalCR;
+	}
+	
+	function saveMonster() {
+		var table = document.getElementById("monsterList");
+		var row = table.insertRow(-1);
+		var nameCell = row.insertCell(-1);
+		nameCell.innerHTML = document.getElementById("monsterName").value;
+		var CRCell = row.insertCell(-1);
+		CRCell.innerHTML = totalCR;
+		var editButtonCell = row.insertCell(-1);
+		editButtonCell.innerHTML = "<button>Edit</button>";
+		var deleteButtonCell = row.insertCell(-1);
+		deleteButtonCell.innerHTML = "<button onclick='deleteMonster(this.parentNode.parentNode.rowIndex)'>Delete</button>";
+		var addButtonCell = row.insertCell(-1);
+		addButtonCell.innerHTML = "<button onclick='addToEncounter(this.parentNode.parentNode.rowIndex)'>Add to Encounter</button>";
+		
+		monsterData = {};
+		monsterData["monsterName"] = document.getElementById("monsterName").value;
+		monsterData["armorClass"] = document.getElementById("armorClass").value;
+		monsterData["hitPoints"] = document.getElementById("hitPoints").value;
+		monsterData["attackBonus"] = document.getElementById("attackBonus").value;
+		monsterData["damagePerRound"] = document.getElementById("damagePerRound").value;
+		monsterData["totalCR"] = totalCR;
+		monsterData["totalXP"] = XPLevels[totalCR];
+	
+	//Edit stored list	
+		var monsterArray = JSON.parse(localStorage.getItem('monsterArray'));
+		monsterArray.push(monsterData);
+
+	//Save changes to local storage	
+		localStorage.setItem("monsterArray", JSON.stringify(monsterArray));
+		
+		console.log(monsterArray);
+	}
+	
+	function deleteMonster(monsterIndex) {
+		
+		var table = document.getElementById("monsterList");
+		table.deleteRow(monsterIndex);
+		
+	//Edit stored list
+		var monsterArray = JSON.parse(localStorage.getItem('monsterArray'));
+		monsterArray.splice(monsterIndex, 1);
+	
+	//Save changes to local storage
+		localStorage.setItem("monsterArray", JSON.stringify(monsterArray));
+		
+		console.log(monsterArray);
+	}
+	
+	function addToEncounter(monsterIndex) {
+	//Retrieve monster data
+		var monsterArray = JSON.parse(localStorage.getItem('monsterArray'));
+		monsterData = monsterArray[monsterIndex];
+		
+	//Edit stored list
+		var encounterArray = JSON.parse(localStorage.getItem('encounterArray'));
+		encounterArray.push(monsterData);
+
+	//Save changes to local storage	
+		localStorage.setItem('encounterArray', JSON.stringify(encounterArray));
+	
+	//Add to table
+		var table = document.getElementById("encounterList");	
+		var row = table.insertRow(-1);
+		var nameCell = row.insertCell(-1);
+		nameCell.innerHTML = monsterData["monsterName"];
+		var CRCell = row.insertCell(-1);
+		CRCell.innerHTML = monsterData["totalCR"];
+		var XPCell = row.insertCell(-1);
+		XPCell.innerHTML = monsterData["totalXP"];
+		var editButtonCell = row.insertCell(-1);
+		editButtonCell.innerHTML = "<button>Edit</button>";
+		var deleteButtonCell = row.insertCell(-1);
+		deleteButtonCell.innerHTML = "<button onclick='deleteMonster(this.parentNode.parentNode.rowIndex)'>Delete</button>";
+		var addButtonCell = row.insertCell(-1);
+		addButtonCell.innerHTML = "<button onclick='addToEncounter(this.parentNode.parentNode.rowIndex)'>Add to Encounter</button>";
+		
+		recalcEncounter();
+	}
+	
+	function recalcEncounter() {
+	//Read stored list
+		var encounterArray = JSON.parse(localStorage.getItem('encounterArray'));
+		
+		var totalXP = 0;
+		var adjustedXP = 0;
+		
+		var monsterIndex;
+		for(monsterIndex in encounterArray) {
+			totalXP += encounterArray[monsterIndex]["totalXP"];
+		}
+	
+	
+		alert(totalXP);
+		
+		var numMonsters = encounterArray.length;
+		var multiplier = 1;
+		
+		//Adjust XP difficulty for more monsters
+			 if(numMonsters == 1)	 					multiplier = 1;
+		else if(numMonsters == 2)						multiplier = 1.5;
+		else if(3 <= numMonsters && numMonsters <= 6)	multiplier = 2;
+		else if(7 <= numMonsters && numMonsters <= 10)	multiplier = 2.5;
+		else if(11 <= numMonsters && numMonsters <= 14)	multiplier = 3;
+		else if(15 <= numMonsters)						multiplier = 4;
+	
+		adjustedXP = totalXP * multiplier;
+		
+		alert(adjustedXP);
+	
+		display = document.getElementById("encounterXPDisplay");
+		display.innerHTML = totalXP;
+		
+		display = document.getElementById("adjustedXPDisplay");
+		display.innerHTML = adjustedXP;
+	}
+	
+	function setupPage() {
+		setBaseCR(1);
+		var monsterArray = [];
+		localStorage.setItem("monsterArray", JSON.stringify(monsterArray));
+		
+		var encounterArray = [];
+		localStorage.setItem("encounterArray", JSON.stringify(encounterArray));
 	}
 	
 	//http://stackoverflow.com/questions/702165/how-do-i-implement-press-and-hold-button-javascript

@@ -1,0 +1,342 @@
+<html>
+<body onload="setupPage()">
+<h1>Monster Challenge Rating Calculator</h1>
+
+Defensive CR: <span id="defensiveCRDisplay">Unknown</span> <br>
+Offensive CR: <span id="offensiveCRDisplay">Unknown</span> <br>
+<b>Total CR: <span id="totalCRDisplay">Unknown</span></b>
+
+<h3>Monster Name</h3>
+<table>
+  <tr>
+	<td>Monster Name:</td>
+	<td><input type="text" id="monsterName"		value="Name"></td>
+  </tr>
+</table>
+
+<h3>Monster Statistics</h3>
+<table>
+  <tr>
+	<td>CR</td>
+	<td><input type="text" id="challengeRating"	onchange="totalCR = parseFloat(this.value); recalcTotalCR();"></td>
+  </tr>
+  <tr>
+	<td>Armor Class:</td>
+	<td><input type="text" id="armorClass"		onchange="AC = parseInt(this.value); recalcTotalCR();"></td>
+	<td><button onclick="addValue(document.getElementById('armorClass'), 1)">+</button></td>
+	<td><button onclick="addValue(document.getElementById('armorClass'), -1)">-</button></td>	
+  </tr>
+  <tr>
+	<td>Hit Points:</td>
+	<td><input type="text" id="hitPoints"		onchange="HP = parseInt(this.value); recalcTotalCR();"></td>
+	<td><button onclick="addValue(document.getElementById('hitPoints'), 1)">+</button></td>
+	<td><button onclick="addValue(document.getElementById('hitPoints'), -1)">-</button></td>
+  </tr>
+</table>
+
+<h3>Monster Features</h3>
+<table>
+<tr>
+	<td><input type="checkbox" id="featAvoidance" onchange="recalcTotalCR()">Aggressive</input></td>
+	<td><input type="checkbox" id="featAvoidance" onchange="recalcTotalCR()">Ambusher</input></td>
+	<td><input type="checkbox" id="featAvoidance" onchange="recalcTotalCR()">Amorphous</input></td>
+	<td><input type="checkbox" id="featAvoidance" onchange="recalcTotalCR()">Amphibious</input></td>
+	<td><input type="checkbox" id="featAvoidance" onchange="recalcTotalCR()">Angelic Weapons</input></td>
+</tr>
+<tr>
+	<td><input type="checkbox" id="featAvoidance" onchange="recalcTotalCR()">Antimagic Susceptibility</input></td>
+	<td><input type="checkbox" id="featAvoidance" onchange="recalcTotalCR()">Avoidance</input></td>
+	<td><input type="checkbox" id="featAvoidance" onchange="recalcTotalCR()">Blind Senses</input></td>
+	<td><input type="checkbox" id="featAvoidance" onchange="recalcTotalCR()">Blood Frenzy</input></td>
+	<td><input type="checkbox" id="featAvoidance" onchange="recalcTotalCR()">Breath Weapon</input></td>
+</tr>
+<tr>
+	<td><input type="checkbox" id="featAvoidance" onchange="recalcTotalCR()">Brute</input></td>
+	<td><input type="checkbox" id="featAvoidance" onchange="recalcTotalCR()">Chameleon Skin</input></td>
+	<td><input type="checkbox" id="featAvoidance" onchange="recalcTotalCR()">Change Shape</input></td>
+	<td><input type="checkbox" id="featAvoidance" onchange="recalcTotalCR()">Charge</input></td>
+	<td><input type="checkbox" id="featAvoidance" onchange="recalcTotalCR()">Charm</input></td>
+</tr>
+<tr>
+	<td><input type="checkbox" id="featAvoidance" onchange="recalcTotalCR()">Constrict</input></td>
+	<td><input type="checkbox" id="featAvoidance" onchange="recalcTotalCR()">Damage Absorption</input></td>
+	<td><input type="checkbox" id="featAvoidance" onchange="recalcTotalCR()">Damage Transfer</input></td>
+	<td><input type="checkbox" id="featAvoidance" onchange="recalcTotalCR()">Death Burst</input></td>
+	<td><input type="checkbox" id="featAvoidance" onchange="recalcTotalCR()">Devil Sight</input></td>
+</tr>
+<tr>
+	<td><input type="checkbox" id="featAvoidance" onchange="recalcTotalCR()">Dive</input></td>
+	<td><input type="checkbox" id="featAvoidance" onchange="recalcTotalCR()">Echolocation</input></td>
+	<td><input type="checkbox" id="featAvoidance" onchange="recalcTotalCR()">Elemental Body</input></td>
+	<td><input type="checkbox" id="featAvoidance" onchange="recalcTotalCR()">Enlarge</input></td>
+	<td><input type="checkbox" id="featAvoidance" onchange="recalcTotalCR()">Etherealness</input></td>
+</tr>
+<tr>
+	<td><input type="checkbox" id="featAvoidance" onchange="recalcTotalCR()">False Appearance</input></td>
+	<td><input type="checkbox" id="featAvoidance" onchange="recalcTotalCR()">Fey Ancestry</input></td>
+	<td><input type="checkbox" id="featAvoidance" onchange="recalcTotalCR()">Fiendish Blessing</input></td>
+	<td><input type="checkbox" id="featAvoidance" onchange="recalcTotalCR()">Flyby</input></td>
+	<td><input type="checkbox" id="featAvoidance" onchange="recalcTotalCR()">Frightful Presence</input></td>
+</tr>
+<tr>
+	<td><input type="checkbox" id="featAvoidance" onchange="recalcTotalCR()">Grappler</input></td>
+	<td><input type="checkbox" id="featAvoidance" onchange="recalcTotalCR()">Hold Breath</input></td>
+	<td><input type="checkbox" id="featAvoidance" onchange="recalcTotalCR()">Horrifying Visage</input></td>
+	<td><input type="checkbox" id="featAvoidance" onchange="recalcTotalCR()">Illumination</input></td>
+	<td><input type="checkbox" id="featAvoidance" onchange="recalcTotalCR()">Illusory Appearance</input></td>
+</tr>
+<tr>
+	<td><input type="checkbox" id="featAvoidance" onchange="recalcTotalCR()">Immutable Form</input></td>
+	<td><input type="checkbox" id="featAvoidance" onchange="recalcTotalCR()">Incorporeal Movement</input></td>
+	<td><input type="checkbox" id="featAvoidance" onchange="recalcTotalCR()">Innate Spellcasting</input></td>
+	<td><input type="checkbox" id="featAvoidance" onchange="recalcTotalCR()">Inscrutable</input></td>
+	<td><input type="checkbox" id="featAvoidance" onchange="recalcTotalCR()">Invisibility</input></td>
+</tr>
+<tr>
+	<td><input type="checkbox" id="featAvoidance" onchange="recalcTotalCR()">Keen Senses</input></td>
+	<td><input type="checkbox" id="featAvoidance" onchange="recalcTotalCR()">Labrynthine Recall</input></td>
+	<td><input type="checkbox" id="featAvoidance" onchange="recalcTotalCR()">Leadership</input></td>
+	<td><input type="checkbox" id="featAvoidance" onchange="recalcTotalCR()">Legendary Resistance</input></td>
+	<td><input type="checkbox" id="featAvoidance" onchange="recalcTotalCR()">Life Drain</input></td>
+</tr>
+<tr>
+	<td><input type="checkbox" id="featAvoidance" onchange="recalcTotalCR()">Light Sensitivity</input></td>
+	<td><input type="checkbox" id="featAvoidance" onchange="recalcTotalCR()">Magic Resistance</input></td>
+	<td><input type="checkbox" id="featAvoidance" onchange="recalcTotalCR()">Magic Weapons</input></td>
+	<td><input type="checkbox" id="featAvoidance" onchange="recalcTotalCR()">Martial Advantage</input></td>
+	<td><input type="checkbox" id="featAvoidance" onchange="recalcTotalCR()">Mimicry</input></td>
+</tr>
+<tr>
+	<td><input type="checkbox" id="featAvoidance" onchange="recalcTotalCR()">Nimble Escape</input></td>
+	<td><input type="checkbox" id="featAvoidance" onchange="recalcTotalCR()">Otherworldly Perception</input></td>
+	<td><input type="checkbox" id="featAvoidance" onchange="recalcTotalCR()">Pack Tactics</input></td>
+	<td><input type="checkbox" id="featAvoidance" onchange="recalcTotalCR()">Parry</input></td>
+	<td><input type="checkbox" id="featAvoidance" onchange="recalcTotalCR()">Possession</input></td>
+</tr>
+<tr>
+	<td><input type="checkbox" id="featAvoidance" onchange="recalcTotalCR()">Pounce</input></td>
+	<td><input type="checkbox" id="featAvoidance" onchange="recalcTotalCR()">Psychic Defense</input></td>
+	<td><input type="checkbox" id="featAvoidance" onchange="recalcTotalCR()">Rampage</input></td>
+	<td><input type="checkbox" id="featAvoidance" onchange="recalcTotalCR()">Reactive</input></td>
+	<td><input type="checkbox" id="featAvoidance" onchange="recalcTotalCR()">Read Thoughts</input></td>
+</tr>
+<tr>
+	<td><input type="checkbox" id="featAvoidance" onchange="recalcTotalCR()">Reckless</input></td>
+	<td><input type="checkbox" id="featAvoidance" onchange="recalcTotalCR()">Redirect Attack</input></td>
+	<td><input type="checkbox" id="featAvoidance" onchange="recalcTotalCR()">Reel</input></td>
+	<td><input type="checkbox" id="featAvoidance" onchange="recalcTotalCR()">Regeneration</input></td>
+	<td><input type="checkbox" id="featAvoidance" onchange="recalcTotalCR()">Rejuvenation</input></td>
+</tr>
+<tr>
+	<td><input type="checkbox" id="featAvoidance" onchange="recalcTotalCR()"></input></td>
+	<td><input type="checkbox" id="featAvoidance" onchange="recalcTotalCR()"></input></td>
+	<td><input type="checkbox" id="featAvoidance" onchange="recalcTotalCR()"></input></td>
+	<td><input type="checkbox" id="featAvoidance" onchange="recalcTotalCR()"></input></td>
+	<td><input type="checkbox" id="featAvoidance" onchange="recalcTotalCR()"></input></td>
+</tr>
+<tr>
+	<td><input type="checkbox" id="featAvoidance" onchange="recalcTotalCR()"></input></td>
+	<td><input type="checkbox" id="featAvoidance" onchange="recalcTotalCR()"></input></td>
+	<td><input type="checkbox" id="featAvoidance" onchange="recalcTotalCR()"></input></td>
+	<td><input type="checkbox" id="featAvoidance" onchange="recalcTotalCR()"></input></td>
+	<td><input type="checkbox" id="featAvoidance" onchange="recalcTotalCR()"></input></td>
+</tr><tr>
+	<td><input type="checkbox" id="featAvoidance" onchange="recalcTotalCR()"></input></td>
+	<td><input type="checkbox" id="featAvoidance" onchange="recalcTotalCR()"></input></td>
+	<td><input type="checkbox" id="featAvoidance" onchange="recalcTotalCR()"></input></td>
+	<td><input type="checkbox" id="featAvoidance" onchange="recalcTotalCR()"></input></td>
+	<td><input type="checkbox" id="featAvoidance" onchange="recalcTotalCR()"></input></td>
+</tr>
+</table>
+
+<script>
+	var defensiveCR;
+	var offensiveCR;
+	var totalCR;
+	
+	var HP;
+	var AC;
+	var AB;
+	var DPR;
+	
+	function addValue(element, value) {
+		element.value = parseInt(element.value) + value;
+		element.onchange();
+	}
+	
+	function recalcTotalCR() {
+		recalcDefensiveCR();
+		
+		offensiveCR = totalCR * 2 - defensiveCR;
+		
+	//Handle cases when offensiveCR is a weird fraction
+		if	   (					   offensiveCR < 1/16)	offensiveCR = 0;
+		else if(1/16 <= offensiveCR && offensiveCR < 3/16)	offensiveCR = 1/8;
+		else if(3/16 <= offensiveCR && offensiveCR < 6/16)	offensiveCR = 1/4;
+		else if(6/16 <= offensiveCR && offensiveCR < 12/16)	offensiveCR = 1/2;
+		else offensiveCR = Math.round(offensiveCR);
+	
+	//Display Total CR	
+		display = document.getElementById("totalCRDisplay");
+		if(totalCR == 0.125) display.innerHTML = "1/8";
+		else if(totalCR == 0.25) display.innerHTML = "1/4";
+		else if(totalCR == 0.5) display.innerHTML = "1/2";
+		else display.innerHTML = totalCR;
+	
+	//Display Offensive CR
+		display = document.getElementById("offensiveCRDisplay");
+		if(offensiveCR == 0.125) display.innerHTML = "1/8";
+		else if(offensiveCR == 0.25) display.innerHTML = "1/4";
+		else if(offensiveCR == 0.5) display.innerHTML = "1/2";
+		else display.innerHTML = offensiveCR;
+	}
+
+	function recalcDefensiveCR() {		
+	//Adjust for Feats
+		var effectiveAC = AC;
+		var effectiveHP = HP;
+	
+		if(document.getElementById("featAvoidance").checked)
+			effectiveAC += 1;
+		if(document.getElementById("featNimbleEscape").checked)
+			effectiveAC += 4;
+		
+		var HPCR = 0;	//HPCR is the CR based solely on the Hit Points
+		var ACCR = 0;	//HPCR is the CR based solely on the Armor Class
+		
+		//Determine defensive CR based first on Hit Points
+		if	   (1   <= HP && HP <= 6)   HPCR = 0;
+		else if(7   <= HP && HP <= 35)  HPCR = 1/8;
+		else if(36  <= HP && HP <= 49)  HPCR = 1/4;
+		else if(50  <= HP && HP <= 70)  HPCR = 1/2;
+		else if(71  <= HP && HP <= 85)  HPCR = 1;
+		else if(86  <= HP && HP <= 100) HPCR = 2;
+		else if(101 <= HP && HP <= 115) HPCR = 3;
+		else if(116 <= HP && HP <= 130) HPCR = 4;
+		else if(131 <= HP && HP <= 145) HPCR = 5;
+		else if(146 <= HP && HP <= 160) HPCR = 6;
+		else if(161 <= HP && HP <= 175) HPCR = 7;
+		else if(176 <= HP && HP <= 190) HPCR = 8;
+		else if(191 <= HP && HP <= 205) HPCR = 9;
+		//ADD MORE FOR HIGHER LEVELS
+
+		//Adjust defensive CR based on Armor Class
+		var expectedAC = ACLevels[HPCR];
+		defensiveCR = nextCR(HPCR, ((effectiveAC - expectedAC)/2 | 0));
+		
+		//Display Result
+		display = document.getElementById("defensiveCRDisplay");
+
+		if(defensiveCR == 0.125) display.innerHTML = "1/8";
+		else if(defensiveCR == 0.25) display.innerHTML = "1/4";
+		else if(defensiveCR == 0.5) display.innerHTML = "1/2";
+		else display.innerHTML = defensiveCR;
+	}
+	
+	function nextLowerCR(current) {
+		if	   (current == 1)	return 1/2;
+		else if(current == 1/2)	return 1/4;
+		else if(current == 1/4) return 1/8;
+		else if(current == 1/8) return 0;
+		else if(current == 0)	return 0;
+		else					return (current - 1);
+	}
+	
+	function nextHigherCR(current) {
+		if	   (current == 0)	return 1/8;
+		else if(current == 1/8) return 1/4;
+		else if(current == 1/4) return 1/2;
+		else if(current == 1/2)	return 1;
+		else if(current == 30)	return 30;
+		else					return (current + 1);
+	}
+	
+	function nextCR(current, diff) {
+		var result = current;
+		if(diff > 0)
+		{
+			for(var i = 0; i < diff; i++)
+			{
+				result = nextHigherCR(result);
+			}
+		}
+		else
+		{
+			for(var i = diff; i < 0; i++)
+			{
+				result = nextLowerCR(result);
+			}
+		}
+		return result;
+	}
+
+	
+	function setupPage() {
+		AC = ACLevels[1];
+		HP = HPLevels[1];
+		totalCR = 1;
+	
+		document.getElementById("armorClass").value = AC;
+		document.getElementById("hitPoints").value = HP;
+		document.getElementById("challengeRating").value = totalCR;
+			
+		
+		
+		recalcTotalCR();
+
+		var monsterArray = [];
+		localStorage.setItem("monsterArray", JSON.stringify(monsterArray));
+		
+		var encounterArray = [];
+		localStorage.setItem("encounterArray", JSON.stringify(encounterArray));
+	}
+		
+	//Estimated Armor Class at each level
+	var ACLevels = {};
+	ACLevels[0] = 13;
+	ACLevels[1/8] = 13;
+	ACLevels[1/4] = 13;
+	ACLevels[1/2] = 13;
+	ACLevels[1] = 13;
+	ACLevels[2] = 13;
+	ACLevels[3] = 13;
+	ACLevels[4] = 14;
+	ACLevels[5] = 15;
+	ACLevels[6] = 15;
+	ACLevels[7] = 15;
+	ACLevels[8] = 16;
+	ACLevels[9] = 16;
+	ACLevels[10] = 17;
+	ACLevels[11] = 17;
+	ACLevels[12] = 17;
+	ACLevels[13] = 18;
+	ACLevels[14] = 18;
+	ACLevels[15] = 18;
+	//more
+	
+	//Estimated Hit Points at each level
+	var HPLevels = {};
+	HPLevels[0] = 6;
+	HPLevels[1/8] = 35;
+	HPLevels[1/4] = 49;
+	HPLevels[1/2] = 70;
+	HPLevels[1] = 85;
+	HPLevels[2] = 100;
+	HPLevels[3] = 115;
+	HPLevels[4] = 130;
+	HPLevels[5] = 145;
+	HPLevels[6] = 160;
+	HPLevels[7] = 175;
+	HPLevels[8] = 190;
+	HPLevels[9] = 205;
+	HPLevels[10] = 220;
+	HPLevels[11] = 235;
+	HPLevels[12] = 250;
+	HPLevels[13] = 265;
+	HPLevels[14] = 280;
+	HPLevels[15] = 295;
+	//more
+</script>
+
+</body>
+</html>

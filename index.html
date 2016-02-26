@@ -27,6 +27,10 @@ Base CR (Choose a base CR to give your monster some starting values)
 </tr>
 </table>
 
+Defensive CR: <span id="defensiveCRDisplay">Unknown</span> <br>
+Offensive CR: <span id="offensiveCRDisplay">Unknown</span> <br>
+<b>Total CR: <span id="totalCRDisplay">Unknown</span></b>
+
 <table>
   <tr>
 	<td>Monster Name:</td>
@@ -36,55 +40,140 @@ Base CR (Choose a base CR to give your monster some starting values)
 
 <h3>Monster Statistics</h3>
 <table>
-  <tr>
-	<td>Armor Class:</td>
-	<td><input type="text" id="armorClass"		value=13	onchange="recalcDefensiveCR()"></td>
-	<td><button onclick="addValue(document.getElementById('armorClass'), 1)">+</button></td>
-	<td><button onclick="addValue(document.getElementById('armorClass'), -1)">-</button></td>	
-  </tr>
-  <tr>
-	<td>Hit Points:</td>
-	<td><input type="text" id="hitPoints"		value=5		onchange="recalcDefensiveCR()"></td>
-	<td><button onclick="addValue(document.getElementById('hitPoints'), 1)">+</button></td>
-	<td><button onclick="addValue(document.getElementById('hitPoints'), -1)">-</button></td>
-  </tr>
-  <tr>
-	<td>Attack Bonus:</td>
-	<td><input type="text" id="attackBonus"		value=3		onchange="recalcOffensiveCR()"></td>
-	<td><button onclick="addValue(document.getElementById('attackBonus'), 1)">+</button></td>
-	<td><button onclick="addValue(document.getElementById('attackBonus'), -1)">-</button></td>	
-  </tr>
-  <tr>
-	<td>Damage per Round:</td>
-	<td><input type="text" id="damagePerRound"	value=1		onchange="recalcOffensiveCR()"></td>
-	<td><button onclick="addValue(document.getElementById('damagePerRound'), 1)">+</button></td>
-	<td><button onclick="addValue(document.getElementById('damagePerRound'), -1)">-</button></td>	
-  </tr>
-  <tr>
-	<td>Save DC:</td>
-	<td><input type="text" id="saveDC"			value=13></td>
-	<td><button onclick="addValue(document.getElementById('saveDC'), 1)">+</button></td>
-	<td><button onclick="addValue(document.getElementById('saveDC'), -1)">-</button></td>	
-  </tr>
-  <tr>
-    <td>Proficiency Bonus:</td>
-	<td><input type="text" id="proficiencyBonus" value=2></td>
-	<td><button onclick="addValue(document.getElementById('proficiencyBonus'), 1)">+</button></td>
-	<td><button onclick="addValue(document.getElementById('proficiencyBonus'), -1)">-</button></td>	
-  </tr>
+<tr>
+	<td>
+	<table>
+	  <tr>
+		<td>Armor Class:</td>
+		<td><input type="text" id="armorClass"		value=13	onchange="recalcTotalCR()"></td>
+		<td><button onclick="addValue(document.getElementById('armorClass'), 1)">+</button></td>
+		<td><button onclick="addValue(document.getElementById('armorClass'), -1)">-</button></td>	
+	  </tr>
+	  <tr>
+		<td>Hit Points:</td>
+		<td><input type="text" id="hitPoints"		value=3		size="3" onchange="recalcTotalCR()">
+		Dice Code
+		<input type="text" id="HPDiceCode"		value="-"	size="10"></input></td>
+		<td><button onclick="addValue(document.getElementById('hitPoints'), 1)">+</button></td>
+		<td><button onclick="addValue(document.getElementById('hitPoints'), -1)">-</button></td>
+		
+	  </tr>
+	  <tr>
+		<td>Attack Bonus:</td>
+		<td><input type="text" id="attackBonus"		value=3		onchange="recalcTotalCR()"></td>
+		<td><button onclick="addValue(document.getElementById('attackBonus'), 1)">+</button></td>
+		<td><button onclick="addValue(document.getElementById('attackBonus'), -1)">-</button></td>	
+	  </tr>
+	  <tr>
+		<td>Damage per Round:</td>
+		<td><input type="text" id="damagePerRound"	value=1		onchange="recalcTotalCR()"></td>
+		<td><button onclick="addValue(document.getElementById('damagePerRound'), 1)">+</button></td>
+		<td><button onclick="addValue(document.getElementById('damagePerRound'), -1)">-</button></td>	
+	  </tr>
+	  <tr>
+		<td>Save DC:</td>
+		<td><input type="text" id="saveDC"			value=13	onchange="recalcTotalCR()></td>
+		<td><button onclick="addValue(document.getElementById('saveDC'), 1)">+</button></td>
+		<td><button onclick="addValue(document.getElementById('saveDC'), -1)">-</button></td>	
+	  </tr>
+	  <tr>
+		<td>Proficiency Bonus:</td>
+		<td><input type="text" id="proficiencyBonus" value=2></td>
+		<td><button onclick="addValue(document.getElementById('proficiencyBonus'), 1)">+</button></td>
+		<td><button onclick="addValue(document.getElementById('proficiencyBonus'), -1)">-</button></td>	
+	  </tr>
+	</table>
+	</td>
+	<td>
+	<table>
+	  <tr>
+		<td>Strength:</td>
+		<td><input type="text" id="strength"		value=13	onchange="updateAbilityModifiers()"></td>
+		<td><button onclick="addValue(document.getElementById('strength'), 1)">+</button></td>
+		<td><button onclick="addValue(document.getElementById('strength'), -1)">-</button></td>
+		<td><input type="text" id="strengthMod"></input></td>
+	  </tr>
+	  <tr>
+		<td>Dexterity:</td>
+		<td><input type="text" id="dexterity"		value=13	onchange="updateAbilityModifiers()"></td>
+		<td><button onclick="addValue(document.getElementById('dexterity'), 1)">+</button></td>
+		<td><button onclick="addValue(document.getElementById('dexterity'), -1)">-</button></td>
+		<td><input type="text" id="dexterityMod"></input></td>		
+	  </tr>
+	  <tr>
+		<td>Constitution:</td>
+		<td><input type="text" id="constitution"	value=13	onchange="updateAbilityModifiers()"></td>
+		<td><button onclick="addValue(document.getElementById('constitution'), 1)">+</button></td>
+		<td><button onclick="addValue(document.getElementById('constitution'), -1)">-</button></td>
+		<td><input type="text" id="constitutionMod"></input></td>
+	  </tr>
+	  <tr>
+		<td>Intelligence:</td>
+		<td><input type="text" id="intelligence"	value=13	onchange="updateAbilityModifiers()"></td>
+		<td><button onclick="addValue(document.getElementById('intelligence'), 1)">+</button></td>
+		<td><button onclick="addValue(document.getElementById('intelligence'), -1)">-</button></td>
+		<td><input type="text" id="intelligenceMod"></input></td>
+	  </tr>
+	  <tr>
+		<td>Wisdom:</td>
+		<td><input type="text" id="wisdom"			value=13	onchange="updateAbilityModifiers()"></td>
+		<td><button onclick="addValue(document.getElementById('wisdom'), 1)">+</button></td>
+		<td><button onclick="addValue(document.getElementById('wisdom'), -1)">-</button></td>
+		<td><input type="text" id="wisdomMod"></input></td>
+	  </tr>
+	  <tr>
+		<td>Charisma:</td>
+		<td><input type="text" id="charisma"		value=13	onchange="updateAbilityModifiers()"></td>
+		<td><button onclick="addValue(document.getElementById('charisma'), 1)">+</button></td>
+		<td><button onclick="addValue(document.getElementById('charisma'), -1)">-</button></td>
+		<td><input type="text" id="charismaMod"></input></td>
+	  </tr>
+	  <tr>
+		<td>Total Skill Points:</td>
+		<td><span id="totalSkillPoints"></span></td>
+	  </tr>
+	</table>
+	</td>
+</tr>
 </table>
+
+<h3>Monster Size</h3>
+<form>
+	<input type="radio" name="size" id="sizeTiny" onchange="setMonsterSize('Tiny')">Tiny</input>
+	<input type="radio" name="size" id="sizeSmall" onchange="setMonsterSize('Small')">Small</input>
+	<input type="radio" name="size" id="sizeMedium" onchange="setMonsterSize('Medium')">Medium</input>
+	<input type="radio" name="size" id="sizeLarge" onchange="setMonsterSize('Large')">Large</input>
+	<input type="radio" name="size" id="sizeHuge" onchange="setMonsterSize('Huge')">Huge</input>
+	<input type="radio" name="size" id="sizeGargantuan" onchange="setMonsterSize('Gargantuan')">Gargantuan</input>
+</form>
+
+<h3>Primary Attack Type</h3>
+<form>
+<table>
+<tr>
+	<td><input type="radio" name="attackType" id="attackMelee" onchange="recalcAbilityScores()">Melee (STR)</input></td>
+	<td><input type="radio" name="attackType" id="attackRanged" onchange="recalcAbilityScores()">Ranged (DEX)</input></td>
+	<td><input type="radio" name="attackType" id="attackMagic" onchange="recalcAbilityScores()">Innate Magic (CHA)</input></td>
+</tr>
+<tr>
+	<td><input type="radio" name="attackType" id="attackFinesse" onchange="recalcAbilityScores()">Finesse (DEX)</input></td>
+	<td><input type="radio" name="attackType" id="attackThrown" onchange="recalcAbilityScores()">Thrown (STR)</input></td>
+	<td><input type="radio" name="attackType" id="attackPoison" onchange="recalcAbilityScores()">Poison/Disease (CON)</input></td>
+</tr>
+</table>
+</form>
 
 <h3>Monster Features</h3>
 <table>
 <tr>
-	<td><input type="checkbox" id="featAvoidance" value="test" onchange="recalcDefensiveCR()">Avoidance</input></td>
+	<td><input type="checkbox" id="featAvoidance" onchange="recalcTotalCR()">Avoidance</input></td>
 	<td><input type="checkbox" value="test">Test1</input></td>
 	<td><input type="checkbox" value="test">Test1</input></td>
 	<td><input type="checkbox" value="test">Test1</input></td>
 	<td><input type="checkbox" value="test">Test1</input></td>
 </tr>
 <tr>
-	<td><input type="checkbox" value="test">Test1</input></td>
+	<td><input type="checkbox" id="featNimbleEscape">Nimble Escape</input></td>
 	<td><input type="checkbox" value="test">Test1</input></td>
 	<td><input type="checkbox" value="test">Test1</input></td>
 	<td><input type="checkbox" value="test">Test1</input></td>
@@ -94,10 +183,6 @@ Base CR (Choose a base CR to give your monster some starting values)
 
 <br>
 <button onclick="saveMonster()">Save</button>
-
-Defensive CR: <span id="defensiveCRDisplay">Unknown</span> <br>
-Offensive CR: <span id="offensiveCRDisplay">Unknown</span> <br>
-<b>Total CR: <span id="totalCRDisplay">Unknown</span></b>
 
 <h3>Monster List</h3>
 <table id="monsterList"></table>
@@ -111,6 +196,78 @@ Offensive CR: <span id="offensiveCRDisplay">Unknown</span> <br>
 	var defensiveCR = 0;
 	var offensiveCR = 0;
 	var totalCR = 0;
+	
+	var monsterSize = "Medium";
+	var hitDice = 8;
+	
+	var hitDiceSize = {};
+	hitDiceSize["Tiny"] = 4;
+	hitDiceSize["Small"] = 6;
+	hitDiceSize["Medium"] = 8;
+	hitDiceSize["Large"] = 10;
+	hitDiceSize["Huge"] = 12;
+	hitDiceSize["Gargantuan"] = 20;
+	
+	//Average values of dice rolls
+	var diceAverages = {};
+	diceAverages[4] = 2.5;
+	diceAverages[6] = 3.5;
+	diceAverages[8] = 4.5;
+	diceAverages[10] = 5.5;
+	diceAverages[12] = 6.5;
+	diceAverages[20] = 10.5;
+	
+	//Ability Modifier to Score
+	var abilityScores = {};
+	abilityScores[-5] = 1;
+	abilityScores[-4] = 2;
+	abilityScores[-3] = 4;
+	abilityScores[-2] = 6;
+	abilityScores[-1] = 8;
+	abilityScores[0] = 10;
+	abilityScores[1] = 12;
+	abilityScores[2] = 14;
+	abilityScores[3] = 16;
+	abilityScores[4] = 18;
+	abilityScores[5] = 20;
+	abilityScores[6] = 22;
+	abilityScores[7] = 24;
+	abilityScores[8] = 26;
+	abilityScores[9] = 28;
+	abilityScores[10] = 30;
+	
+	//Ability Score to Ability Modifier
+	var abilityModifiers = {};
+	abilityModifiers[1] = -5;
+	abilityModifiers[2] = -4;
+	abilityModifiers[3] = -4;
+	abilityModifiers[4] = -3;
+	abilityModifiers[5] = -3;
+	abilityModifiers[6] = -2;
+	abilityModifiers[7] = -2;
+	abilityModifiers[8] = -1;
+	abilityModifiers[9] = -1;
+	abilityModifiers[10] = 0;
+	abilityModifiers[11] = 0;
+	abilityModifiers[12] = 1;
+	abilityModifiers[13] = 1;
+	abilityModifiers[14] = 2;
+	abilityModifiers[15] = 2;
+	abilityModifiers[16] = 3;
+	abilityModifiers[17] = 3;
+	abilityModifiers[18] = 4;
+	abilityModifiers[19] = 4;
+	abilityModifiers[20] = 5;
+	abilityModifiers[21] = 5;
+	abilityModifiers[22] = 6;
+	abilityModifiers[23] = 6;
+	abilityModifiers[24] = 7;
+	abilityModifiers[25] = 7;
+	abilityModifiers[26] = 8;
+	abilityModifiers[27] = 8;
+	abilityModifiers[28] = 9;
+	abilityModifiers[29] = 9;
+	abilityModifiers[30] = 10;
 	
 	//XP at each level
 	var XPLevels = {};
@@ -286,12 +443,136 @@ Offensive CR: <span id="offensiveCRDisplay">Unknown</span> <br>
 	PBLevels[14] = 5;
 	PBLevels[15] = 5;
 	//more
-
 	
+	//Estimated Average Ability Score at each level
+	var ASLevels = {};
+	ASLevels[0] = 8;
+	ASLevels[1/8] = 9;
+	ASLevels[1/4] = 10;
+	ASLevels[1/2] = 10;
+	ASLevels[1] = 11;
+	ASLevels[2] = 11;
+	ASLevels[3] = 12;
+	ASLevels[4] = 12;
+	ASLevels[5] = 13;
+	ASLevels[6] = 13;
+	ASLevels[7] = 14;
+	ASLevels[8] = 14;
+	ASLevels[9] = 15;
+	ASLevels[10] = 15;
+	ASLevels[11] = 16;
+	ASLevels[12] = 16;
+	ASLevels[13] = 17;
+	ASLevels[14] = 17;
+    ASLevels[15] = 18;
+	ASLevels[16] = 18;
+	ASLevels[17] = 19;
+	ASLevels[18] = 19;
+	ASLevels[19] = 20;
+	ASLevels[20] = 20;
+	ASLevels[21] = 21;
+	ASLevels[22] = 21;
+	ASLevels[23] = 22;
+	ASLevels[24] = 22;
+	ASLevels[25] = 23;
+	ASLevels[26] = 23;
+	ASLevels[27] = 24;
+	ASLevels[28] = 24;
+	ASLevels[29] = 25;
+	ASLevels[30] = 25;
+	
+	function setMonsterSize(size) {
+		monsterSize = size;
+		hitDice = hitDiceSize[monsterSize];
+		recalcAbilityScores();
+	}
+	
+	function nextLowerCR(current) {
+		if	   (current == 1)	return 1/2;
+		else if(current == 1/2)	return 1/4;
+		else if(current == 1/4) return 1/8;
+		else if(current == 1/8) return 0;
+		else if(current == 0)	return 0;
+		else					return (current - 1);
+	}
+	
+	function nextHigherCR(current) {
+		if	   (current == 0)	return 1/8;
+		else if(current == 1/8) return 1/4;
+		else if(current == 1/4) return 1/2;
+		else if(current == 1/2)	return 1;
+		else if(current == 30)	return 30;
+		else					return (current + 1);
+	}
+	
+	function nextCR(current, diff) {
+		var result = current;
+		if(diff > 0)
+		{
+			for(var i = 0; i < diff; i++)
+			{
+				result = nextHigherCR(result);
+			}
+		}
+		else
+		{
+			for(var i = diff; i < 0; i++)
+			{
+				result = nextLowerCR(result);
+			}
+		}
+		return result;
+	}
 	
 	function addValue(element, value) {
 		element.value = parseInt(element.value) + value;
 		element.onchange();
+	}
+	
+	function resetAbilityScores(CR) {
+		document.getElementById("strength").value = ASLevels[CR];
+		document.getElementById("dexterity").value = ASLevels[CR];
+		document.getElementById("constitution").value = ASLevels[CR];
+		document.getElementById("intelligence").value = ASLevels[CR];
+		document.getElementById("wisdom").value = ASLevels[CR];
+		document.getElementById("charisma").value = ASLevels[CR];
+	}
+	
+	function updateAbilityModifiers() {
+		document.getElementById('strengthMod').value = abilityModifiers[document.getElementById('strength').value];		
+		document.getElementById('dexterityMod').value = abilityModifiers[document.getElementById('dexterity').value];
+		document.getElementById('constitutionMod').value = abilityModifiers[document.getElementById('constitution').value];
+		document.getElementById('intelligenceMod').value = abilityModifiers[document.getElementById('intelligence').value];
+		document.getElementById('wisdomMod').value = abilityModifiers[document.getElementById('wisdom').value];
+		document.getElementById('charismaMod').value = abilityModifiers[document.getElementById('charisma').value];
+		
+		var totalSkillPoints = parseInt(document.getElementById('strength').value) + parseInt(document.getElementById('dexterity').value) + parseInt(document.getElementById('constitution').value) + parseInt(document.getElementById('intelligence').value) + parseInt(document.getElementById('wisdom').value) + parseInt(document.getElementById('charisma').value);
+		if (totalSkillPoints == (ASLevels[totalCR] * 6))
+		{
+			document.getElementById('totalSkillPoints').innerHTML = "<font color='green'>" + totalSkillPoints + "</font>";
+		}
+		else if (Math.abs(totalSkillPoints - (ASLevels[totalCR] * 6)) <= 6)
+		{
+			if(totalSkillPoints < ASLevels[totalCR] * 6)
+			{
+				document.getElementById('totalSkillPoints').innerHTML = "<font color='orange'>" + totalSkillPoints + "</font> A bit low!";
+			}
+			else
+			{
+				document.getElementById('totalSkillPoints').innerHTML = "<font color='orange'>" + totalSkillPoints + "</font> A bit high!";
+			}
+		}
+		else
+		{
+			if(totalSkillPoints < ASLevels[totalCR] * 6)
+			{
+				document.getElementById('totalSkillPoints').innerHTML = "<font color='red'>" + totalSkillPoints + "</font> Too low!";
+			}
+			else
+			{
+				document.getElementById('totalSkillPoints').innerHTML = "<font color='red'>" + totalSkillPoints + "</font> Too high!";
+			}
+		}
 	}
 	
 	function setBaseCR(val) {
@@ -301,8 +582,8 @@ Offensive CR: <span id="offensiveCRDisplay">Unknown</span> <br>
 		document.getElementById("damagePerRound").value = DPRLevels[val];
 		document.getElementById("saveDC").value = SDCLevels[val];
 		document.getElementById("proficiencyBonus").value = PBLevels[val];
-		recalcDefensiveCR();
-		recalcOffensiveCR();
+				
+		recalcTotalCR();
 	}
 	
 	function recalcDefensiveCR() {
@@ -310,8 +591,11 @@ Offensive CR: <span id="offensiveCRDisplay">Unknown</span> <br>
 		var HP = parseInt(document.getElementById("hitPoints").value);
 		var AC = parseInt(document.getElementById("armorClass").value);
 		
+	//Adjust for Feats
 		if(document.getElementById("featAvoidance").checked)
 			AC += 1;
+		if(document.getElementById("featNimbleEscape").checked)
+			AC += 4;
 		
 		var HPCR = 0;	//HPCR is the CR based solely on the Hit Points
 		var ACCR = 0;	//HPCR is the CR based solely on the Armor Class
@@ -334,7 +618,7 @@ Offensive CR: <span id="offensiveCRDisplay">Unknown</span> <br>
 
 		//Adjust defensive CR based on Armor Class
 		var expectedAC = ACLevels[HPCR];
-		defensiveCR = HPCR + ((AC - expectedAC)/2 | 0);
+		defensiveCR = nextCR(HPCR, ((AC - expectedAC)/2 | 0));
 
 		//Display Result
 		display = document.getElementById("defensiveCRDisplay");
@@ -344,13 +628,17 @@ Offensive CR: <span id="offensiveCRDisplay">Unknown</span> <br>
 		else if(defensiveCR == 0.25) display.innerHTML = "1/4";
 		else if(defensiveCR == 0.5) display.innerHTML = "1/2";
 		else display.innerHTML = defensiveCR;
-		
-		recalcTotalCR();
 	}
 	
 	function recalcOffensiveCR() {
 		var DPR = parseInt(document.getElementById("damagePerRound").value);
 		var AB = parseInt(document.getElementById("attackBonus").value);
+		
+	//Adjust for Feats
+		//if(document.getElementById("featAvoidance").checked)
+			//AC += 1;
+		if(document.getElementById("featNimbleEscape").checked)
+			AB += 4;
 		
 		//Determine offensive CR based first on Damage per Round
 		if	   (0  <= DPR && DPR <= 1)  DPRCR = 0;
@@ -370,7 +658,7 @@ Offensive CR: <span id="offensiveCRDisplay">Unknown</span> <br>
 		
 		//Adjust offensive CR based on Attack Bonus
 		var expectedAB = ABLevels[DPRCR];
-		offensiveCR = DPRCR + ((AB - expectedAB)/2 | 0);
+		offensiveCR = nextCR(DPRCR, ((AB - expectedAB)/2 | 0));
 
 		//Display Result
 		display = document.getElementById("offensiveCRDisplay");
@@ -379,12 +667,13 @@ Offensive CR: <span id="offensiveCRDisplay">Unknown</span> <br>
 		else if(offensiveCR == 0.25) display.innerHTML = "1/4";
 		else if(offensiveCR == 0.5) display.innerHTML = "1/2";
 		else display.innerHTML = offensiveCR;
-		
-		recalcTotalCR();
 	}
 	
 	function recalcTotalCR()
 	{
+		recalcDefensiveCR();
+		recalcOffensiveCR();
+		
 		totalCR = (defensiveCR + offensiveCR)/2;
 		
 	//Handle cases when totalCR is around the fractional CRs
@@ -400,6 +689,70 @@ Offensive CR: <span id="offensiveCRDisplay">Unknown</span> <br>
 		else if(totalCR == 0.25) display.innerHTML = "1/4";
 		else if(totalCR == 0.5) display.innerHTML = "1/2";
 		else display.innerHTML = totalCR;
+		
+		recalcAbilityScores();
+	}
+	
+	function recalcAbilityScores() {
+		resetAbilityScores(totalCR);
+	
+		//Calculate Strength Score (STR MOD + Proficiency Bonus = ATK Bonus if Melee attack selected)
+		if(document.getElementById("attackMelee").checked == true || document.getElementById("attackThrown").checked == true)
+		{
+			document.getElementById('strength').value = parseInt(abilityScores[parseInt(document.getElementById("attackBonus").value) - parseInt(document.getElementById("proficiencyBonus").value)]);			
+		}
+		else if(document.getElementById("attackRanged").checked == true || document.getElementById("attackFinesse").checked == true)
+		{
+			document.getElementById('dexterity').value = parseInt(abilityScores[parseInt(document.getElementById("attackBonus").value) - parseInt(document.getElementById("proficiencyBonus").value)]);			
+		}
+		else if(document.getElementById("attackMagic").checked == true)
+		{
+			document.getElementById('charisma').value = parseInt(abilityScores[parseInt(document.getElementById("saveDC").value) - parseInt(document.getElementById("proficiencyBonus").value) - 8]);		
+		}
+		
+	//Calculate Constitution Score (Based on whether the monster has more or less HP than usual.
+		//Higher HP or lower AC for the current CR means higher Constitution score
+		var HP = parseInt(document.getElementById("hitPoints").value);				
+		var HPCR = 0;	//HPCR is the CR based solely on the Hit Points
+		
+		//Determine defensive CR based first on Hit Points
+		if	   (1   <= HP && HP <= 6)   HPCR = 0;
+		else if(7   <= HP && HP <= 35)  HPCR = 1/8;
+		else if(36  <= HP && HP <= 49)  HPCR = 1/4;
+		else if(50  <= HP && HP <= 70)  HPCR = 1/2;
+		else if(71  <= HP && HP <= 85)  HPCR = 1;
+		else if(86  <= HP && HP <= 100) HPCR = 2;
+		else if(101 <= HP && HP <= 115) HPCR = 3;
+		else if(116 <= HP && HP <= 130) HPCR = 4;
+		else if(131 <= HP && HP <= 145) HPCR = 5;
+		else if(146 <= HP && HP <= 160) HPCR = 6;
+		else if(161 <= HP && HP <= 175) HPCR = 7;
+		else if(176 <= HP && HP <= 190) HPCR = 8;
+		else if(191 <= HP && HP <= 205) HPCR = 9;
+		
+		console.log("HPCR " + HPCR);
+		console.log("TOTAL CR"  + totalCR);
+		//Find where in the range of HP for this CR we land (Lower half = +0 CON, Top half = +1 CON)
+		var rangeLower = HPLevels[nextLowerCR(HPCR)] + 1;
+		var rangeUpper = HPLevels[HPCR];
+		console.log("range lower" + rangeLower);
+		console.log("range upper" + rangeUpper);
+		
+		var rangeMid = (rangeLower + rangeUpper) / 2;
+		console.log("range mid " + rangeMid);
+				
+		if(HP > rangeMid)
+		{
+			document.getElementById('constitution').value = parseInt(document.getElementById('constitution').value) + 1;
+		}
+		document.getElementById('constitution').value = parseInt(document.getElementById('constitution').value) + 2 * Math.round(HPCR - totalCR);
+		
+		updateAbilityModifiers();
+		
+	//Update HP Dice Code
+		var numHitDice = Math.round(HP / (parseInt(diceAverages[hitDice]) + parseInt(document.getElementById('constitutionMod').value)));
+		var diceCode = numHitDice + "D" + hitDice + " + " + document.getElementById('constitutionMod').value*numHitDice;
+		document.getElementById('HPDiceCode').value = diceCode;
 	}
 	
 	function saveMonster() {
@@ -431,8 +784,6 @@ Offensive CR: <span id="offensiveCRDisplay">Unknown</span> <br>
 
 	//Save changes to local storage	
 		localStorage.setItem("monsterArray", JSON.stringify(monsterArray));
-		
-		console.log(monsterArray);
 	}
 	
 	function deleteMonster(monsterIndex) {
@@ -446,8 +797,6 @@ Offensive CR: <span id="offensiveCRDisplay">Unknown</span> <br>
 	
 	//Save changes to local storage
 		localStorage.setItem("monsterArray", JSON.stringify(monsterArray));
-		
-		console.log(monsterArray);
 	}
 	
 	function addToEncounter(monsterIndex) {
@@ -492,9 +841,6 @@ Offensive CR: <span id="offensiveCRDisplay">Unknown</span> <br>
 		for(monsterIndex in encounterArray) {
 			totalXP += encounterArray[monsterIndex]["totalXP"];
 		}
-	
-	
-		alert(totalXP);
 		
 		var numMonsters = encounterArray.length;
 		var multiplier = 1;
@@ -509,8 +855,6 @@ Offensive CR: <span id="offensiveCRDisplay">Unknown</span> <br>
 	
 		adjustedXP = totalXP * multiplier;
 		
-		alert(adjustedXP);
-	
 		display = document.getElementById("encounterXPDisplay");
 		display.innerHTML = totalXP;
 		
@@ -528,6 +872,7 @@ Offensive CR: <span id="offensiveCRDisplay">Unknown</span> <br>
 	}
 	
 	//http://stackoverflow.com/questions/702165/how-do-i-implement-press-and-hold-button-javascript
+	//PC HP = 8 * (Level + 1)  If monster can kill a pc in one attack, bump up one CR
 </script>
 
 

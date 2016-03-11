@@ -23,6 +23,12 @@ Offensive CR: <span id="offensiveCRDisplay">Unknown</span> <br>
 	<td><button onclick="document.getElementById('challengeRating').value = nextCR(eval(document.getElementById('challengeRating').value), -1);">-</button></td>
   </tr>
   <tr>
+	<td>Desired CR</td>
+	<td><input type="text" id="desiredChallengeRating"	onchange="desiredCR = eval(this.value); recalcDesiredCR();"></td>
+	<td><button onclick="document.getElementById('desiredChallengeRating').value = nextCR(eval(document.getElementById('desiredChallengeRating').value), 1); ">+</button></td>
+	<td><button onclick="document.getElementById('desiredChallengeRating').value = nextCR(eval(document.getElementById('desiredChallengeRating').value), -1);">-</button></td>
+  </tr>
+  <tr>
 	<td>Armor Class:</td>
 	<td><input type="text" id="armorClass"		onchange="AC = parseInt(this.value); recalcTotalCR();"></td>
 	<td><button onclick="addValue(document.getElementById('armorClass'), 1)">+</button></td>
@@ -45,7 +51,7 @@ Offensive CR: <span id="offensiveCRDisplay">Unknown</span> <br>
 </table>
 
 <h3>Monster Features</h3>
-<table>
+<table style="font-size:x-small">
 <tr>
 	<td><input type="checkbox" id="featAggressive" onchange="recalcTotalCR()">Aggressive</input></td>
 	<td><input type="checkbox" id="featAmbusher" onchange="recalcTotalCR()">Ambusher</input></td>
@@ -176,10 +182,19 @@ Offensive CR: <span id="offensiveCRDisplay">Unknown</span> <br>
 </tr>
 </table>
 
+<br>
+<button onclick="saveMonster()">Save</button>
+
+<h3>Monster List</h3>
+<table id="monsterList">
+<tr><td>Monster Name</td><td>CR</td><td></td><td></td><td>Count</td></tr>
+</table>
+
 <script>
 	var defensiveCR;
 	var offensiveCR;
 	var totalCR;
+	var desiredCR;
 	
 	var HP;
 	var AC;
@@ -189,6 +204,169 @@ Offensive CR: <span id="offensiveCRDisplay">Unknown</span> <br>
 	function addValue(element, value) {
 		element.value = parseInt(element.value) + value;
 		element.onchange();
+	}
+	
+	function recalcDesiredCR() {
+	//Capture initial monster stats
+		var monsterFeatsOffensive = [];
+		var monsterFeatsDefensive = [];
+		var baseDPR = DPR;
+		var baseAB = AB;
+		var baseHP = HP;
+		var baseAC = AC;
+		var effectiveOffensiveCR = offensiveCR;
+		var effectiveDefensiveCR = defensiveCR;
+		var effectiveTotalCR = totalCR;
+	
+	//Sort monster features by strength and store in a list
+		if(document.getElementById("featDamageTransfer").checked)	monsterFeatsOffensive.push("DamageTransfer");
+		if(document.getElementById("featEnlarge").checked)			monsterFeatsOffensive.push("Enlarge");
+		if(document.getElementById("featMartialAdvantage").checked)	monsterFeatsOffensive.push("MartialAdvantage");
+		if(document.getElementById("featSwallow").checked)			monsterFeatsOffensive.push("Swallow");
+		if(document.getElementById("featCharge").checked)			monsterFeatsOffensive.push("Charge");
+		if(document.getElementById("featDive").checked)				monsterFeatsOffensive.push("Dive");
+		if(document.getElementById("featPounce").checked)			monsterFeatsOffensive.push("Pounce");
+		if(document.getElementById("featSurpriseAttack").checked)	monsterFeatsOffensive.push("SurpriseAttack");
+		if(document.getElementById("featWoundedFury").checked)		monsterFeatsOffensive.push("WoundedFury");
+		if(document.getElementById("featBloodFrenzy").checked)		monsterFeatsOffensive.push("BloodFrenzy");
+		if(document.getElementById("featNimbleEscape").checked)		monsterFeatsOffensive.push("NimbleEscape");
+		if(document.getElementById("featAmbusher").checked)			monsterFeatsOffensive.push("Ambusher");
+		if(document.getElementById("featPackTactics").checked)		monsterFeatsOffensive.push("PackTactics");
+		if(document.getElementById("featElementalBody").checked)	monsterFeatsOffensive.push("ElementalBody");
+		if(document.getElementById("featAggressive").checked)		monsterFeatsOffensive.push("Aggressive");
+		if(document.getElementById("featRampage").checked)			monsterFeatsOffensive.push("Rampage");	
+		
+	//Repeat this until we have reached our desired CR
+					
+			while(effectiveTotalCR != desiredCR)
+			{
+				if(effectiveDefensiveCR > effectiveOffensiveCR)
+				{	//Work to lower defensiveCR first				
+			//==-----  Lower defensive CR one notch -----==//
+				//First remove monster features
+					if(monsterFeatsDefensive.length > 1)
+					{
+					//Take first item out of monster list
+						monsterFeatsDefensive = monsterFeatsDefensive.slice(1);	//Cut off first item in the array
+						console.log(monsterFeatsDefensive);
+						console.log("CUT OFF A DEFENSIVE MONSTER FEAT");
+					}
+
+				//Next lower base AC
+					else if(baseAC > ACLevels[desiredCR] + 2)
+					{
+						baseAC -= 1;
+						console.log("LOWERED BASE AC to " + baseAC);
+					}
+				
+				//Next lower base HP
+					else if(baseHP > HPLevels[desiredCR])
+					{
+						var baseHPCR = getHPCR(baseHP);
+						console.log("baseHPCR" + baseHPCR);
+						baseHP = Math.round((HPLevels[nextLowerCR(baseHPCR)] + HPLevels[nextLowerCR(nextLowerCR(baseHPCR))]) / 2);
+						console.log("LOWERED BASE HP to " + baseHP);
+					}
+					
+				//Next lower base AC even more
+					else if(baseAC > ACLevels[desiredCR])
+					{
+						baseAC -= 1;
+						console.log("LOWERED BASE AC to " + baseAC);
+					}
+			//===============================================//	
+
+					var effectiveHP = baseHP;
+					var effectiveAC = baseAC;
+			
+					var HPCR = getHPCR(effectiveHP);
+			
+					//Adjust defensive CR based on Armor Class
+					var expectedAC = ACLevels[HPCR];
+					effectiveDefensiveCR = nextCR(HPCR, ((effectiveAC - expectedAC)/2 | 0));
+					console.log("effectiveDefensiveCR " + effectiveDefensiveCR);					
+				}
+				else	//Work to lower offensiveCR
+				{
+			//==-----  Lower offensive CR one notch -----==//
+				//First remove monster features
+					if(monsterFeatsOffensive.length > 1)
+					{
+					//Take first item out of monster list
+						monsterFeatsOffensive = monsterFeatsOffensive.slice(1);	//Cut off first item in the array
+						console.log(monsterFeatsOffensive);
+						console.log("CUT OFF AN OFFENSIVE MONSTER FEAT");
+					}
+
+				//Next lower base AB
+					else if(baseAB > ABLevels[desiredCR] + 2)
+					{
+						baseAB -= 1;
+						console.log("LOWERED BASE AB to " + baseAB);
+					}
+				
+				//Next lower base DPR
+					else if(baseDPR > DPRLevels[desiredCR])
+					{
+						var baseDPRCR = getDPRCR(baseDPR);
+						console.log("baseDPRCR" + baseDPRCR);
+						baseDPR = Math.round((DPRLevels[nextLowerCR(baseDPRCR)] + DPRLevels[nextLowerCR(nextLowerCR(baseDPRCR))]) / 2);
+						console.log("LOWERED BASE DPR to " + baseDPR);
+					}
+					
+				//Next lower base AB even more
+					else if(baseAB > ABLevels[desiredCR])
+					{
+						baseAB -= 1;
+						console.log("LOWERED BASE AB to " + baseAB);
+					}
+			//===============================================//				
+					
+				//Recalc offensive CR
+					var effectiveDPR = baseDPR;
+					var effectiveAB = baseAB;
+					
+					//Recalc effective DPR and abbr
+					for(var i = 0; i < monsterFeatsOffensive.length; i++)
+					{
+						if(monsterFeatsOffensive[i] == "Aggressive")			effectiveDPR += 2;
+						if(monsterFeatsOffensive[i] == "Ambusher")				effectiveAB += 1;
+						if(monsterFeatsOffensive[i] == "BloodFrenzy")			effectiveAB += 4;
+						if(monsterFeatsOffensive[i] == "Charge")				effectiveDPR /= 3/4;
+						if(monsterFeatsOffensive[i] == "DamageTransfer")		effectiveDPR += HP/3;
+						if(monsterFeatsOffensive[i] == "Dive")					effectiveDPR /= 3/4;
+						if(monsterFeatsOffensive[i] == "ElementalBody")			effectiveDPR += 5;
+						if(monsterFeatsOffensive[i] == "Enlarge")				effectiveDPR /= 1/2;
+						if(monsterFeatsOffensive[i] == "MartialAdvantage")		effectiveDPR /= 2/3;
+						if(monsterFeatsOffensive[i] == "NimbleEscape")			effectiveAB += 4;
+						if(monsterFeatsOffensive[i] == "PackTactics")			effectiveAB += 1;
+						if(monsterFeatsOffensive[i] == "Pounce")				effectiveDPR /= 3/4;
+						if(monsterFeatsOffensive[i] == "Rampage")				effectiveDPR += 2;
+						if(monsterFeatsOffensive[i] == "SurpriseAttack")		effectiveDPR /= 3/4;
+						if(monsterFeatsOffensive[i] == "Swallow")				effectiveDPR /= 2/3;
+						if(monsterFeatsOffensive[i] == "WoundedFury")			effectiveDPR /= 3/4;						
+					}
+					var DPRCR = getDPRCR(effectiveDPR);
+					
+					//Adjust offensive CR based on Attack Bonus
+					var expectedAB = ABLevels[DPRCR];
+					effectiveOffensiveCR = nextCR(DPRCR, ((effectiveAB - expectedAB)/2 | 0))
+					//console.log("* effectiveDPR" + effectiveDPR);
+					//console.log("* effectiveAB" + effectiveAB);
+					console.log("effectiveOffensiveCR " + effectiveOffensiveCR);
+				}	//END CALCULATING OFFENSIVE CR
+				
+				//Recalc total CR.  If total CR is target, end
+				effectiveTotalCR = (effectiveDefensiveCR + effectiveOffensiveCR)/2;
+			}
+				
+			//Handle cases when totalCR is around the fractional CRs
+			if	   (0 	 <= effectiveTotalCR && effectiveTotalCR < 1/16)	effectiveTotalCR = 0;
+			else if(1/16 <= effectiveTotalCR && effectiveTotalCR < 3/16)	effectiveTotalCR = 1/8;
+			else if(3/16 <= effectiveTotalCR && effectiveTotalCR < 6/16)	effectiveTotalCR = 1/4;
+			else if(6/16 <= effectiveTotalCR && effectiveTotalCR < 12/16)	effectiveTotalCR = 1/2;
+			else effectiveTotalCR = Math.round(effectiveTotalCR);
+			console.log("effectiveTotalCR" + effectiveTotalCR);
 	}
 	
 	function recalcTotalCR() {
@@ -335,7 +513,6 @@ Offensive CR: <span id="offensiveCRDisplay">Unknown</span> <br>
 		if(document.getElementById("featWoundedFury").checked)			//Increases DPR of one round (to about double).  Not included in Monster DPR.
 			DPR *= 3/4;		
 			
-		
 		document.getElementById("attackBonus").value = AB;
 		document.getElementById("damagePerRound").value = DPR;
 	}
@@ -375,6 +552,124 @@ Offensive CR: <span id="offensiveCRDisplay">Unknown</span> <br>
 			}
 		}
 		return result;
+	}
+	
+	function getHPCR(HP) {
+		var HPCR = 0;
+		
+		if	   (1   <= HP && HP <= 6)   HPCR = 0;
+		else if(7   <= HP && HP <= 35)  HPCR = 1/8;
+		else if(36  <= HP && HP <= 49)  HPCR = 1/4;
+		else if(50  <= HP && HP <= 70)  HPCR = 1/2;
+		else if(71  <= HP && HP <= 85)  HPCR = 1;
+		else if(86  <= HP && HP <= 100) HPCR = 2;
+		else if(101 <= HP && HP <= 115) HPCR = 3;
+		else if(116 <= HP && HP <= 130) HPCR = 4;
+		else if(131 <= HP && HP <= 145) HPCR = 5;
+		else if(146 <= HP && HP <= 160) HPCR = 6;
+		else if(161 <= HP && HP <= 175) HPCR = 7;
+		else if(176 <= HP && HP <= 190) HPCR = 8;
+		else if(191 <= HP && HP <= 205) HPCR = 9;
+		else if(206 <= HP && HP <= 220) HPCR = 10;
+		else if(221 <= HP && HP <= 235) HPCR = 11;
+		else if(236 <= HP && HP <= 250) HPCR = 12;
+		else if(251 <= HP && HP <= 265) HPCR = 13;
+		else if(266 <= HP && HP <= 280) HPCR = 14;
+		else if(281 <= HP && HP <= 295) HPCR = 15;
+		else if(296 <= HP && HP <= 310) HPCR = 16;
+		else if(311 <= HP && HP <= 325) HPCR = 17;
+		else if(326 <= HP && HP <= 340) HPCR = 18;
+		else if(341 <= HP && HP <= 355) HPCR = 19;
+		else if(356 <= HP && HP <= 400) HPCR = 20;
+		else if(401 <= HP && HP <= 445) HPCR = 21;
+		else if(446 <= HP && HP <= 490) HPCR = 22;
+		else if(491 <= HP && HP <= 535) HPCR = 23;
+		else if(536 <= HP && HP <= 580) HPCR = 24;
+		else if(581 <= HP && HP <= 625) HPCR = 25;
+		else if(626 <= HP && HP <= 670) HPCR = 26;
+		else if(671 <= HP && HP <= 715) HPCR = 27;
+		else if(716 <= HP && HP <= 760) HPCR = 28;
+		else if(761 <= HP && HP <= 805) HPCR = 29;
+		else if(806 <= HP && HP <= 850) HPCR = 30;
+		
+		return HPCR;
+	}
+	
+	function getDPRCR(DPR) {
+		var DPRCR = 0;
+		
+		if	   (0  <= DPR && DPR <= 1)  DPRCR = 0;
+		else if(2  <= DPR && DPR <= 3)  DPRCR = 1/8;
+		else if(4  <= DPR && DPR <= 5)  DPRCR = 1/4;
+		else if(6  <= DPR && DPR <= 8)  DPRCR = 1/2;
+		else if(9  <= DPR && DPR <= 14) DPRCR = 1;
+		else if(15 <= DPR && DPR <= 20) DPRCR = 2;
+		else if(21 <= DPR && DPR <= 26) DPRCR = 3;
+		else if(27 <= DPR && DPR <= 32) DPRCR = 4;
+		else if(33 <= DPR && DPR <= 38) DPRCR = 5;
+		else if(39 <= DPR && DPR <= 44) DPRCR = 6;
+		else if(45 <= DPR && DPR <= 50) DPRCR = 7;
+		else if(51 <= DPR && DPR <= 56) DPRCR = 8;
+		else if(57 <= DPR && DPR <= 62) DPRCR = 9;
+		else if(63 <= DPR && DPR <= 68) DPRCR = 10;
+		else if(69 <= DPR && DPR <= 74) DPRCR = 11;
+		else if(75 <= DPR && DPR <= 80) DPRCR = 12;
+		else if(81 <= DPR && DPR <= 86) DPRCR = 13;
+		else if(87 <= DPR && DPR <= 92) DPRCR = 14;
+		else if(93 <= DPR && DPR <= 98) DPRCR = 15;
+		else if(99 <= DPR && DPR <= 104) DPRCR = 16;
+		else if(105 <= DPR && DPR <= 110) DPRCR = 17;
+		else if(111 <= DPR && DPR <= 116) DPRCR = 18;
+		else if(117 <= DPR && DPR <= 122) DPRCR = 19;
+		else if(123 <= DPR && DPR <= 140) DPRCR = 20;
+		else if(141 <= DPR && DPR <= 158) DPRCR = 21;
+		else if(159 <= DPR && DPR <= 176) DPRCR = 22;
+		else if(177 <= DPR && DPR <= 194) DPRCR = 23;
+		else if(195 <= DPR && DPR <= 212) DPRCR = 24;
+		else if(213 <= DPR && DPR <= 230) DPRCR = 25;
+		else if(231 <= DPR && DPR <= 248) DPRCR = 26;
+		else if(249 <= DPR && DPR <= 266) DPRCR = 27;
+		else if(267 <= DPR && DPR <= 284) DPRCR = 28;
+		else if(285 <= DPR && DPR <= 302) DPRCR = 29;
+		else if(303 <= DPR && DPR <= 320) DPRCR = 30;
+		
+		return DPRCR;
+	}
+	
+	function saveMonster() {
+		var table = document.getElementById("monsterList");
+		var row = table.insertRow(-1);
+		var nameCell = row.insertCell(-1);
+		nameCell.innerHTML = document.getElementById("monsterName").value;
+		var CRCell = row.insertCell(-1);
+		CRCell.innerHTML = totalCR;
+		var countCell = row.insertCell(-1);
+		countCell.innerHTML = 1;
+		console.log(countCell.parentNode);
+		var plusButtonCell = row.insertCell(-1);
+		plusButtonCell.innerHTML = "<button onclick='this.parentNode.parentNode.childNodes[2].innerHTML = parseInt(this.parentNode.parentNode.childNodes[2].innerHTML) + 1;'>+</button>";
+		var minusButtonCell = row.insertCell(-1);
+		minusButtonCell.innerHTML = "<button onclick='this.parentNode.parentNode.childNodes[2].innerHTML = parseInt(this.parentNode.parentNode.childNodes[2].innerHTML) - 1;'>-</button>";
+		var editButtonCell = row.insertCell(-1);
+		editButtonCell.innerHTML = "<button>Edit</button>";
+		var deleteButtonCell = row.insertCell(-1);
+		deleteButtonCell.innerHTML = "<button onclick='deleteMonster(this.parentNode.parentNode.rowIndex)'>Delete</button>";
+		
+		monsterData = {};
+		monsterData["monsterName"] = document.getElementById("monsterName").value;
+		monsterData["armorClass"] = AC;
+		monsterData["hitPoints"] = HP;
+		monsterData["attackBonus"] = AB;
+		monsterData["damagePerRound"] = DPR;
+		monsterData["totalCR"] = totalCR;
+		monsterData["totalXP"] = XPLevels[totalCR];
+	
+	//Edit stored list	
+		var monsterArray = JSON.parse(localStorage.getItem('monsterArray'));
+		monsterArray.push(monsterData);
+
+	//Save changes to local storage	
+		localStorage.setItem("monsterArray", JSON.stringify(monsterArray));
 	}
 
 	
@@ -545,7 +840,43 @@ Offensive CR: <span id="offensiveCRDisplay">Unknown</span> <br>
 	DPRLevels[28] = 760;
 	DPRLevels[29] = 805;
 	DPRLevels[30] = 850;
-	//more
+	
+	//XP at each level
+	var XPLevels = {};
+	XPLevels[0] = 0;
+	XPLevels[1/8] = 25;
+	XPLevels[1/4] = 50;
+	XPLevels[1/2] = 100;
+	XPLevels[1] = 200;
+	XPLevels[2] = 450;
+	XPLevels[3] = 700;
+	XPLevels[4] = 1100;
+	XPLevels[5] = 1800;
+	XPLevels[6] = 2300;
+	XPLevels[7] = 2900;
+	XPLevels[8] = 3900;
+	XPLevels[9] = 5000;
+	XPLevels[10] = 5900;
+	XPLevels[11] = 7200;
+	XPLevels[12] = 8400;
+	XPLevels[13] = 10000;
+	XPLevels[14] = 11500;
+	XPLevels[15] = 13000;
+	XPLevels[16] = 15000;
+	XPLevels[17] = 18000;
+	XPLevels[18] = 20000;
+	XPLevels[19] = 22000;
+	XPLevels[20] = 25000;
+	XPLevels[21] = 33000;
+	XPLevels[22] = 41000;
+	XPLevels[23] = 50000;
+	XPLevels[24] = 62000;
+	XPLevels[25] = 75000;
+	XPLevels[26] = 90000;
+	XPLevels[27] = 105000;
+	XPLevels[28] = 120000;
+	XPLevels[29] = 135000;
+	XPLevels[30] = 155000;
 </script>
 
 </body>

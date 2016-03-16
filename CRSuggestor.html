@@ -2,6 +2,8 @@
 <body onload="setupPage()">
 <h1>Monster Challenge Rating Calculator</h1>
 
+<div id="leftCol" style="float:left">
+
 Defensive CR: <span id="defensiveCRDisplay">Unknown</span> <br>
 Offensive CR: <span id="offensiveCRDisplay">Unknown</span> <br>
 <b>Total CR: <span id="totalCRDisplay">Unknown</span></b>
@@ -184,6 +186,8 @@ Offensive CR: <span id="offensiveCRDisplay">Unknown</span> <br>
 
 <br>
 <button onclick="saveMonster()">Save</button>
+</div>
+<div id="rightCol">	
 
 <h3>Party Thresholds</h3>
 <b>Easy:</b> <span id="easyThreshold"></span> <br>
@@ -201,6 +205,8 @@ Offensive CR: <span id="offensiveCRDisplay">Unknown</span> <br>
 <table id="monsterList">
 <tr><td>Monster Name</td><td>CR</td><td></td><td></td><td>Count</td></tr>
 </table>
+
+</div>
 
 <script>
 	var defensiveCR;

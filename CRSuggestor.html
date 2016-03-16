@@ -53,11 +53,11 @@ Offensive CR: <span id="offensiveCRDisplay">Unknown</span> <br>
 <h3>Monster Features</h3>
 <table style="font-size:x-small">
 <tr>
-	<td><input type="checkbox" id="featAggressive" onchange="recalcTotalCR()">Aggressive</input></td>
-	<td><input type="checkbox" id="featAmbusher" onchange="recalcTotalCR()">Ambusher</input></td>
-	<td><input type="checkbox" id="featAmorphous" onchange="recalcTotalCR()">Amorphous</input></td>
-	<td><input type="checkbox" id="featAmphibious" onchange="recalcTotalCR()">Amphibious</input></td>
-	<td><input type="checkbox" id="featAngelicWeapons" onchange="recalcTotalCR()">Angelic Weapons</input></td>
+	<td><input type="checkbox" value="Aggressive"		onchange="setFeature(this.value, this.checked); recalcTotalCR();">Aggressive</input></td>
+	<td><input type="checkbox" value="Ambusher"			onchange="setFeature(this.value, this.checked); recalcTotalCR();">Ambusher</input></td>
+	<td><input type="checkbox" value="Amorphous"		onchange="setFeature(this.value, this.checked); recalcTotalCR();">Amorphous</input></td>
+	<td><input type="checkbox" value="Amphibious"		onchange="setFeature(this.value, this.checked); recalcTotalCR();">Amphibious</input></td>
+	<td><input type="checkbox" value="Angelic Weapons"	onchange="setFeature(this.value, this.checked); recalcTotalCR();">Angelic Weapons</input></td>
 </tr>
 <tr>
 	<td><input type="checkbox" id="featAntimagicSusceptibility" onchange="recalcTotalCR()">Antimagic Susceptibility</input></td>
@@ -185,7 +185,19 @@ Offensive CR: <span id="offensiveCRDisplay">Unknown</span> <br>
 <br>
 <button onclick="saveMonster()">Save</button>
 
-<h3>Monster List</h3>
+<h3>Party Thresholds</h3>
+<b>Easy:</b> <span id="easyThreshold"></span> <br>
+<b>Medium:</b> <span id="mediumThreshold"></span> <br>
+<b>Hard:</b> <span id="hardThreshold"></span> <br>
+<b>Deadly:</b> <span id="deadlyThreshold"></span> <br>
+
+<h3>Party Members</h3>
+<table id="partyList">
+<tr><td>Number of Characters</td><td>Character Level</td><td><button onclick="addPartyRow();">Add row</button></td></tr>
+<tr><td><input type='text' onclick='calculatePartyThresholds();'></input></td><td><input type='text' onclick='calculatePartyThresholds();'></input></td></tr>
+</table>
+
+<h3>Monster List</h3>  Difficulty: <span id="encounterDifficulty"></span>
 <table id="monsterList">
 <tr><td>Monster Name</td><td>CR</td><td></td><td></td><td>Count</td></tr>
 </table>
@@ -200,6 +212,79 @@ Offensive CR: <span id="offensiveCRDisplay">Unknown</span> <br>
 	var AC;
 	var AB;
 	var DPR;
+	var monsterFeats = {};
+	var encounterSize = 0;
+	
+	//Party Info
+	var partySize = 0;	
+	
+	var editing = false;
+	var editingMonster = 0;
+	
+	function addPartyRow() {
+		var table = document.getElementById("partyList");
+		var row = table.insertRow(-1);
+		var numberCell = row.insertCell(-1);
+		numberCell.innerHTML = "<input type='text' onclick='calculatePartyThresholds();'></input>";
+		var levelCell = row.insertCell(-1);
+		levelCell.innerHTML = "<input type='text' onclick='calculatePartyThresholds();'></input>";
+		var deleteButtonCell = row.insertCell(-1);
+		deleteButtonCell.innerHTML = "<button onclick='deletePlayer(this.parentNode.parentNode.rowIndex)'>Delete</button>";
+	}
+	
+	function deletePlayer(playerIndex) {
+		var table = document.getElementById("partyList");
+		table.deleteRow(playerIndex);
+	}
+	
+	function calculatePartyThresholds() {
+		var table = document.getElementById("partyList");
+		partySize = 0;		//Clear this count to start over
+		var totalXPEasy = 0;
+		var totalXPMedium = 0;
+		var totalXPHard = 0;
+		var totalXPDeadly = 0;
+		for(var i = 1; i < table.rows.length; i++)
+		{
+			if(table.rows[i].cells[0].firstElementChild.value != "" && table.rows[i].cells[1].firstElementChild.value != "")	//Skip rows with blanks
+			{
+				var playerCount = parseInt(table.rows[i].cells[0].firstElementChild.value);
+				partySize += playerCount;
+				
+				var playerLevel = parseInt(table.rows[i].cells[1].firstElementChild.value)
+				totalXPEasy		+= playerCount * XPThresholdEasy[playerLevel];
+				totalXPMedium	+= playerCount * XPThresholdMedium[playerLevel];
+				totalXPHard		+= playerCount * XPThresholdHard[playerLevel];
+				totalXPDeadly	+= playerCount * XPThresholdDeadly[playerLevel];
+			}
+		}
+		document.getElementById("easyThreshold").innerHTML = totalXPEasy;
+		document.getElementById("mediumThreshold").innerHTML = totalXPMedium;
+		document.getElementById("hardThreshold").innerHTML = totalXPHard;
+		document.getElementById("deadlyThreshold").innerHTML = totalXPDeadly;
+		
+		calculateEncounterDifficulty();
+	}
+	
+	function calculateEncounterDifficulty() {
+		var table = document.getElementById("monsterList");
+		encounterSize = 0;
+		var totalXP = 0;
+		for(var i = 1; i < table.rows.length; i++)
+		{
+			var monsterCount = parseInt(table.rows[i].cells[2].innerHTML);
+			encounterSize += monsterCount;
+			
+			var monsterCR = parseInt(table.rows[i].cells[1].innerHTML);
+			totalXP += monsterCount * XPLevels[monsterCR]; 
+		}
+		document.getElementById("encounterDifficulty").innerHTML = totalXP;
+	}
+	
+	function setFeature(value, isSet) {
+		monsterFeats[value] = isSet;
+		console.log(monsterFeats);
+	}
 	
 	function addValue(element, value) {
 		element.value = parseInt(element.value) + value;
@@ -230,7 +315,7 @@ Offensive CR: <span id="offensiveCRDisplay">Unknown</span> <br>
 		if(document.getElementById("featWoundedFury").checked)		monsterFeatsOffensive.push("WoundedFury");
 		if(document.getElementById("featBloodFrenzy").checked)		monsterFeatsOffensive.push("BloodFrenzy");
 		if(document.getElementById("featNimbleEscape").checked)		monsterFeatsOffensive.push("NimbleEscape");
-		if(document.getElementById("featAmbusher").checked)			monsterFeatsOffensive.push("Ambusher");
+		if(monsterFeats["Ambusher"])			monsterFeatsOffensive.push("Ambusher");
 		if(document.getElementById("featPackTactics").checked)		monsterFeatsOffensive.push("PackTactics");
 		if(document.getElementById("featElementalBody").checked)	monsterFeatsOffensive.push("ElementalBody");
 		if(document.getElementById("featAggressive").checked)		monsterFeatsOffensive.push("Aggressive");
@@ -395,40 +480,7 @@ Offensive CR: <span id="offensiveCRDisplay">Unknown</span> <br>
 		var ACCR = 0;	//HPCR is the CR based solely on the Armor Class
 		
 		//Determine defensive CR based first on Hit Points
-		if	   (1   <= effectiveHP && effectiveHP <= 6)   HPCR = 0;
-		else if(7   <= effectiveHP && effectiveHP <= 35)  HPCR = 1/8;
-		else if(36  <= effectiveHP && effectiveHP <= 49)  HPCR = 1/4;
-		else if(50  <= effectiveHP && effectiveHP <= 70)  HPCR = 1/2;
-		else if(71  <= effectiveHP && effectiveHP <= 85)  HPCR = 1;
-		else if(86  <= effectiveHP && effectiveHP <= 100) HPCR = 2;
-		else if(101 <= effectiveHP && effectiveHP <= 115) HPCR = 3;
-		else if(116 <= effectiveHP && effectiveHP <= 130) HPCR = 4;
-		else if(131 <= effectiveHP && effectiveHP <= 145) HPCR = 5;
-		else if(146 <= effectiveHP && effectiveHP <= 160) HPCR = 6;
-		else if(161 <= effectiveHP && effectiveHP <= 175) HPCR = 7;
-		else if(176 <= effectiveHP && effectiveHP <= 190) HPCR = 8;
-		else if(191 <= effectiveHP && effectiveHP <= 205) HPCR = 9;
-		else if(206 <= effectiveHP && effectiveHP <= 220) HPCR = 10;
-		else if(221 <= effectiveHP && effectiveHP <= 235) HPCR = 11;
-		else if(236 <= effectiveHP && effectiveHP <= 250) HPCR = 12;
-		else if(251 <= effectiveHP && effectiveHP <= 265) HPCR = 13;
-		else if(266 <= effectiveHP && effectiveHP <= 280) HPCR = 14;
-		else if(281 <= effectiveHP && effectiveHP <= 295) HPCR = 15;
-		else if(296 <= effectiveHP && effectiveHP <= 310) HPCR = 16;
-		else if(311 <= effectiveHP && effectiveHP <= 325) HPCR = 17;
-		else if(326 <= effectiveHP && effectiveHP <= 340) HPCR = 18;
-		else if(341 <= effectiveHP && effectiveHP <= 355) HPCR = 19;
-		else if(356 <= effectiveHP && effectiveHP <= 400) HPCR = 20;
-		else if(401 <= effectiveHP && effectiveHP <= 445) HPCR = 21;
-		else if(446 <= effectiveHP && effectiveHP <= 490) HPCR = 22;
-		else if(491 <= effectiveHP && effectiveHP <= 535) HPCR = 23;
-		else if(536 <= effectiveHP && effectiveHP <= 580) HPCR = 24;
-		else if(581 <= effectiveHP && effectiveHP <= 625) HPCR = 25;
-		else if(626 <= effectiveHP && effectiveHP <= 670) HPCR = 26;
-		else if(671 <= effectiveHP && effectiveHP <= 715) HPCR = 27;
-		else if(716 <= effectiveHP && effectiveHP <= 760) HPCR = 28;
-		else if(761 <= effectiveHP && effectiveHP <= 805) HPCR = 29;
-		else if(806 <= effectiveHP && effectiveHP <= 850) HPCR = 30;
+		HPCR = getHPCR(effectiveHP);
 
 		//Adjust defensive CR based on Armor Class
 		var expectedAC = ACLevels[HPCR];
@@ -472,11 +524,11 @@ Offensive CR: <span id="offensiveCRDisplay">Unknown</span> <br>
 		
 	//Adjust Attack Bonus and Damage Per Round based on Monster Features
 		// For features that increase damage for one round, assume each attack for 3 rounds is equal, plus the bonus damage.  i.e., effectiveDPR = (DPR + DPR + DPR + Bonus) / 3 = DPR + (Bonus / 3), or DPR = effectiveDPR - (Bonus / 3)
-		if(document.getElementById("featAggressive").checked)
+		if(monsterFeats["Aggressive"])
 			DPR -= 2;
-		if(document.getElementById("featAmbusher").checked)
+		if(monsterFeats["Ambusher"])
 			AB -= 1;
-		if(document.getElementById("featAngelicWeapons").checked)		//NO EFFECT (Already included in Monster DPR) Adds some additional damage to all weapon attacks.
+		if(monsterFeats["AngelicWeapons"])		//NO EFFECT (Already included in Monster DPR) Adds some additional damage to all weapon attacks.
 			AB -= 0;
 		if(document.getElementById("featBloodFrenzy").checked)
 			AB -= 4;
@@ -637,41 +689,108 @@ Offensive CR: <span id="offensiveCRDisplay">Unknown</span> <br>
 	}
 	
 	function saveMonster() {
-		var table = document.getElementById("monsterList");
-		var row = table.insertRow(-1);
-		var nameCell = row.insertCell(-1);
-		nameCell.innerHTML = document.getElementById("monsterName").value;
-		var CRCell = row.insertCell(-1);
-		CRCell.innerHTML = totalCR;
-		var countCell = row.insertCell(-1);
-		countCell.innerHTML = 1;
-		console.log(countCell.parentNode);
-		var plusButtonCell = row.insertCell(-1);
-		plusButtonCell.innerHTML = "<button onclick='this.parentNode.parentNode.childNodes[2].innerHTML = parseInt(this.parentNode.parentNode.childNodes[2].innerHTML) + 1;'>+</button>";
-		var minusButtonCell = row.insertCell(-1);
-		minusButtonCell.innerHTML = "<button onclick='this.parentNode.parentNode.childNodes[2].innerHTML = parseInt(this.parentNode.parentNode.childNodes[2].innerHTML) - 1;'>-</button>";
-		var editButtonCell = row.insertCell(-1);
-		editButtonCell.innerHTML = "<button>Edit</button>";
-		var deleteButtonCell = row.insertCell(-1);
-		deleteButtonCell.innerHTML = "<button onclick='deleteMonster(this.parentNode.parentNode.rowIndex)'>Delete</button>";
-		
+	//Collect monster data into an object to save
 		monsterData = {};
 		monsterData["monsterName"] = document.getElementById("monsterName").value;
 		monsterData["armorClass"] = AC;
 		monsterData["hitPoints"] = HP;
 		monsterData["attackBonus"] = AB;
 		monsterData["damagePerRound"] = DPR;
+		monsterData["monsterFeats"] = monsterFeats;
 		monsterData["totalCR"] = totalCR;
 		monsterData["totalXP"] = XPLevels[totalCR];
-	
-	//Edit stored list	
+		
 		var monsterArray = JSON.parse(localStorage.getItem('monsterArray'));
-		monsterArray.push(monsterData);
+	
+	//Edit monster table
+		if(editing == true)		//If we are editing an existing monster, just overwrite the old table data
+		{
+			console.log("editingMonster (edit) " + editingMonster);
+			var table = document.getElementById("monsterList");
+			var row = table.rows[editingMonster];
+			var nameCell = row.cells[0];
+			var CRCell = row.cells[1];
+			
+			nameCell.innerHTML = document.getElementById("monsterName").value;
+			CRCell.innerHTML = totalCR;
+			
+			monsterArray.splice(editingMonster - 1, 1, monsterData);		//Replace edited monster in list
+			editing = false;
+		}
+		else					//Otherwise create a new row in the table
+		{
+			var table = document.getElementById("monsterList");
+			editingMonster = table.rows.length;
+			console.log("editingMonster " + editingMonster);
+			var row = table.insertRow(-1);
+			var nameCell = row.insertCell(-1);
+			nameCell.innerHTML = document.getElementById("monsterName").value;
+			var CRCell = row.insertCell(-1);
+			CRCell.innerHTML = totalCR;
+			var countCell = row.insertCell(-1);
+			countCell.innerHTML = 1;
+			console.log(countCell.parentNode);
+			var plusButtonCell = row.insertCell(-1);
+			plusButtonCell.innerHTML = "<button onclick='this.parentNode.parentNode.childNodes[2].innerHTML = parseInt(this.parentNode.parentNode.childNodes[2].innerHTML) + 1;'>+</button>";
+			var minusButtonCell = row.insertCell(-1);
+			minusButtonCell.innerHTML = "<button onclick='this.parentNode.parentNode.childNodes[2].innerHTML = parseInt(this.parentNode.parentNode.childNodes[2].innerHTML) - 1;'>-</button>";
+			var editButtonCell = row.insertCell(-1);
+			editButtonCell.innerHTML = "<button onclick='editMonster(this.parentNode.parentNode.rowIndex)'>Edit</button>";
+			var deleteButtonCell = row.insertCell(-1);
+			deleteButtonCell.innerHTML = "<button onclick='deleteMonster(this.parentNode.parentNode.rowIndex)'>Delete</button>";
+			
+			monsterArray.splice(monsterArray.length, 0, monsterData);		//Append new monster to end of list
+		}
 
 	//Save changes to local storage	
 		localStorage.setItem("monsterArray", JSON.stringify(monsterArray));
+		
+		calculateEncounterDifficulty();
 	}
+	
+	function editMonster(monsterIndex) {		
+	//Read stored list
+		var monsterArray = JSON.parse(localStorage.getItem('monsterArray'));
+		var monsterData = monsterArray[monsterIndex - 1];
+		console.log(monsterIndex);
+		console.log(monsterData);
+		console.log(monsterArray);
+		document.getElementById("monsterName").value = monsterData["monsterName"];
+		
+		document.getElementById("challengeRating").value = monsterData["totalCR"];
+		document.getElementById("challengeRating").onchange();		
+		document.getElementById("armorClass").value = monsterData["armorClass"];
+		document.getElementById("armorClass").onchange();
+		document.getElementById("hitPoints").value = monsterData["hitPoints"];
+		document.getElementById("hitPoints").onchange();
+		
+		
+		editing = true;
+		editingMonster = monsterIndex;
 
+		for(var i = 0; i < Object.keys(monsterData["monsterFeats"]).length; i++)
+		{
+			var checkbox = document.querySelector('input[value="' + Object.keys(monsterData["monsterFeats"])[i] +'"]');
+			console.log(checkbox);
+			checkbox.checked = true;
+		}
+	
+	//Save changes to local storage
+		localStorage.setItem("monsterArray", JSON.stringify(monsterArray));
+	}
+	
+	function deleteMonster(monsterIndex) {
+		
+		var table = document.getElementById("monsterList");
+		table.deleteRow(monsterIndex);
+		
+	//Edit stored list
+		var monsterArray = JSON.parse(localStorage.getItem('monsterArray'));
+		monsterArray.splice(monsterIndex, 1);
+	
+	//Save changes to local storage
+		localStorage.setItem("monsterArray", JSON.stringify(monsterArray));
+	}
 	
 	function setupPage() {
 		AC = ACLevels[1];
@@ -681,55 +800,63 @@ Offensive CR: <span id="offensiveCRDisplay">Unknown</span> <br>
 		document.getElementById("armorClass").value = AC;
 		document.getElementById("hitPoints").value = HP;
 		document.getElementById("challengeRating").value = totalCR;
-			
-		
 		
 		recalcTotalCR();
 
 		var monsterArray = [];
-		localStorage.setItem("monsterArray", JSON.stringify(monsterArray));
+		localStorage.setItem('monsterArray', JSON.stringify(monsterArray));
 		
 		var encounterArray = [];
-		localStorage.setItem("encounterArray", JSON.stringify(encounterArray));
+		localStorage.setItem('encounterArray', JSON.stringify(encounterArray));
 	}
-		
+	
+//====-- XP THRESHOLDS --====//	
+	//XP Thresholds (EASY)
+	var XPThresholdEasy = {};
+	XPThresholdEasy[1] = 25;	  XPThresholdEasy[2] = 50;	     XPThresholdEasy[3] = 75;	    XPThresholdEasy[4] = 125;
+	XPThresholdEasy[5] = 250;	  XPThresholdEasy[6] = 300;	     XPThresholdEasy[7] = 350;	    XPThresholdEasy[8] = 450;
+	XPThresholdEasy[9] = 550;	  XPThresholdEasy[10] = 600;	 XPThresholdEasy[11] = 800;	    XPThresholdEasy[12] = 1000;
+	XPThresholdEasy[13] = 1100;	  XPThresholdEasy[14] = 1250;	 XPThresholdEasy[15] = 1400;	XPThresholdEasy[16] = 1600;
+	XPThresholdEasy[17] = 2000;	  XPThresholdEasy[18] = 2100;	 XPThresholdEasy[19] = 2400;	XPThresholdEasy[20] = 2800;
+	
+	//XP Thresholds (MEDIUM)
+	var XPThresholdMedium = {};
+	XPThresholdMedium[1] = 50;	  XPThresholdMedium[6] = 600;	 XPThresholdMedium[11] = 1600;	XPThresholdMedium[16] = 3200;
+	XPThresholdMedium[2] = 100;	  XPThresholdMedium[7] = 750;	 XPThresholdMedium[12] = 2000;	XPThresholdMedium[17] = 3900;
+	XPThresholdMedium[3] = 150;	  XPThresholdMedium[8] = 900;	 XPThresholdMedium[13] = 2200;	XPThresholdMedium[18] = 4200;
+	XPThresholdMedium[4] = 250;	  XPThresholdMedium[9] = 1100;	 XPThresholdMedium[14] = 2500;	XPThresholdMedium[19] = 4900;
+	XPThresholdMedium[5] = 500;	  XPThresholdMedium[10] = 1200;	 XPThresholdMedium[15] = 2800;	XPThresholdMedium[20] = 5700;
+	                                                       
+	//XP Thresholds (HARD)
+	var XPThresholdHard = {};
+	XPThresholdHard[1] = 75;	  XPThresholdHard[6] = 900;	     XPThresholdHard[11] = 2400;	XPThresholdHard[16] = 4800;
+	XPThresholdHard[2] = 150;     XPThresholdHard[7] = 1100;     XPThresholdHard[12] = 3000;    XPThresholdHard[17] = 5900;
+	XPThresholdHard[3] = 225;     XPThresholdHard[8] = 1400;     XPThresholdHard[13] = 3400;    XPThresholdHard[18] = 6300;
+	XPThresholdHard[4] = 375;     XPThresholdHard[9] = 1600;     XPThresholdHard[14] = 3800;    XPThresholdHard[19] = 7300;
+	XPThresholdHard[5] = 750;     XPThresholdHard[10] = 1900;    XPThresholdHard[15] = 4300;    XPThresholdHard[20] = 8500;
+	
+	//XP Thresholds (DEADLY)
+	var XPThresholdDeadly = {};
+	XPThresholdDeadly[1] = 100;	  XPThresholdDeadly[6] = 1400;   XPThresholdDeadly[11] = 3600;  XPThresholdDeadly[16] = 7200;
+	XPThresholdDeadly[2] = 200;   XPThresholdDeadly[7] = 1700;   XPThresholdDeadly[12] = 4500;  XPThresholdDeadly[17] = 8800;
+	XPThresholdDeadly[3] = 400;   XPThresholdDeadly[8] = 2100;   XPThresholdDeadly[13] = 5100;  XPThresholdDeadly[18] = 9500;
+	XPThresholdDeadly[4] = 500;   XPThresholdDeadly[9] = 2400;   XPThresholdDeadly[14] = 5700;  XPThresholdDeadly[19] = 10900;
+	XPThresholdDeadly[5] = 1100;  XPThresholdDeadly[10] = 2800;  XPThresholdDeadly[15] = 6400;  XPThresholdDeadly[20] = 12700;	
+//====-----------------------====//
+
 	//Estimated Armor Class at each level
 	var ACLevels = {};
-	ACLevels[0] = 13;
-	ACLevels[1/8] = 13;
-	ACLevels[1/4] = 13;
-	ACLevels[1/2] = 13;
-	ACLevels[1] = 13;
-	ACLevels[2] = 13;
-	ACLevels[3] = 13;
-	ACLevels[4] = 14;
-	ACLevels[5] = 15;
-	ACLevels[6] = 15;
-	ACLevels[7] = 15;
-	ACLevels[8] = 16;
-	ACLevels[9] = 16;
-	ACLevels[10] = 17;
-	ACLevels[11] = 17;
-	ACLevels[12] = 17;
-	ACLevels[13] = 18;
-	ACLevels[14] = 18;
-	ACLevels[15] = 18;
-	ACLevels[16] = 310;
-	ACLevels[17] = 325;
-	ACLevels[18] = 340;
-	ACLevels[19] = 355;
-	ACLevels[20] = 400;
-	ACLevels[21] = 445;
-	ACLevels[22] = 490;
-	ACLevels[23] = 535;
-	ACLevels[24] = 580;
-	ACLevels[25] = 625;
-	ACLevels[26] = 670;
-	ACLevels[27] = 715;
-	ACLevels[28] = 760;
-	ACLevels[29] = 805;
-	ACLevels[30] = 850;
-	
+	ACLevels[0] = 13;    ACLevels[1] = 13;   ACLevels[11] = 17;   ACLevels[21] = 445;
+	ACLevels[1/8] = 13;  ACLevels[2] = 13;   ACLevels[12] = 17;   ACLevels[22] = 490;
+	ACLevels[1/4] = 13;  ACLevels[3] = 13;   ACLevels[13] = 18;   ACLevels[23] = 535;
+	ACLevels[1/2] = 13;  ACLevels[4] = 14;   ACLevels[14] = 18;   ACLevels[24] = 580;
+	                     ACLevels[5] = 15;   ACLevels[15] = 18;   ACLevels[25] = 625;
+	                     ACLevels[6] = 15;   ACLevels[16] = 310;  ACLevels[26] = 670;
+	                     ACLevels[7] = 15;   ACLevels[17] = 325;  ACLevels[27] = 715;
+	                     ACLevels[8] = 16;   ACLevels[18] = 340;  ACLevels[28] = 760;
+	                     ACLevels[9] = 16;   ACLevels[19] = 355;  ACLevels[29] = 805;
+	                     ACLevels[10] = 17;  ACLevels[20] = 400;  ACLevels[30] = 850;
+		
 	//Estimated Hit Points at each level
 	var HPLevels = {};
 	HPLevels[0] = 6;

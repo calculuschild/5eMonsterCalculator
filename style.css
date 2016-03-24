@@ -1,4 +1,30 @@
+@import url(https://fonts.googleapis.com/css?family=Amethysta);
+@import url(https://fonts.googleapis.com/css?family=Open+Sans);
+@import url(https://fonts.googleapis.com/css?family=Duru+Sans);
+@import url(https://fonts.googleapis.com/css?family=Libre+Baskerville:700);
+@import url(http://fonts.googleapis.com/css?family=Noto+Sans:400,700,400italic,700italic);
+
+
+font-family: 'Amethysta', serif;
+font-family: 'Open Sans', sans-serif;
+font-family: 'Duru Sans', sans-serif;
+font-family: 'Libre Baskerville', serif;
+font-family: 'Noto Sans', sans-serif;
+
 .monsterBlock {
 	background-color: blue;
 	
+}
+
+.customHr {
+    width: 80%
+    font-size: 1px;
+    color: rgba(0, 0, 0, 0);
+    line-height: 3px;
+    
+    background-color: rgb(128, 0, 0);
+    margin-top: 2px;
+    margin-bottom: 2px;
+	margin-left: 3px;
+	margin-right: 3px;
 }

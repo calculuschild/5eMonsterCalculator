@@ -993,19 +993,22 @@ Offensive CR: <span id="offensiveCRDisplay">Unknown</span> <br>
 		else					//Otherwise create a new row in the table
 		{
 			var table = document.getElementById("monsterList");
+			table.style.width = "300px";
+			table.style = "border-collapse: separate; border-spacing: 8px 5px;";
 			editingMonster = table.rows.length;
 			console.log("editingMonster " + editingMonster);
-			var monsterBlock = table.appendChild(document.createElement('tbody'))
-			monsterBlock.style = "border-style: solid; border-radius: 4px; display: block;";
+			var monsterBlock = table.appendChild(document.createElement('tbody'));
+			monsterBlock.style = "box-shadow: 0px 4px 5px black; background-color: rgb(100, 0, 0); display: block;";
 			var titleRow = monsterBlock.insertRow(-1);
 			var nameCell = titleRow.insertCell(-1);
 			nameCell.innerHTML = document.getElementById("monsterName").value;
+			nameCell.style = "font: small-caps 700 1.2em Libre Baskerville; color: white; text-shadow:0px 3px 3px rgb(0, 0, 0);";
 			var buttonsCell = titleRow.insertCell(-1);
 			buttonsCell.innerHTML = "<button onclick='editMonster  (this.parentNode.parentNode.rowIndex / 3)'>Edit</button>"
 								  + "<button onclick='deleteMonster(this.parentNode.parentNode.rowIndex / 3)'>Delete</button>";
 			var countRow = table.insertRow(-1);
 			var originalCountCell = countRow.insertCell(-1);
-			originalCountCell.innerHTML = "<table>"
+			originalCountCell.innerHTML = "<table style='color: white; font: bold .7em Noto Sans;'>"
 								+ "	 <tr>"
 								+ "    <td>Count:</td>"
 								+ "    <td>1</td>"
@@ -1013,7 +1016,9 @@ Offensive CR: <span id="offensiveCRDisplay">Unknown</span> <br>
 								+ "        <button onclick='changeMonsterCount(this, -1);'>-</button></td>"
 								+ "  </tr>"
 								+ "</table>";
+			originalCountCell.style = "box-shadow: 0px 4px 5px black; background-color: rgb(190, 0, 0);";
 			var adjustedCountCell = countRow.insertCell(-1);
+			adjustedCountCell.style = "box-shadow: 0px 4px 5px black; background-color: rgb(206, 0, 0); color: white; font-weight: bold; font-family: Verdana";
 			/*adjustedCountCell.innerHTML = "<table>"
 								+ "	 <tr>"
 								+ "    <td></td>"
@@ -1022,7 +1027,10 @@ Offensive CR: <span id="offensiveCRDisplay">Unknown</span> <br>
 								+ "</table>";*/
 			var statsRow = table.insertRow(-1);
 			originalStatsCell = statsRow.insertCell(-1);
+			originalStatsCell.style = "border-style: solid; border-radius: 4px; border-color: rgb(190, 0, 0); border-width: 2px; background-color: rgb(255, 234, 219); display: block; font: .8em Noto Sans;";
+			originalStatsCell.style.width = "150px";
 			var adjustedStatsCell = statsRow.insertCell(-1);
+			adjustedStatsCell.style.width = "150px";
 
 			monsterData["count"] = 1;
 			
@@ -1030,9 +1038,10 @@ Offensive CR: <span id="offensiveCRDisplay">Unknown</span> <br>
 		}
 		
 	//Fill list with details
-		originalStatsCell.innerHTML = "CR: " + monsterData["totalCR"] + "<br>"
-									+ "AC: " + monsterData["armorClass"] + "<br>"
-									+ "HP: " + monsterData["hitPoints"] + "<br>";
+		originalStatsCell.innerHTML = "<b><i>CR:</i></b> " + monsterData["totalCR"] + "<br>"
+									+ "<div class='customHr'>.</div>"
+									+ "<b><i>AC:</i></b> " + monsterData["armorClass"] + "<br>"
+									+ "<b><i>HP:</i></b> " + monsterData["hitPoints"] + "<br>";
 		for(var i = 0; i < Object.keys(monsterData["monsterFeats"]).length; i++)
 		{
 			var feat = Object.keys(monsterData["monsterFeats"])[i];

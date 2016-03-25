@@ -4,25 +4,30 @@
 @import url(https://fonts.googleapis.com/css?family=Libre+Baskerville:700);
 @import url(http://fonts.googleapis.com/css?family=Noto+Sans:400,700,400italic,700italic);
 
+.statsBlock {
+	border-style: solid;
+	border-radius: 4px;
+	border-color: rgb(190, 0, 0);
+	border-width: 2px;
+	background-color: #FDF1DC;
+	display: block;
+	width: 150px;
+	font: 0.8em Noto Sans;
+}
 
-font-family: 'Amethysta', serif;
-font-family: 'Open Sans', sans-serif;
-font-family: 'Duru Sans', sans-serif;
-font-family: 'Libre Baskerville', serif;
-font-family: 'Noto Sans', sans-serif;
-
-.monsterBlock {
-	background-color: blue;
-	
+.spaceTBody {
+	content: "buh";
+	background: none;
+	height: 10px;
+	display: block;
 }
 
 .customHr {
-    width: 80%
+    width: 80%;
     font-size: 1px;
     color: rgba(0, 0, 0, 0);
     line-height: 3px;
-    
-    background-color: rgb(128, 0, 0);
+	background-color: rgb(128, 0, 0);
     margin-top: 2px;
     margin-bottom: 2px;
 	margin-left: 3px;

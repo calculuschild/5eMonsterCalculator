@@ -233,10 +233,20 @@ Offensive CR: <span id="offensiveCRDisplay">Unknown</span> <br>
 
 <div id="rightCol">	
 	<h3>Party Thresholds</h3>
-	<b>Easy:</b> <span id="easyThreshold"></span> <br>
-	<b>Medium:</b> <span id="mediumThreshold"></span> <br>
-	<b>Hard:</b> <span id="hardThreshold"></span> <br>
-	<b>Deadly:</b> <span id="deadlyThreshold"></span> <br>
+	<table width="300px" style="text-align: center">
+	<tr>
+		<td width="25%"><b><u>Easy</u></b></td>
+		<td width="25%"><b><u>Medium</u></b></td>
+		<td width="25%"><b><u>Hard</u></b></td>
+		<td width="25%"><b><u>Deadly</u></b></td>
+	</tr>
+	<tr>
+		<td><span id="easyThreshold"></span></td>
+		<td><span id="mediumThreshold"></span></td>
+		<td><span id="hardThreshold"></span></td>
+		<td><span id="deadlyThreshold"></span></td>
+	</tr>
+	</table>
 
 	<h3>Party Members</h3>
 	<table id="partyList">
@@ -245,8 +255,8 @@ Offensive CR: <span id="offensiveCRDisplay">Unknown</span> <br>
 			<td><button onclick="addPartyRow();">Add row</button></td>
 		</tr>
 		<tr>
-			<td><input type='text' onclick='calculatePartyThresholds();'></input></td>
-			<td><input type='text' onclick='calculatePartyThresholds();'></input></td>
+			<td><input type='text' size=5 onclick='calculatePartyThresholds();'></input></td>
+			<td><input type='text' size=5 onclick='calculatePartyThresholds();'></input></td>
 		</tr>
 	</table>
 
@@ -301,21 +311,21 @@ Offensive CR: <span id="offensiveCRDisplay">Unknown</span> <br>
 		var mob = false;
 		
 		//FIRST STEP: ADD OR REMOVE MONSTERS TO BETTER BALANCE WITH THE NUMBER OF PLAYERS
-		if(calculateEncounterDifficulty(monsterArray) < minXPThreshold)
+		if(calculateEncounterDifficulty(monsterArray) <= minXPThreshold)
 		{
 			do
 			{
 				for(var i = 0; i < monsterArray.length; i++)
 				{	//If already 2 or more of the same monster, add some more.  Probably meant as a mob or group battle.
 					//If one of each monster, this is probably meant to be some individually strong monsters, so don't change numbers.
-					if(monsterArray[i]["count"] >= 2 && encounterSize < (partySize - 1))
+					if(monsterArray[i]["count"] >= 2 && encounterSize < (partySize))
 					{
 						mob = true;
 						monsterArray[i]["count"] += 1;
 						console.log("ADDING A " + monsterArray[i]["monsterName"]);
 					}
 					encounterSize = getEncounterSize(monsterArray);
-					if(calculateEncounterDifficulty(monsterArray) >= minXPThreshold || encounterSize >= (partySize - 1))
+					if(calculateEncounterDifficulty(monsterArray) > minXPThreshold || encounterSize >= (partySize - 1))
 						break;
 				}
 			} while(encounterSize < partySize - 1 && mob == true)		//If we added any monsters, and there are still more players than monsters, keep adding more.
@@ -344,7 +354,7 @@ Offensive CR: <span id="offensiveCRDisplay">Unknown</span> <br>
 		console.log("maxXPThreshold " + maxXPThreshold);
 				
 		//SECOND STEP: RAISE OR LOWER CR OF EACH MONSTER TYPE ONE BY ONE
-		while(calculateEncounterDifficulty(monsterArray) > maxXPThreshold || calculateEncounterDifficulty(monsterArray) < minXPThreshold)
+		while(calculateEncounterDifficulty(monsterArray) <= minXPThreshold || calculateEncounterDifficulty(monsterArray) > maxXPThreshold)
 		{
 			if(calculateEncounterDifficulty(monsterArray) > maxXPThreshold)
 			{
@@ -356,13 +366,13 @@ Offensive CR: <span id="offensiveCRDisplay">Unknown</span> <br>
 						break;
 				}
 			}
-			else if(calculateEncounterDifficulty(monsterArray) < minXPThreshold)
+			else if(calculateEncounterDifficulty(monsterArray) <= minXPThreshold)
 			{
 				for(var i = 0; i < monsterArray.length; i++)
 				{
 					console.log("raising difficulty...");
 					monsterArray[i] = raiseCR(monsterArray[i]);
-					if(calculateEncounterDifficulty(monsterArray) >= minXPThreshold)
+					if(calculateEncounterDifficulty(monsterArray) > minXPThreshold)
 						break;
 				}
 			}
@@ -376,15 +386,27 @@ Offensive CR: <span id="offensiveCRDisplay">Unknown</span> <br>
 			countCell.innerHTML = "Count: " + monsterArray[i]["count"];
 			var row = table.rows[i * 3 + 2];
 			var adjustedStatsCell = row.cells[1];
+					
 		//Fill list with details
-			adjustedStatsCell.innerHTML = "CR: " + monsterArray[i]["totalCR"] + "<br>"
-								+	"AC: " + monsterArray[i]["armorClass"] + "<br>"
-								+   "HP: " + monsterArray[i]["hitPoints"] + "<br>";
+			adjustedStatsCell.innerHTML = "<b>Challenge:</b> " + monsterArray[i]["totalCR"] + "<br>"
+								+ '<svg height="5" width="140" style="fill: #922610; stroke: #922610;"><polyline points="3,1 140,2.5 3,4"></polyline></svg>'
+								+ "<b>Armor Class:</b>" + monsterArray[i]["armorClass"] + "<br>"
+								+ "<b>Hit Points:</b>" + monsterArray[i]["hitPoints"] + "<br>"
+								+ "<b>Attack Bonus:</b> " + monsterArray[i]["attackBonus"] + "<br>"
+								+ "<b>Damage / Round:</b> " + monsterArray[i]["damagePerRound"] + "<br>";
+			var atLeastOneFeat = false;
 			for(var j = 0; j < Object.keys(monsterArray[i]["monsterFeats"]).length; j++)
 			{
 				var feat = Object.keys(monsterArray[i]["monsterFeats"])[j];
 				if(monsterArray[i]["monsterFeats"][feat] == true)
-					adjustedStatsCell.innerHTML += feat + "<br>";
+				{
+					if(atLeastOneFeat == false)
+					{
+						atLeastOneFeat = true; 
+						adjustedStatsCell.innerHTML += '<svg height="5" width="140" style="fill: #922610; stroke: #922610;"><polyline points="3,1 140,2.5 3,4"></polyline></svg>';
+					}
+					adjustedStatsCell.innerHTML += "<b><i>" + feat + "</i></b" + "<br>";
+				}
 			}
 		}
 
@@ -498,7 +520,7 @@ Offensive CR: <span id="offensiveCRDisplay">Unknown</span> <br>
 		var effectiveOffensiveCR = recalcOffensiveCR(baseAB, baseDPR, baseHP, baseFeats);
 		var effectiveDefensiveCR = recalcDefensiveCR(baseAC, baseHP, baseFeats);
 		
-		var targetCR = monsterData["totalCR"] + 1;
+		var targetCR = nextHigherCR(monsterData["totalCR"]);
 		
 		//Repeat this until CR is raised by 1		
 		while(effectiveTotalCR < targetCR)
@@ -589,7 +611,7 @@ Offensive CR: <span id="offensiveCRDisplay">Unknown</span> <br>
 		var effectiveDefensiveCR = recalcDefensiveCR(baseAC, baseHP, baseFeats);
 		console.log("DEFENSIVE??? : " + effectiveDefensiveCR);
 		
-		var targetCR = monsterData["totalCR"] - 1;
+		var targetCR = nextLowerCR(monsterData["totalCR"]);
 	
 	//Sort monster features by strength and store in a list
 		//Offensive Features
@@ -688,7 +710,6 @@ Offensive CR: <span id="offensiveCRDisplay">Unknown</span> <br>
 					baseAB -= 1;
 					console.log("LOWERED BASE AB to " + baseAB);
 				}
-				console.log("HERE WE GO!!!");
 				effectiveOffensiveCR = recalcOffensiveCR(baseAB, baseDPR, baseHP, baseFeats);
 				console.log("effectiveOffensiveCR " + effectiveOffensiveCR);
 			}	//END CALCULATING OFFENSIVE CR
@@ -999,6 +1020,7 @@ Offensive CR: <span id="offensiveCRDisplay">Unknown</span> <br>
 			console.log("editingMonster " + editingMonster);
 			var monsterBlock = table.appendChild(document.createElement('tbody'));
 			monsterBlock.style = "box-shadow: 0px 4px 5px black; background-color: rgb(100, 0, 0); display: block;";
+			monsterBlock.className = "monsterBlock";
 			var titleRow = monsterBlock.insertRow(-1);
 			var nameCell = titleRow.insertCell(-1);
 			nameCell.innerHTML = document.getElementById("monsterName").value;
@@ -1027,10 +1049,14 @@ Offensive CR: <span id="offensiveCRDisplay">Unknown</span> <br>
 								+ "</table>";*/
 			var statsRow = table.insertRow(-1);
 			originalStatsCell = statsRow.insertCell(-1);
-			originalStatsCell.style = "border-style: solid; border-radius: 4px; border-color: rgb(190, 0, 0); border-width: 2px; background-color: rgb(255, 234, 219); display: block; font: .8em Noto Sans;";
-			originalStatsCell.style.width = "150px";
+			originalStatsCell.className = "statsBlock";
+			//originalStatsCell.style.width = "150px";
 			var adjustedStatsCell = statsRow.insertCell(-1);
-			adjustedStatsCell.style.width = "150px";
+			adjustedStatsCell.className = "statsBlock";
+			//adjustedStatsCell.style.width = "150px";
+			var space = table.appendChild(document.createElement('tbody'));
+			space.className = "spaceTBody";
+			//var spaceRow = space.insertRow(-1);
 
 			monsterData["count"] = 1;
 			
@@ -1038,15 +1064,26 @@ Offensive CR: <span id="offensiveCRDisplay">Unknown</span> <br>
 		}
 		
 	//Fill list with details
-		originalStatsCell.innerHTML = "<b><i>CR:</i></b> " + monsterData["totalCR"] + "<br>"
-									+ "<div class='customHr'>.</div>"
-									+ "<b><i>AC:</i></b> " + monsterData["armorClass"] + "<br>"
-									+ "<b><i>HP:</i></b> " + monsterData["hitPoints"] + "<br>";
+		originalStatsCell.innerHTML = "<b>Challenge:</b> " + monsterData["totalCR"] + "<br>"
+									+ '<svg height="5" width="140" style="fill: #922610; stroke: #922610;"><polyline points="3,1 140,2.5 3,4"></polyline></svg>'
+									+ "<b>Armor Class:</b> " + monsterData["armorClass"] + "<br>"
+									+ '<div class="customHr"></div>'
+									+ "<b>Hit Points:</b> " + monsterData["hitPoints"] + "<br>"
+									+ "<b>Attack Bonus:</b> " + monsterData["attackBonus"] + "<br>"
+									+ "<b>Damage / Round:</b> " + monsterData["damagePerRound"] + "<br>";
+		var atLeastOneFeat = false;
 		for(var i = 0; i < Object.keys(monsterData["monsterFeats"]).length; i++)
 		{
 			var feat = Object.keys(monsterData["monsterFeats"])[i];
 			if(monsterData["monsterFeats"][feat] == true)
-				originalStatsCell.innerHTML += feat + "<br>";
+			{
+				if(atLeastOneFeat == false)
+				{
+					atLeastOneFeat = true; 
+					originalStatsCell.innerHTML += '<svg height="5" width="140" style="fill: #922610; stroke: #922610;"><polyline points="3,1 140,2.5 3,4"></polyline></svg>';
+				}
+				originalStatsCell.innerHTML += "<b><i>" + feat + "</i></b><br>";
+			}
 		}
 		
 	//Save changes to local storage	

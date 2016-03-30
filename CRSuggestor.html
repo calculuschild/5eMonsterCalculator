@@ -303,11 +303,25 @@ Offensive CR: <span id="offensiveCRDisplay">Unknown</span> <br>
 			maxXPThreshold = document.getElementById("deadlyThreshold").innerHTML; }
 		if(difficulty == "Deadly") {
 			minXPThreshold = document.getElementById("deadlyThreshold").innerHTML;
-			maxXPThreshold = document.getElementById("deadlyThreshold").innerHTML * 1.4; }	//Let a Deadly encounter be only 40% above deadly.  Still deadly but not impossibly high.	
+			maxXPThreshold = Number.POSITIVE_INFINITY; }
+			
+			//maxXPThreshold = Math.max(document.getElementById("deadlyThreshold").innerHTML * 1.4, parseInt(document.getElementById("deadlyThreshold").innerHTML) + 200);}	//Let a Deadly encounter be only 50% above deadly.  Still deadly but not impossibly high.	
 	
 		var monsterArray = JSON.parse(localStorage.getItem('monsterArray'));
 		
 		var encounterSize = getEncounterSize(monsterArray);
+		
+		var onlyGroups = true;		//false if there are some single monsters, true if every monster has at least 2
+		
+		for(var i = 0; i < monsterArray.length; i++)
+		{
+			if(monsterArray[i]["count"] == 1)
+			{
+				onlyGroups = false;
+				break;
+			}
+		}
+		
 		var mob = false;
 		
 		//FIRST STEP: ADD OR REMOVE MONSTERS TO BETTER BALANCE WITH THE NUMBER OF PLAYERS
@@ -352,30 +366,59 @@ Offensive CR: <span id="offensiveCRDisplay">Unknown</span> <br>
 				
 		console.log("encounter diff " + calculateEncounterDifficulty(monsterArray));
 		console.log("maxXPThreshold " + maxXPThreshold);
-				
-		//SECOND STEP: RAISE OR LOWER CR OF EACH MONSTER TYPE ONE BY ONE
+		
+		var k = 0;	
+		
+		//SECOND STEP: RAISE OR LOWER CR OF EACH MONSTER TYPE ONE BY ONE		
 		while(calculateEncounterDifficulty(monsterArray) <= minXPThreshold || calculateEncounterDifficulty(monsterArray) > maxXPThreshold)
 		{
-			if(calculateEncounterDifficulty(monsterArray) > maxXPThreshold)
+			if(calculateEncounterDifficulty(monsterArray) > maxXPThreshold)				//Lower CR
 			{
-				for(var i = 0; i < monsterArray.length; i++)
+				for( ; k < monsterArray.length; k++)
 				{
-					console.log("lowering difficulty...");
-					monsterArray[i] = lowerCR(monsterArray[i]);
+					console.log("lowering difficulty of " + monsterArray[k]["monsterName"] + "...");
+					monsterArray[k] = lowerCR(monsterArray[k]);
+					
+					console.log("Total XP set to " + calculateEncounterDifficulty(monsterArray));
+					
 					if(calculateEncounterDifficulty(monsterArray) <= maxXPThreshold)
 						break;
 				}
 			}
-			else if(calculateEncounterDifficulty(monsterArray) <= minXPThreshold)
+			else if(calculateEncounterDifficulty(monsterArray) <= minXPThreshold)		//Raise CR
 			{
-				for(var i = 0; i < monsterArray.length; i++)
+				for( ; k < monsterArray.length; k++)
 				{
-					console.log("raising difficulty...");
-					monsterArray[i] = raiseCR(monsterArray[i]);
+					console.log("raising difficulty of " + monsterArray[k]["monsterName"] + "...");
+					var tempMonster = JSON.stringify(monsterArray[k]);
+					
+					monsterArray[k] = raiseCR(monsterArray[k]);
+
+				//If this change was made to a group of monsters, thus pushing difficulty too high now, AND the whole encounter is only groups of monsters,
+				//	keep the weaker version of the monsters but just make the group larger.  This could help increase difficulty by a smaller amount.
+					if(calculateEncounterDifficulty(monsterArray) > maxXPThreshold)
+					{
+						console.log("uh oh.  Raised too high!");
+						
+						monsterArray[k] = JSON.parse(tempMonster);		//Return to previous weaker stats
+					
+						if(monsterArray[k]["count"] >= 2 && onlyGroups)
+							monsterArray[k]["count"] += 1;
+					}
+					else
+					{
+						console.log("raised a good amount");			// Good.  Keep the changes (delete this branch later)
+					}
+					
+					console.log("Total XP set to " + calculateEncounterDifficulty(monsterArray));
+					
 					if(calculateEncounterDifficulty(monsterArray) > minXPThreshold)
 						break;
 				}
 			}
+			
+			k += 1;
+			if(k >= monsterArray.length) k = 0;		//We are doing this so if we break out of the loop we don't get stuck editing the same monster.
 		}
 		
 		var table = document.getElementById("monsterList");
@@ -405,7 +448,7 @@ Offensive CR: <span id="offensiveCRDisplay">Unknown</span> <br>
 						atLeastOneFeat = true; 
 						adjustedStatsCell.innerHTML += '<svg height="5" width="140" style="fill: #922610; stroke: #922610;"><polyline points="3,1 140,2.5 3,4"></polyline></svg>';
 					}
-					adjustedStatsCell.innerHTML += "<b><i>" + feat + "</i></b" + "<br>";
+					adjustedStatsCell.innerHTML += "<b><i>" + feat + "</i></b>" + "<br>";
 				}
 			}
 		}
@@ -493,6 +536,33 @@ Offensive CR: <span id="offensiveCRDisplay">Unknown</span> <br>
 			var monsterCR = monsterData["totalCR"];
 			totalXP += monsterCount * XPLevels[monsterCR]; 
 		}
+		
+		//Add modifiers for encounter size
+		var multiplierIndex = 1;
+		if(encounterSize == 1)
+			multiplierIndex = 1;
+		else if(encounterSize == 2)
+			multiplierIndex = 2;
+		else if(encounterSize >= 3 && encounterSize <= 6)
+			multiplierIndex = 3;
+		else if(encounterSize >= 7 && encounterSize <= 10)
+			multiplierIndex = 4;
+		else if(encounterSize >= 11 && encounterSize <= 14)
+			multiplierIndex = 5;
+		else if(encounterSize >= 15)
+			multiplierIndex = 6;
+			
+		//Adjust modifier based on party size
+		if(partySize <= 2)
+			multiplierIndex += 1;
+		else if(partySize >= 6)
+			multiplierIndex -= 1;
+		
+		console.log("ENCOUNSIZE " + encounterSize);
+		console.log("MULTINDEX  " + multiplierIndex);
+		console.log("MULTIPLIER " + encounterSizeMultipliers[multiplierIndex]);
+		
+		totalXP *= encounterSizeMultipliers[multiplierIndex];
 		
 		return totalXP;
 	}
@@ -1172,6 +1242,17 @@ Offensive CR: <span id="offensiveCRDisplay">Unknown</span> <br>
 		var encounterArray = [];
 		localStorage.setItem('encounterArray', JSON.stringify(encounterArray));
 	}
+
+	var encounterSizeMultipliers = {}
+	encounterSizeMultipliers[0] = 0.5;
+	encounterSizeMultipliers[1] = 1.0;
+	encounterSizeMultipliers[2] = 1.5;
+	encounterSizeMultipliers[3] = 2.0;
+	encounterSizeMultipliers[4] = 2.5;
+	encounterSizeMultipliers[5] = 3.0;
+	encounterSizeMultipliers[6] = 4.0;
+	encounterSizeMultipliers[7] = 5.0;
+	
 	
 //====-- XP THRESHOLDS --====//	
 	//XP Thresholds (EASY)

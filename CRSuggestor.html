@@ -454,16 +454,16 @@ Offensive CR: <span id="offensiveCRDisplay">Unknown</span> <br>
 						adjustedStatsCell.innerHTML += '<svg height="5" width="140" style="fill: #922610; stroke: #922610;"><polyline points="3,1 140,2.5 3,4"></polyline></svg>';
 					}
 				
-				if(monsterArray[i]["monsterFeats"][feat])
-				{
-					adjustedStatsCell.innerHTML += '<img src="Transparent.PNG" alt="Blank" width="16" height="16" style="vertical-align:middle">';
-				}
-				else
-				{	
-					adjustedStatsCell.innerHTML += '<img src="RedX.PNG" alt="RedX" width="16" height="16" style="vertical-align:middle">';
-				}
-									
-				adjustedStatsCell.innerHTML += "<b><i>" + feat + "</i></b>" + "<br>";
+					if(monsterArray[i]["monsterFeats"][feat])
+					{
+						adjustedStatsCell.innerHTML += '<img src="Transparent.PNG" alt="Blank" width="16" height="16" style="vertical-align:middle">';
+						adjustedStatsCell.innerHTML += "<b><i>" + feat + "</i></b>" + "<br>";
+					}
+					else
+					{	
+						adjustedStatsCell.innerHTML += '<img src="RedX.PNG" alt="RedX" width="16" height="16" style="vertical-align:middle">';
+						adjustedStatsCell.innerHTML += "<b><i><span style='text-decoration: line-through; color: red;'>" + feat + "</span></i></b>" + "<br>";
+					}
 				}
 			}
 		}
@@ -733,7 +733,23 @@ Offensive CR: <span id="offensiveCRDisplay">Unknown</span> <br>
 		console.log(monsterFeatsOffensive);
 		
 		//Defensive Features
-		var monsterFeatsDefensive = [];
+		var monsterFeatsDefensive = [];			
+		if(baseFeats["NimbleEscape"])			monsterFeatsDefensive.push("NimbleEscape");
+		if(baseFeats["ShadowStealth"])		    monsterFeatsDefensive.push("ShadowStealth");		 
+		if(baseFeats["Possession"])             monsterFeatsDefensive.push("Possession");
+		if(baseFeats["DamageTransfer"])		    monsterFeatsDefensive.push("DamageTransfer");		 
+		if(baseFeats["SuperiorInvisibility"])	monsterFeatsDefensive.push("SuperiorInvisibility");
+		if(baseFeats["MagicResistance"])	    monsterFeatsDefensive.push("MagicResistance");	
+		if(baseFeats["FrightfulPresence"])	    monsterFeatsDefensive.push("FrightfulPresence");	 
+		if(baseFeats["HorrifyingVisage"])	    monsterFeatsDefensive.push("HorrifyingVisage");	
+		if(baseFeats["Avoidance"])			    monsterFeatsDefensive.push("Avoidance");			 
+		if(baseFeats["Constrict"])			    monsterFeatsDefensive.push("Constrict");			 
+		if(baseFeats["Parry"])				    monsterFeatsDefensive.push("Parry");				 
+		if(baseFeats["Stench"])				    monsterFeatsDefensive.push("Stench");				 
+		if(baseFeats["Web"])				    monsterFeatsDefensive.push("Web");				
+		if(baseFeats["LegendaryResistance"])    monsterFeatsDefensive.push("LegendaryResistance");
+		if(baseFeats["UndeadFortitude"])        monsterFeatsDefensive.push("UndeadFortitude");
+		if(baseFeats["Relentless"])		        monsterFeatsDefensive.push("Relentless");		
 		
 	//Repeat this until CR is lowered by 1		
 		while(effectiveTotalCR > targetCR)
@@ -855,7 +871,7 @@ Offensive CR: <span id="offensiveCRDisplay">Unknown</span> <br>
 	}
 	
 	function recalcTotalCR() {
-		var defensiveCR = recalcDefensiveCR(AC, HP, targetCR, monsterFeats);
+		var defensiveCR = recalcDefensiveCR(AC, HP, totalCR, monsterFeats);
 		var offensiveCRStats = estimateOffensiveCR(defensiveCR, totalCR, monsterFeats);
 		var offensiveCR = offensiveCRStats.offensiveCR;
 		AB = offensiveCRStats.attackBonus;

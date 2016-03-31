@@ -53,9 +53,9 @@ Base CR (Choose a base CR to give your monster some starting values)
 </tr>
 </table>
 
-Defensive CR: <span id="defensiveCRDisplay">Unknown</span> <br>
+<!--Defensive CR: <span id="defensiveCRDisplay">Unknown</span> <br>
 Offensive CR: <span id="offensiveCRDisplay">Unknown</span> <br>
-<b>Total CR: <span id="totalCRDisplay">Unknown</span></b>
+<b>Total CR: <span id="totalCRDisplay">Unknown</span></b> -->
 
 <h3>Monster Name</h3>
 <table>
@@ -87,11 +87,11 @@ Offensive CR: <span id="offensiveCRDisplay">Unknown</span> <br>
   </tr>
   <tr>
 	<td>Estimated Attack Bonus:</td>
-	<td><input type="text" id="attackBonus"></td>
+	<td><span id="attackBonus"></span></td>
   </tr>
   <tr>
 	<td>Estimated Damage Per Round:</td>
-	<td><input type="text" id="damagePerRound"></td>
+	<td><span id="damagePerRound"></span></td>
   </tr>
 </table>
 
@@ -878,20 +878,20 @@ Offensive CR: <span id="offensiveCRDisplay">Unknown</span> <br>
 		DPR = offensiveCRStats.damagePerRound;
 		
 	//Display Defensive CR
-		display = document.getElementById("defensiveCRDisplay");
-		display.innerHTML = CRtoFraction(defensiveCR);
+		//display = document.getElementById("defensiveCRDisplay");
+		//display.innerHTML = CRtoFraction(defensiveCR);
 		
 	//Display Offensive CR
-		display = document.getElementById("offensiveCRDisplay");
-		display.innerHTML = CRtoFraction(offensiveCR);
+		//display = document.getElementById("offensiveCRDisplay");
+		//display.innerHTML = CRtoFraction(offensiveCR);
 	
 	//Display Offensive Stats (Attack Bonus and Damage Per Round)
-		document.getElementById("attackBonus").value = AB;
-		document.getElementById("damagePerRound").value = DPR;		
+		document.getElementById("attackBonus").innerHTML = AB;
+		document.getElementById("damagePerRound").innerHTML = DPR;		
 	
 	//Display Total CR	
-		display = document.getElementById("totalCRDisplay");
-		display.innerHTML = CRtoFraction(totalCR);
+		//display = document.getElementById("totalCRDisplay");
+		//display.innerHTML = CRtoFraction(totalCR);
 	}
 	
 	function CRtoFraction(CR) {

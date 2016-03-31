@@ -255,8 +255,8 @@ Offensive CR: <span id="offensiveCRDisplay">Unknown</span> <br>
 			<td><button onclick="addPartyRow();">Add row</button></td>
 		</tr>
 		<tr>
-			<td><input type='text' size=5 onclick='calculatePartyThresholds();'></input></td>
-			<td><input type='text' size=5 onclick='calculatePartyThresholds();'></input></td>
+			<td><input type='text' id="partySize" size=5 onclick='calculatePartyThresholds();'></input></td>
+			<td><input type='text' id="partyLevel" size=5 onclick='calculatePartyThresholds();'></input></td>
 		</tr>
 	</table>
 
@@ -303,9 +303,9 @@ Offensive CR: <span id="offensiveCRDisplay">Unknown</span> <br>
 			maxXPThreshold = document.getElementById("deadlyThreshold").innerHTML; }
 		if(difficulty == "Deadly") {
 			minXPThreshold = document.getElementById("deadlyThreshold").innerHTML;
-			maxXPThreshold = Number.POSITIVE_INFINITY; }
+			//maxXPThreshold = Number.POSITIVE_INFINITY; }
 			
-			//maxXPThreshold = Math.max(document.getElementById("deadlyThreshold").innerHTML * 1.4, parseInt(document.getElementById("deadlyThreshold").innerHTML) + 200);}	//Let a Deadly encounter be only 50% above deadly.  Still deadly but not impossibly high.	
+			maxXPThreshold = Math.max(document.getElementById("deadlyThreshold").innerHTML * 1.4, parseInt(document.getElementById("deadlyThreshold").innerHTML) + 200);}	//Let a Deadly encounter be only 50% above deadly.  Still deadly but not impossibly high.	
 	
 		var monsterArray = JSON.parse(localStorage.getItem('monsterArray'));
 		
@@ -402,7 +402,8 @@ Offensive CR: <span id="offensiveCRDisplay">Unknown</span> <br>
 						
 						monsterArray[k] = JSON.parse(tempMonster);		//Return to previous weaker stats
 					
-						if(monsterArray[k]["count"] >= 2 && onlyGroups)
+						//if(monsterArray[k]["count"] >= 2 && onlyGroups)
+						if(onlyGroups || monsterArray.length == 1)			//If just increasing CR raises it too much, try adding monsters (only if all monsters are in sets, or only one set of monsters)
 							monsterArray[k]["count"] += 1;
 					}
 					else
@@ -421,39 +422,62 @@ Offensive CR: <span id="offensiveCRDisplay">Unknown</span> <br>
 			if(k >= monsterArray.length) k = 0;		//We are doing this so if we break out of the loop we don't get stuck editing the same monster.
 		}
 		
+		var originalMonsterArray = JSON.parse(localStorage.getItem('monsterArray'));
+		
 		var table = document.getElementById("monsterList");
 		for(var i = 0; i < monsterArray.length; i++)
 		{
 			console.log(monsterArray[i]);
 			var countCell = table.rows[i * 3 + 1].cells[1];
-			countCell.innerHTML = "Count: " + monsterArray[i]["count"];
+			countCell.innerHTML = printArrows(originalMonsterArray[i], monsterArray[i], "count") + "Count: " + monsterArray[i]["count"];
 			var row = table.rows[i * 3 + 2];
 			var adjustedStatsCell = row.cells[1];
 					
 		//Fill list with details
-			adjustedStatsCell.innerHTML = "<b>Challenge:</b> " + monsterArray[i]["totalCR"] + "<br>"
+			adjustedStatsCell.innerHTML = "";
+		
+			adjustedStatsCell.innerHTML += printArrows(originalMonsterArray[i], monsterArray[i], "totalCR") + "<b>Challenge:</b> " + monsterArray[i]["totalCR"] + "<br>"
 								+ '<svg height="5" width="140" style="fill: #922610; stroke: #922610;"><polyline points="3,1 140,2.5 3,4"></polyline></svg>'
-								+ "<b>Armor Class:</b>" + monsterArray[i]["armorClass"] + "<br>"
-								+ "<b>Hit Points:</b>" + monsterArray[i]["hitPoints"] + "<br>"
-								+ "<b>Attack Bonus:</b> " + monsterArray[i]["attackBonus"] + "<br>"
-								+ "<b>Damage / Round:</b> " + monsterArray[i]["damagePerRound"] + "<br>";
+								+ printArrows(originalMonsterArray[i], monsterArray[i], "armorClass") + "<b>Armor Class:</b>" + monsterArray[i]["armorClass"] + "<br>"
+								+ printArrows(originalMonsterArray[i], monsterArray[i], "hitPoints") + "<b>Hit Points:</b>" + monsterArray[i]["hitPoints"] + "<br>"
+								+ printArrows(originalMonsterArray[i], monsterArray[i], "attackBonus") + "<b>Attack Bonus:</b> " + monsterArray[i]["attackBonus"] + "<br>"
+								+ printArrows(originalMonsterArray[i], monsterArray[i], "damagePerRound") + "<b>Damage / Round:</b> " + monsterArray[i]["damagePerRound"] + "<br>";
 			var atLeastOneFeat = false;
-			for(var j = 0; j < Object.keys(monsterArray[i]["monsterFeats"]).length; j++)
+			for(var j = 0; j < Object.keys(originalMonsterArray[i]["monsterFeats"]).length; j++)
 			{
-				var feat = Object.keys(monsterArray[i]["monsterFeats"])[j];
-				if(monsterArray[i]["monsterFeats"][feat] == true)
+				var feat = Object.keys(originalMonsterArray[i]["monsterFeats"])[j];
+				if(originalMonsterArray[i]["monsterFeats"][feat])
 				{
 					if(atLeastOneFeat == false)
 					{
 						atLeastOneFeat = true; 
 						adjustedStatsCell.innerHTML += '<svg height="5" width="140" style="fill: #922610; stroke: #922610;"><polyline points="3,1 140,2.5 3,4"></polyline></svg>';
 					}
-					adjustedStatsCell.innerHTML += "<b><i>" + feat + "</i></b>" + "<br>";
+				
+				if(monsterArray[i]["monsterFeats"][feat])
+				{
+					adjustedStatsCell.innerHTML += '<img src="Transparent.PNG" alt="Blank" width="16" height="16" style="vertical-align:middle">';
+				}
+				else
+				{	
+					adjustedStatsCell.innerHTML += '<img src="RedX.PNG" alt="RedX" width="16" height="16" style="vertical-align:middle">';
+				}
+									
+				adjustedStatsCell.innerHTML += "<b><i>" + feat + "</i></b>" + "<br>";
 				}
 			}
 		}
 
 		document.getElementById("adjustedDifficulty").innerHTML = calculateEncounterDifficulty(monsterArray);
+	}
+	
+	function printArrows(originalMonster, newMonster, index) {
+			if(newMonster[index] > originalMonster[index])
+				return '<img src="UpArrow.PNG" 	 alt="UpArrow"	 width="16" height="16" style="vertical-align:middle">';
+			else if (newMonster[index] < originalMonster[index])
+				return '<img src="DownArrow.PNG" alt="DownArrow" width="16" height="16" style="vertical-align:middle">';
+			else
+				return '<img src="Transparent.PNG"	 alt="Equals" 	 width="16" height="16" style="vertical-align:middle">';		
 	}
 	
 	function setBaseCR(val) {
@@ -586,11 +610,11 @@ Offensive CR: <span id="offensiveCRDisplay">Unknown</span> <br>
 		
 		var baseFeats = monsterData["monsterFeats"];
 		
+		var targetCR = nextHigherCR(monsterData["totalCR"]);
+		
 		var effectiveTotalCR = monsterData["totalCR"];
 		var effectiveOffensiveCR = recalcOffensiveCR(baseAB, baseDPR, baseHP, baseFeats);
-		var effectiveDefensiveCR = recalcDefensiveCR(baseAC, baseHP, baseFeats);
-		
-		var targetCR = nextHigherCR(monsterData["totalCR"]);
+		var effectiveDefensiveCR = recalcDefensiveCR(baseAC, baseHP, targetCR, baseFeats);
 		
 		//Repeat this until CR is raised by 1		
 		while(effectiveTotalCR < targetCR)
@@ -616,7 +640,7 @@ Offensive CR: <span id="offensiveCRDisplay">Unknown</span> <br>
 					baseAC += 1;
 					console.log("RAISED BASE AC to " + baseAC);
 				}
-				effectiveDefensiveCR = recalcDefensiveCR(baseAC, baseHP, baseFeats);
+				effectiveDefensiveCR = recalcDefensiveCR(baseAC, baseHP, targetCR, baseFeats);
 				console.log("effectiveDefensiveCR " + effectiveDefensiveCR);					
 			}
 			else											//========----- RAISE OFFENSIVE CR		
@@ -675,13 +699,15 @@ Offensive CR: <span id="offensiveCRDisplay">Unknown</span> <br>
 		
 		var baseFeats = monsterData["monsterFeats"];
 		
+		var targetCR = nextLowerCR(monsterData["totalCR"]);
+		
 		var effectiveTotalCR = monsterData["totalCR"];
 		var effectiveOffensiveCR = recalcOffensiveCR(baseAB, baseDPR, baseHP, baseFeats);
 		console.log("OFFENSIVE??? : " + effectiveOffensiveCR);
-		var effectiveDefensiveCR = recalcDefensiveCR(baseAC, baseHP, baseFeats);
+		var effectiveDefensiveCR = recalcDefensiveCR(baseAC, baseHP, targetCR, baseFeats);
 		console.log("DEFENSIVE??? : " + effectiveDefensiveCR);
 		
-		var targetCR = nextLowerCR(monsterData["totalCR"]);
+		
 	
 	//Sort monster features by strength and store in a list
 		//Offensive Features
@@ -743,8 +769,18 @@ Offensive CR: <span id="offensiveCRDisplay">Unknown</span> <br>
 					baseAC -= 1;
 					console.log("LOWERED BASE AC to " + baseAC);
 				}
-				effectiveDefensiveCR = recalcDefensiveCR(baseAC, baseHP, baseFeats);
-				console.log("effectiveDefensiveCR " + effectiveDefensiveCR);					
+			//STEP 5: Remove all defensive features
+				else if(monsterFeatsDefensive.length > 0)	
+				{
+					var featToCut = monsterFeatsDefensive[0];
+					delete baseFeats[featToCut];
+					monsterFeatsOffensive.splice(monsterFeatsOffensive.indexOf(featToCut), 1);
+					monsterFeatsDefensive = monsterFeatsDefensive.slice(1);	//Take first item out of the FEAT list
+					console.log(monsterFeatsDefensive);
+					console.log("CUT OFF A DEFENSIVE MONSTER FEAT");				
+				}
+				effectiveDefensiveCR = recalcDefensiveCR(baseAC, baseHP, targetCR, baseFeats);
+				console.log("effectiveDefensiveCR " + effectiveDefensiveCR);
 			}
 			else											//========----- LOWER OFFENSIVE CR		
 			{
@@ -780,6 +816,18 @@ Offensive CR: <span id="offensiveCRDisplay">Unknown</span> <br>
 					baseAB -= 1;
 					console.log("LOWERED BASE AB to " + baseAB);
 				}
+			//STEP 5: Remove all offensive features
+				else if(monsterFeatsOffensive.length > 0)
+				{
+					var featToCut = monsterFeatsOffensive[0];
+					console.log("feattocut " + featToCut);
+					delete baseFeats[featToCut];
+					console.log("baseFeats " + baseFeats);
+					monsterFeatsDefensive.splice(monsterFeatsDefensive.indexOf(featToCut), 1);
+					monsterFeatsOffensive = monsterFeatsOffensive.slice(1); //Take first item out of the FEAT list
+					console.log(monsterFeatsOffensive);
+					console.log("CUT OFF AN OFFENSIVE MONSTER FEAT");
+				}
 				effectiveOffensiveCR = recalcOffensiveCR(baseAB, baseDPR, baseHP, baseFeats);
 				console.log("effectiveOffensiveCR " + effectiveOffensiveCR);
 			}	//END CALCULATING OFFENSIVE CR
@@ -807,7 +855,7 @@ Offensive CR: <span id="offensiveCRDisplay">Unknown</span> <br>
 	}
 	
 	function recalcTotalCR() {
-		var defensiveCR = recalcDefensiveCR(AC, HP, monsterFeats);
+		var defensiveCR = recalcDefensiveCR(AC, HP, targetCR, monsterFeats);
 		var offensiveCRStats = estimateOffensiveCR(defensiveCR, totalCR, monsterFeats);
 		var offensiveCR = offensiveCRStats.offensiveCR;
 		AB = offensiveCRStats.attackBonus;
@@ -837,14 +885,45 @@ Offensive CR: <span id="offensiveCRDisplay">Unknown</span> <br>
 		else 				  return CR;
 	}
 
-	function recalcDefensiveCR(ACin, HPin, FEATSin) {		
+	function recalcDefensiveCR(ACin, HPin, expectedCRin, FEATSin) {		
 	//Get raw ARMOR CLASS and HIT POINTS
 		var effectiveAC = ACin;
 		var effectiveHP = HPin;
 	
 	//Add MONSTER FEAT bonuses
 		if(FEATSin["Avoidance"])			effectiveAC += 1;
+		if(FEATSin["Constrict"])			effectiveAC += 1;
+		if(FEATSin["DamageTransfer"])		effectiveHP *= 2;
+		if(FEATSin["FrightfulPresence"])	effectiveHP *= 1.25;
+		if(FEATSin["HorrifyingVisage"])		effectiveHP *= 1.25;
+		if(FEATSin["LegendaryResistance"])
+		{
+			if(expectedCRin <= 4) 			effectiveHP += 10;
+			else if(expectedCRin <= 10) 	effectiveHP += 20;
+			else 							effectiveHP += 30;
+		}
+		if(FEATSin["MagicResistance"])		effectiveAC += 2;
 		if(FEATSin["NimbleEscape"])			effectiveAC += 4;
+		if(FEATSin["Parry"])				effectiveAC += 1;
+		if(FEATSin["Possession"])			effectiveHP *= 2;
+		if(FEATSin["Relentless"])
+		{
+			if(expectedCRin <= 4) 			effectiveHP += 7;
+			else if(expectedCRin <= 10) 	effectiveHP += 14;
+			else if(expectedCRin <= 16) 	effectiveHP += 21;
+			else 							effectiveHP += 28;
+		}
+		if(FEATSin["ShadowStealth"])		effectiveAC += 4;
+		if(FEATSin["Stench"])				effectiveAC += 1;
+		if(FEATSin["SuperiorInvisibility"])	effectiveAC += 2;
+		if(FEATSin["UndeadFortitude"])
+		{
+			if(expectedCRin <= 4) 			effectiveHP += 7;
+			else if(expectedCRin <= 10) 	effectiveHP += 14;
+			else if(expectedCRin <= 16) 	effectiveHP += 21;
+			else 							effectiveHP += 28;
+		}
+		if(FEATSin["Web"])					effectiveAC += 1;
 		
 	//Get a defensive CR baseline based on HP
 		var HPCR = getHPCR(effectiveHP);
@@ -1100,7 +1179,7 @@ Offensive CR: <span id="offensiveCRDisplay">Unknown</span> <br>
 								  + "<button onclick='deleteMonster(this.parentNode.parentNode.rowIndex / 3)'>Delete</button>";
 			var countRow = table.insertRow(-1);
 			var originalCountCell = countRow.insertCell(-1);
-			originalCountCell.innerHTML = "<table style='color: white; font: bold .7em Noto Sans;'>"
+			originalCountCell.innerHTML = "<table style='color: white; font: bold 1em Noto Sans;'>"
 								+ "	 <tr>"
 								+ "    <td>Count:</td>"
 								+ "    <td>1</td>"
@@ -1110,7 +1189,7 @@ Offensive CR: <span id="offensiveCRDisplay">Unknown</span> <br>
 								+ "</table>";
 			originalCountCell.style = "box-shadow: 0px 4px 5px black; background-color: rgb(190, 0, 0);";
 			var adjustedCountCell = countRow.insertCell(-1);
-			adjustedCountCell.style = "box-shadow: 0px 4px 5px black; background-color: rgb(206, 0, 0); color: white; font-weight: bold; font-family: Verdana";
+			adjustedCountCell.style = "box-shadow: 0px 4px 5px black; background-color: rgb(190, 0, 0); color: white; font: bold 1em Noto Sans;";
 			/*adjustedCountCell.innerHTML = "<table>"
 								+ "	 <tr>"
 								+ "    <td></td>"
@@ -1235,6 +1314,11 @@ Offensive CR: <span id="offensiveCRDisplay">Unknown</span> <br>
 		document.getElementById("challengeRating").value = totalCR;
 		
 		recalcTotalCR();
+				
+		document.getElementById("partySize").value = 4;
+		document.getElementById("partyLevel").value = 1;
+		
+		calculatePartyThresholds();
 
 		var monsterArray = [];
 		localStorage.setItem('monsterArray', JSON.stringify(monsterArray));
@@ -1341,7 +1425,7 @@ Offensive CR: <span id="offensiveCRDisplay">Unknown</span> <br>
 	
 	//XP at each level
 	var XPLevels = {};
-	XPLevels[0] = 0;
+	XPLevels[0] = 10;
 	XPLevels[1/8] = 25;
 	XPLevels[1/4] = 50;
 	XPLevels[1/2] = 100;

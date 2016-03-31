@@ -456,12 +456,12 @@ Offensive CR: <span id="offensiveCRDisplay">Unknown</span> <br>
 				
 					if(monsterArray[i]["monsterFeats"][feat])
 					{
-						adjustedStatsCell.innerHTML += '<img src="Transparent.PNG" alt="Blank" width="16" height="16" style="vertical-align:middle">';
+						adjustedStatsCell.innerHTML += '<img src="Transparent.png" alt="Blank" width="16" height="16" style="vertical-align:middle">';
 						adjustedStatsCell.innerHTML += "<b><i>" + feat + "</i></b>" + "<br>";
 					}
 					else
 					{	
-						adjustedStatsCell.innerHTML += '<img src="RedX.PNG" alt="RedX" width="16" height="16" style="vertical-align:middle">';
+						adjustedStatsCell.innerHTML += '<img src="RedX.png" alt="RedX" width="16" height="16" style="vertical-align:middle">';
 						adjustedStatsCell.innerHTML += "<b><i><span style='text-decoration: line-through; color: red;'>" + feat + "</span></i></b>" + "<br>";
 					}
 				}
@@ -473,11 +473,11 @@ Offensive CR: <span id="offensiveCRDisplay">Unknown</span> <br>
 	
 	function printArrows(originalMonster, newMonster, index) {
 			if(newMonster[index] > originalMonster[index])
-				return '<img src="UpArrow.PNG" 	 alt="UpArrow"	 width="16" height="16" style="vertical-align:middle">';
+				return '<img src="UpArrow.png" 	 alt="UpArrow"	 width="16" height="16" style="vertical-align:middle">';
 			else if (newMonster[index] < originalMonster[index])
-				return '<img src="DownArrow.PNG" alt="DownArrow" width="16" height="16" style="vertical-align:middle">';
+				return '<img src="DownArrow.png" alt="DownArrow" width="16" height="16" style="vertical-align:middle">';
 			else
-				return '<img src="Transparent.PNG"	 alt="Equals" 	 width="16" height="16" style="vertical-align:middle">';		
+				return '<img src="Transparent.png"	 alt="Equals" 	 width="16" height="16" style="vertical-align:middle">';		
 	}
 	
 	function setBaseCR(val) {

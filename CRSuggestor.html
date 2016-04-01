@@ -3,10 +3,8 @@
 <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body onload="setupPage()">
-<h1>Encounter Adjustment Calculator</h1>
-
 <div id="leftCol" style="float:left">
-
+<h1>Encounter Adjustment Calculator</h1>
 Base CR (Choose a base CR to give your monster some starting values)
 <table>
 <tr>
@@ -57,13 +55,9 @@ Base CR (Choose a base CR to give your monster some starting values)
 Offensive CR: <span id="offensiveCRDisplay">Unknown</span> <br>
 <b>Total CR: <span id="totalCRDisplay">Unknown</span></b> -->
 
-<h3>Monster Name</h3>
-<table>
-  <tr>
-	<td>Monster Name:</td>
-	<td><input type="text" id="monsterName"		value="Name"></td>
-  </tr>
-</table>
+<div style = "box-shadow: 0px 4px 5px black; background-color: rgb(100, 0, 0); display: block;";>
+
+<input type="text" id="monsterName"	placeholder="Monster Name" class="monsterNameInput">
 
 <h3>Monster Statistics</h3>
 <table>
@@ -105,7 +99,7 @@ Offensive CR: <span id="offensiveCRDisplay">Unknown</span> <br>
 	<td><input type="checkbox" value="Angelic Weapons"	onchange="setFeature(this.value, this.checked);">Angelic Weapons</input></td>
 </tr>
 <tr>
-	<td><input type="checkbox" value="AntimagicSusceptibility" onchange="setFeature(this.value, this.checked);">Antimagic Susceptibility</input></td>
+	<td><input type="checkbox" value="AntimagicSusceptibility" onchange="setFeature(this.value, this.checked);"><span class="monsterFeatLabel">Antimagic<br>Susceptibility</span></input></td>
 	<td><input type="checkbox" value="Avoidance" 		onchange="setFeature(this.value, this.checked);">Avoidance</input></td>
 	<td><input type="checkbox" value="BlindSenses" 		onchange="setFeature(this.value, this.checked);">Blind Senses</input></td>
 	<td><input type="checkbox" value="BloodFrenzy" 		onchange="setFeature(this.value, this.checked);">Blood Frenzy</input></td>
@@ -113,14 +107,14 @@ Offensive CR: <span id="offensiveCRDisplay">Unknown</span> <br>
 </tr>
 <tr>
 	<td><input type="checkbox" value="Brute" 			onchange="setFeature(this.value, this.checked);">Brute</input></td>
-	<td><input type="checkbox" value="Avoidance" 		onchange="setFeature(this.value, this.checked);">Chameleon Skin</input></td>
+	<td><input type="checkbox" value="Avoidance" 		onchange="setFeature(this.value, this.checked);"><span class="monsterFeatLabel">Chameleon<br>Skin</span></input></td>
 	<td><input type="checkbox" value="ChameleonSkin" 	onchange="setFeature(this.value, this.checked);">Change Shape</input></td>
 	<td><input type="checkbox" value="Charge" 			onchange="setFeature(this.value, this.checked);">Charge</input></td>
 	<td><input type="checkbox" value="Charm" 			onchange="setFeature(this.value, this.checked);">Charm</input></td>
 </tr>
 <tr>
 	<td><input type="checkbox" value="Constrict" 		onchange="setFeature(this.value, this.checked);">Constrict</input></td>
-	<td><input type="checkbox" value="DamageAbsorption" onchange="setFeature(this.value, this.checked);">Damage Absorption</input></td>
+	<td><input type="checkbox" value="DamageAbsorption" onchange="setFeature(this.value, this.checked);"><span class="monsterFeatLabel">Damage<br>Absorption</span></input></td>
 	<td><input type="checkbox" value="DamageTransfer" 	onchange="setFeature(this.value, this.checked);">Damage Transfer</input></td>
 	<td><input type="checkbox" value="DeathBurst" 		onchange="setFeature(this.value, this.checked);">Death Burst</input></td>
 	<td><input type="checkbox" value="DevilSight" 		onchange="setFeature(this.value, this.checked);">Devil Sight</input></td>
@@ -133,7 +127,7 @@ Offensive CR: <span id="offensiveCRDisplay">Unknown</span> <br>
 	<td><input type="checkbox" value="Etherealness" 	onchange="setFeature(this.value, this.checked);">Etherealness</input></td>
 </tr>
 <tr>
-	<td><input type="checkbox" value="False Appearance" onchange="setFeature(this.value, this.checked);">False Appearance</input></td>
+	<td><input type="checkbox" value="False Appearance" onchange="setFeature(this.value, this.checked);"><span class="monsterFeatLabel">False<br>Appearance</span></input></td>
 	<td><input type="checkbox" value="FeyAncestry" 		onchange="setFeature(this.value, this.checked);">Fey Ancestry</input></td>
 	<td><input type="checkbox" value="FiendishBlessing" onchange="setFeature(this.value, this.checked);">Fiendish Blessing</input></td>
 	<td><input type="checkbox" value="Flyby" 			onchange="setFeature(this.value, this.checked);">Flyby</input></td>
@@ -147,29 +141,29 @@ Offensive CR: <span id="offensiveCRDisplay">Unknown</span> <br>
 	<td><input type="checkbox" value="IllusoryAppearance"	onchange="setFeature(this.value, this.checked);">Illusory Appearance</input></td>
 </tr>
 <tr>
-	<td><input type="checkbox" value="ImmutableForm" 	onchange="setFeature(this.value, this.checked);">Immutable Form</input></td>
-	<td><input type="checkbox" value="IncorporealMovement"	onchange="setFeature(this.value, this.checked);">Incorporeal Movement</input></td>
-	<td><input type="checkbox" value="InnateSpellcasting"	onchange="setFeature(this.value, this.checked);">Innate Spellcasting</input></td>
+	<td><input type="checkbox" value="ImmutableForm" 	onchange="setFeature(this.value, this.checked);"><span class="monsterFeatLabel">Immutable<br>Form</span></input></td>
+	<td><input type="checkbox" value="IncorporealMovement"	onchange="setFeature(this.value, this.checked);"><span class="monsterFeatLabel">Incorporeal<br>Movement</span></input></td>
+	<td><input type="checkbox" value="InnateSpellcasting"	onchange="setFeature(this.value, this.checked);"><span class="monsterFeatLabel">Innate<br>Spellcasting</span></input></td>
 	<td><input type="checkbox" value="Inscrutable"		onchange="setFeature(this.value, this.checked);">Inscrutable</input></td>
 	<td><input type="checkbox" value="Invisibility"		onchange="setFeature(this.value, this.checked);">Invisibility</input></td>
 </tr>
 <tr>
-	<td><input type="checkbox" value="KeenSenses" 		onchange="setFeature(this.value, this.checked);">Keen Senses</input></td>
-	<td><input type="checkbox" value="LabrynthineRecall"	onchange="setFeature(this.value, this.checked);">Labrynthine Recall</input></td>
+	<td><input type="checkbox" value="KeenSenses" 		onchange="setFeature(this.value, this.checked);"><span class="monsterFeatLabel">Keen<br>Senses</span></input></td>
+	<td><input type="checkbox" value="LabrynthineRecall"	onchange="setFeature(this.value, this.checked);"><span class="monsterFeatLabel">Labrynthine<br>Recall</span></input></td>
 	<td><input type="checkbox" value="Leadership" 		onchange="setFeature(this.value, this.checked);">Leadership</input></td>
 	<td><input type="checkbox" value="LegendaryResistance" onchange="setFeature(this.value, this.checked);">Legendary Resistance</input></td>
 	<td><input type="checkbox" value="LifeDrain" 		onchange="setFeature(this.value, this.checked);">Life Drain</input></td>
 </tr>
 <tr>
-	<td><input type="checkbox" value="LightSensitivity" onchange="setFeature(this.value, this.checked);">Light Sensitivity</input></td>
-	<td><input type="checkbox" value="MagicResistance" 	onchange="setFeature(this.value, this.checked);">Magic Resistance</input></td>
+	<td><input type="checkbox" value="LightSensitivity" onchange="setFeature(this.value, this.checked);"><span class="monsterFeatLabel">Light<br>Sensitivity</span></input></td>
+	<td><input type="checkbox" value="MagicResistance" 	onchange="setFeature(this.value, this.checked);"><span class="monsterFeatLabel">Magic<br>Resistance</span></input></td>
 	<td><input type="checkbox" value="MagicWeapons" 	onchange="setFeature(this.value, this.checked);">Magic Weapons</input></td>
 	<td><input type="checkbox" value="MartialAdvantage" onchange="setFeature(this.value, this.checked);">Martial Advantage</input></td>
 	<td><input type="checkbox" value="Mimicry" 			onchange="setFeature(this.value, this.checked);">Mimicry</input></td>
 </tr>
 <tr>
-	<td><input type="checkbox" value="NimbleEscape" 	onchange="setFeature(this.value, this.checked);">Nimble Escape</input></td>
-	<td><input type="checkbox" value="OtherworldlyPerception"	onchange="setFeature(this.value, this.checked);">Otherworldly Perception</input></td>
+	<td><input type="checkbox" value="NimbleEscape" 	onchange="setFeature(this.value, this.checked);"><span class="monsterFeatLabel">Nimble<br>Escape</span></input></td>
+	<td><input type="checkbox" value="OtherworldlyPerception"	onchange="setFeature(this.value, this.checked);"><span class="monsterFeatLabel">Otherworldly<br>Perception</span></input></td>
 	<td><input type="checkbox" value="PackTactics" 		onchange="setFeature(this.value, this.checked);">Pack Tactics</input></td>
 	<td><input type="checkbox" value="Parry" 			onchange="setFeature(this.value, this.checked);">Parry</input></td>
 	<td><input type="checkbox" value="Possession" 		onchange="setFeature(this.value, this.checked);">Possession</input></td>
@@ -202,22 +196,22 @@ Offensive CR: <span id="offensiveCRDisplay">Unknown</span> <br>
 	<td><input type="checkbox" value="Steadfast" 		onchange="setFeature(this.value, this.checked);">Steadfast</input></td>
 	<td><input type="checkbox" value="Stench" 			onchange="setFeature(this.value, this.checked);">Stench</input></td>
 <tr>
-	<td><input type="checkbox" value="SunlightSensitivity"	onchange="setFeature(this.value, this.checked);">Sunlight Sensitivity</input></td>
-	<td><input type="checkbox" value="SuperiorInvisibility"	onchange="setFeature(this.value, this.checked);">Superior Invisibility</input></td>
+	<td><input type="checkbox" value="SunlightSensitivity"	onchange="setFeature(this.value, this.checked);"><span class="monsterFeatLabel">Sunlight<br>Sensitivity</span></input></td>
+	<td><input type="checkbox" value="SuperiorInvisibility"	onchange="setFeature(this.value, this.checked);"><span class="monsterFeatLabel">Superior<br>Invisibility</span></input></td>
 	<td><input type="checkbox" value="SureFooted" 		onchange="setFeature(this.value, this.checked);">Sure-Footed</input></td>
 	<td><input type="checkbox" value="SurpriseAttack" 	onchange="setFeature(this.value, this.checked);">Surprise Attack</input></td>
 	<td><input type="checkbox" value="Swallow" 			onchange="setFeature(this.value, this.checked);">Swallow</input></td>
 </tr>
 <tr>
 	<td><input type="checkbox" value="Teleport" 		onchange="setFeature(this.value, this.checked);">Teleport</input></td>
-	<td><input type="checkbox" value="TerrainCamoflage" onchange="setFeature(this.value, this.checked);">Terrain Camoflage</input></td>
+	<td><input type="checkbox" value="TerrainCamoflage" onchange="setFeature(this.value, this.checked);"><span class="monsterFeatLabel">Terrain<br>Camoflage</span></input></td>
 	<td><input type="checkbox" value="Tunneler" 		onchange="setFeature(this.value, this.checked);">Tunneler</input></td>
 	<td><input type="checkbox" value="TurnImmunity" 	onchange="setFeature(this.value, this.checked);">Turn Immunity</input></td>
 	<td><input type="checkbox" value="TurnResistance" 	onchange="setFeature(this.value, this.checked);">Turn Resistance</input></td>
 </tr>
 <tr>
 	<td><input type="checkbox" value="TwoHeads" 		onchange="setFeature(this.value, this.checked);">Two Heads</input></td>
-	<td><input type="checkbox" value="UndeadFortitude"	onchange="setFeature(this.value, this.checked);">Undead Fortitude</input></td>
+	<td><input type="checkbox" value="UndeadFortitude"	onchange="setFeature(this.value, this.checked);"><span class="monsterFeatLabel">Undead<br>Fortitude</span></input></td>
 	<td><input type="checkbox" value="Web" 				onchange="setFeature(this.value, this.checked);">Web</input></td>
 	<td><input type="checkbox" value="WebSense"			onchange="setFeature(this.value, this.checked);">Web Sense</input></td>
 	<td><input type="checkbox" value="WebWalker"		onchange="setFeature(this.value, this.checked);">Web Walker</input></td>
@@ -226,7 +220,7 @@ Offensive CR: <span id="offensiveCRDisplay">Unknown</span> <br>
 	<td><input type="checkbox" value="WoundedFury"		onchange="setFeature(this.value, this.checked);">Wounded Fury</input></td>
 </tr>
 </table>
-
+</div>
 <br>
 <button onclick="saveMonster()">Save</button>
 </div>

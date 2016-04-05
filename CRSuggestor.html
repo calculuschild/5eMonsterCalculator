@@ -1328,13 +1328,13 @@ Offensive CR: <span id="offensiveCRDisplay">Unknown</span> <br>
 		document.getElementById("partySize").value = 4;
 		document.getElementById("partyLevel").value = 1;
 		
-		calculatePartyThresholds();
-
 		var monsterArray = [];
 		localStorage.setItem('monsterArray', JSON.stringify(monsterArray));
 		
 		var encounterArray = [];
 		localStorage.setItem('encounterArray', JSON.stringify(encounterArray));
+		
+		calculatePartyThresholds();
 	}
 
 	var encounterSizeMultipliers = {}

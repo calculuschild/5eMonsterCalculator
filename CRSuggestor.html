@@ -89,136 +89,139 @@ Offensive CR: <span id="offensiveCRDisplay">Unknown</span> <br>
 </table>
 
 <h3>Monster Features</h3>
-<table style="font-size:x-small">
+
+
+<table id="monsterFeatTable" style="font-size:x-small">
 <tr>
-	<td><input type="checkbox" value="Aggressive"		onchange="setFeature(this.value, this.checked);">Aggressive</input></td>
-	<td><input type="checkbox" value="Ambusher"			onchange="setFeature(this.value, this.checked);">Ambusher</input></td>
-	<td><input type="checkbox" value="Amorphous"		onchange="setFeature(this.value, this.checked);">Amorphous</input></td>
-	<td><input type="checkbox" value="Amphibious"		onchange="setFeature(this.value, this.checked);">Amphibious</input></td>
-	<td><input type="checkbox" value="Angelic Weapons"	onchange="setFeature(this.value, this.checked);">Angelic Weapons</input></td>
+	<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="Aggressive"				>Aggressive</button></td>
+	<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="Ambusher"				>Ambusher</button></td>
+	<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="Amorphous"				>Amorphous</button></td>
+	<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="Amphibious"				>Amphibious</button></td>
+	<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="Angelic Weapons"			>Angelic Weapons</button></td>
 </tr>
 <tr>
-	<td><input type="checkbox" value="AntimagicSusceptibility" onchange="setFeature(this.value, this.checked);"><span class="monsterFeatLabel">Antimagic<br>Susceptibility</span></input></td>
-	<td><input type="checkbox" value="Avoidance" 		onchange="setFeature(this.value, this.checked);">Avoidance</input></td>
-	<td><input type="checkbox" value="BlindSenses" 		onchange="setFeature(this.value, this.checked);">Blind Senses</input></td>
-	<td><input type="checkbox" value="BloodFrenzy" 		onchange="setFeature(this.value, this.checked);">Blood Frenzy</input></td>
-	<td><input type="checkbox" value="BreathWeapon" 	onchange="setFeature(this.value, this.checked);">Breath Weapon</input></td>
+	<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="AntimagicSusceptibility"	>Antimagic Susceptibility</button></td>
+	<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="Avoidance"				>Avoidance</button></td>
+	<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="BlindSenses"				>Blind Senses</button></td>
+	<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="BloodFrenzy"				>Blood Frenzy</button></td>
+	<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="BreathWeapon"			>Breath Weapon</button></td>
 </tr>
 <tr>
-	<td><input type="checkbox" value="Brute" 			onchange="setFeature(this.value, this.checked);">Brute</input></td>
-	<td><input type="checkbox" value="Avoidance" 		onchange="setFeature(this.value, this.checked);"><span class="monsterFeatLabel">Chameleon<br>Skin</span></input></td>
-	<td><input type="checkbox" value="ChameleonSkin" 	onchange="setFeature(this.value, this.checked);">Change Shape</input></td>
-	<td><input type="checkbox" value="Charge" 			onchange="setFeature(this.value, this.checked);">Charge</input></td>
-	<td><input type="checkbox" value="Charm" 			onchange="setFeature(this.value, this.checked);">Charm</input></td>
+	<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="Brute" 					>Brute</button></td>
+	<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="Avoidance" 				>Chameleon Skin</button></td>
+	<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="ChameleonSkin" 			>Change Shape</button></td>
+	<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="Charge" 					>Charge</button></td>
+	<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="Charm" 					>Charm</button></td>
 </tr>
 <tr>
-	<td><input type="checkbox" value="Constrict" 		onchange="setFeature(this.value, this.checked);">Constrict</input></td>
-	<td><input type="checkbox" value="DamageAbsorption" onchange="setFeature(this.value, this.checked);"><span class="monsterFeatLabel">Damage<br>Absorption</span></input></td>
-	<td><input type="checkbox" value="DamageTransfer" 	onchange="setFeature(this.value, this.checked);">Damage Transfer</input></td>
-	<td><input type="checkbox" value="DeathBurst" 		onchange="setFeature(this.value, this.checked);">Death Burst</input></td>
-	<td><input type="checkbox" value="DevilSight" 		onchange="setFeature(this.value, this.checked);">Devil Sight</input></td>
+	<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="Constrict" 				>Constrict</button></td>
+	<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="DamageAbsorption"		>Damage Absorption</button></td>
+	<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="DamageTransfer" 			>Damage Transfer</button></td>
+	<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="DeathBurst" 				>Death Burst</button></td>
+	<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="DevilSight" 				>Devil Sight</button></td>
 </tr>
 <tr>
-	<td><input type="checkbox" value="Dive" 			onchange="setFeature(this.value, this.checked);">Dive</input></td>
-	<td><input type="checkbox" value="Echolocation" 	onchange="setFeature(this.value, this.checked);">Echolocation</input></td>
-	<td><input type="checkbox" value="ElementalBody" 	onchange="setFeature(this.value, this.checked);">Elemental Body</input></td>
-	<td><input type="checkbox" value="Enlarge" 			onchange="setFeature(this.value, this.checked);">Enlarge</input></td>
-	<td><input type="checkbox" value="Etherealness" 	onchange="setFeature(this.value, this.checked);">Etherealness</input></td>
+	<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="Dive" 					>Dive</button></td>
+	<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="Echolocation" 			>Echolocation</button></td>
+	<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="ElementalBody" 			>Elemental Body</button></td>
+	<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="Enlarge" 				>Enlarge</button></td>
+	<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="Etherealness" 			>Etherealness</button></td>
 </tr>
 <tr>
-	<td><input type="checkbox" value="False Appearance" onchange="setFeature(this.value, this.checked);"><span class="monsterFeatLabel">False<br>Appearance</span></input></td>
-	<td><input type="checkbox" value="FeyAncestry" 		onchange="setFeature(this.value, this.checked);">Fey Ancestry</input></td>
-	<td><input type="checkbox" value="FiendishBlessing" onchange="setFeature(this.value, this.checked);">Fiendish Blessing</input></td>
-	<td><input type="checkbox" value="Flyby" 			onchange="setFeature(this.value, this.checked);">Flyby</input></td>
-	<td><input type="checkbox" value="FrightfulPresence"	onchange="setFeature(this.value, this.checked);">Frightful Presence</input></td>
+	<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="False Appearance" 		>False Appearance</button></td>
+	<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="FeyAncestry" 			>Fey Ancestry</button></td>
+	<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="FiendishBlessing"		>Fiendish Blessing</button></td>
+	<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="Flyby" 					>Flyby</button></td>
+	<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="FrightfulPresence"		>Frightful Presence</button></td>
 </tr>
 <tr>
-	<td><input type="checkbox" value="Grappler" 		onchange="setFeature(this.value, this.checked);">Grappler</input></td>
-	<td><input type="checkbox" value="HoldBreath" 		onchange="setFeature(this.value, this.checked);">Hold Breath</input></td>
-	<td><input type="checkbox" value="HorrifyingVisage" onchange="setFeature(this.value, this.checked);">Horrifying Visage</input></td>
-	<td><input type="checkbox" value="Illumination" 	onchange="setFeature(this.value, this.checked);">Illumination</input></td>
-	<td><input type="checkbox" value="IllusoryAppearance"	onchange="setFeature(this.value, this.checked);">Illusory Appearance</input></td>
+	<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="Grappler" 				>Grappler</button></td>
+	<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="HoldBreath" 				>Hold Breath</button></td>
+	<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="HorrifyingVisage" 		>Horrifying Visage</button></td>
+	<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="Illumination" 			>Illumination</button></td>
+	<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="IllusoryAppearance"		>Illusory Appearance</button></td>
 </tr>
 <tr>
-	<td><input type="checkbox" value="ImmutableForm" 	onchange="setFeature(this.value, this.checked);"><span class="monsterFeatLabel">Immutable<br>Form</span></input></td>
-	<td><input type="checkbox" value="IncorporealMovement"	onchange="setFeature(this.value, this.checked);"><span class="monsterFeatLabel">Incorporeal<br>Movement</span></input></td>
-	<td><input type="checkbox" value="InnateSpellcasting"	onchange="setFeature(this.value, this.checked);"><span class="monsterFeatLabel">Innate<br>Spellcasting</span></input></td>
-	<td><input type="checkbox" value="Inscrutable"		onchange="setFeature(this.value, this.checked);">Inscrutable</input></td>
-	<td><input type="checkbox" value="Invisibility"		onchange="setFeature(this.value, this.checked);">Invisibility</input></td>
+	<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="ImmutableForm" 			>Immutable Form</button></td>
+	<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="IncorporealMovement"		>Incorporeal Movement</button></td>
+	<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="InnateSpellcasting"		>Innate Spellcasting</button></td>
+	<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="Inscrutable"				>Inscrutable</button></td>
+	<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="Invisibility"			>Invisibility</button></td>
 </tr>
 <tr>
-	<td><input type="checkbox" value="KeenSenses" 		onchange="setFeature(this.value, this.checked);"><span class="monsterFeatLabel">Keen<br>Senses</span></input></td>
-	<td><input type="checkbox" value="LabrynthineRecall"	onchange="setFeature(this.value, this.checked);"><span class="monsterFeatLabel">Labrynthine<br>Recall</span></input></td>
-	<td><input type="checkbox" value="Leadership" 		onchange="setFeature(this.value, this.checked);">Leadership</input></td>
-	<td><input type="checkbox" value="LegendaryResistance" onchange="setFeature(this.value, this.checked);"><span class="monsterFeatLabel">Legendary<br>Resistance</span></input></td>
-	<td><input type="checkbox" value="LifeDrain" 		onchange="setFeature(this.value, this.checked);">Life Drain</input></td>
+	<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="KeenSenses" 				>Keen Senses</button></td>
+	<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="LabrynthineRecall"		>Labrynthine Recall</button></td>
+	<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="Leadership" 				>Leadership</button></td>
+	<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="LegendaryResistance" 	>Legendary Resistance</button></td>
+	<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="LifeDrain" 				>Life Drain</button></td>
 </tr>
 <tr>
-	<td><input type="checkbox" value="LightSensitivity" onchange="setFeature(this.value, this.checked);"><span class="monsterFeatLabel">Light<br>Sensitivity</span></input></td>
-	<td><input type="checkbox" value="MagicResistance" 	onchange="setFeature(this.value, this.checked);"><span class="monsterFeatLabel">Magic<br>Resistance</span></input></td>
-	<td><input type="checkbox" value="MagicWeapons" 	onchange="setFeature(this.value, this.checked);">Magic Weapons</input></td>
-	<td><input type="checkbox" value="MartialAdvantage" onchange="setFeature(this.value, this.checked);"><span class="monsterFeatLabel">Martial<br>Advantage</span></input></td>
-	<td><input type="checkbox" value="Mimicry" 			onchange="setFeature(this.value, this.checked);">Mimicry</input></td>
+	<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="LightSensitivity" 		>Light Sensitivity</button></td>
+	<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="MagicResistance" 		>Magic Resistance</button></td>
+	<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="MagicWeapons" 			>Magic Weapons</button></td>
+	<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="MartialAdvantage" 		>Martial Advantage</button></td>
+	<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="Mimicry" 				>Mimicry</button></td>
 </tr>
 <tr>
-	<td><input type="checkbox" value="NimbleEscape" 	onchange="setFeature(this.value, this.checked);"><span class="monsterFeatLabel">Nimble<br>Escape</span></input></td>
-	<td><input type="checkbox" value="OtherworldlyPerception"	onchange="setFeature(this.value, this.checked);"><span class="monsterFeatLabel">Otherworldly<br>Perception</span></input></td>
-	<td><input type="checkbox" value="PackTactics" 		onchange="setFeature(this.value, this.checked);">Pack Tactics</input></td>
-	<td><input type="checkbox" value="Parry" 			onchange="setFeature(this.value, this.checked);">Parry</input></td>
-	<td><input type="checkbox" value="Possession" 		onchange="setFeature(this.value, this.checked);">Possession</input></td>
+	<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="NimbleEscape" 			>Nimble Escape</button></td>
+	<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="OtherworldlyPerception"	>Otherworldly Perception</button></td>
+	<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="PackTactics" 			>Pack Tactics</button></td>
+	<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="Parry" 					>Parry</button></td>
+	<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="Possession" 				>Possession</button></td>
 </tr>
 <tr>
-	<td><input type="checkbox" value="Pounce" 			onchange="setFeature(this.value, this.checked);">Pounce</input></td>
-	<td><input type="checkbox" value="PsychicDefense" 	onchange="setFeature(this.value, this.checked);">Psychic Defense</input></td>
-	<td><input type="checkbox" value="Rampage" 			onchange="setFeature(this.value, this.checked);">Rampage</input></td>
-	<td><input type="checkbox" value="Reactive" 		onchange="setFeature(this.value, this.checked);">Reactive</input></td>
-	<td><input type="checkbox" value="ReadThoughts" 	onchange="setFeature(this.value, this.checked);">Read Thoughts</input></td>
+	<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="Pounce" 					>Pounce</button></td>
+	<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="PsychicDefense" 			>Psychic Defense</button></td>
+	<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="Rampage" 				>Rampage</button></td>
+	<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="Reactive" 				>Reactive</button></td>
+	<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="ReadThoughts" 			>Read Thoughts</button></td>
 </tr>
 <tr>
-	<td><input type="checkbox" value="Reckless" 		onchange="setFeature(this.value, this.checked);">Reckless</input></td>
-	<td><input type="checkbox" value="RedirectAttack" 	onchange="setFeature(this.value, this.checked);">Redirect Attack</input></td>
-	<td><input type="checkbox" value="Reel" 			onchange="setFeature(this.value, this.checked);">Reel</input></td>
-	<td><input type="checkbox" value="Regeneration" 	onchange="setFeature(this.value, this.checked);">Regeneration</input></td>
-	<td><input type="checkbox" value="Rejuvenation" 	onchange="setFeature(this.value, this.checked);">Rejuvenation</input></td>
+	<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="Reckless" 				>Reckless</button></td>
+	<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="RedirectAttack" 			>Redirect Attack</button></td>
+	<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="Reel" 					>Reel</button></td>
+	<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="Regeneration" 			>Regeneration</button></td>
+	<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="Rejuvenation" 			>Rejuvenation</button></td>
 </tr>
 <tr>
-	<td><input type="checkbox" value="Relentless" 		onchange="setFeature(this.value, this.checked);">Relentless</input></td>
-	<td><input type="checkbox" value="ShadowStealth" 	onchange="setFeature(this.value, this.checked);">Shadow Stealth</input></td>
-	<td><input type="checkbox" value="ShapeChanger" 	onchange="setFeature(this.value, this.checked);">Shape Changer</input></td>
-	<td><input type="checkbox" value="SiegeMonster" 	onchange="setFeature(this.value, this.checked);">Siege Monster</input></td>
-	<td><input type="checkbox" value="Slippery" 		onchange="setFeature(this.value, this.checked);">Slippery</input></td>
+	<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="Relentless" 				>Relentless</button></td>
+	<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="ShadowStealth" 			>Shadow Stealth</button></td>
+	<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="ShapeChanger" 			>Shape Changer</button></td>
+	<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="SiegeMonster" 			>Siege Monster</button></td>
+	<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="Slippery" 				>Slippery</button></td>
 </tr>
 <tr>
-	<td><input type="checkbox" value="Spellcasting" 	onchange="setFeature(this.value, this.checked);">Spellcasting</input></td>
-	<td><input type="checkbox" value="SpiderClimb" 		onchange="setFeature(this.value, this.checked);">Spider Climb</input></td>
-	<td><input type="checkbox" value="StandingLeap" 	onchange="setFeature(this.value, this.checked);">Standing Leap</input></td>
-	<td><input type="checkbox" value="Steadfast" 		onchange="setFeature(this.value, this.checked);">Steadfast</input></td>
-	<td><input type="checkbox" value="Stench" 			onchange="setFeature(this.value, this.checked);">Stench</input></td>
+	<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="Spellcasting" 			>Spellcasting</button></td>
+	<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="SpiderClimb" 			>Spider Climb</button></td>
+	<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="StandingLeap" 			>Standing Leap</button></td>
+	<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="Steadfast" 				>Steadfast</button></td>
+	<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="Stench" 					>Stench</button></td>
 <tr>
-	<td><input type="checkbox" value="SunlightSensitivity"	onchange="setFeature(this.value, this.checked);"><span class="monsterFeatLabel">Sunlight<br>Sensitivity</span></input></td>
-	<td><input type="checkbox" value="SuperiorInvisibility"	onchange="setFeature(this.value, this.checked);"><span class="monsterFeatLabel">Superior<br>Invisibility</span></input></td>
-	<td><input type="checkbox" value="SureFooted" 		onchange="setFeature(this.value, this.checked);">Sure-Footed</input></td>
-	<td><input type="checkbox" value="SurpriseAttack" 	onchange="setFeature(this.value, this.checked);">Surprise Attack</input></td>
-	<td><input type="checkbox" value="Swallow" 			onchange="setFeature(this.value, this.checked);">Swallow</input></td>
+	<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="SunlightSensitivity"		>Sunlight Sensitivity</button></td>
+	<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="SuperiorInvisibility"	>Superior Invisibility</button></td>
+	<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="SureFooted" 				>Sure-Footed</button></td>
+	<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="SurpriseAttack" 			>Surprise Attack</button></td>
+	<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="Swallow" 				>Swallow</button></td>
 </tr>
 <tr>
-	<td><input type="checkbox" value="Teleport" 		onchange="setFeature(this.value, this.checked);">Teleport</input></td>
-	<td><input type="checkbox" value="TerrainCamoflage" onchange="setFeature(this.value, this.checked);"><span class="monsterFeatLabel">Terrain<br>Camoflage</span></input></td>
-	<td><input type="checkbox" value="Tunneler" 		onchange="setFeature(this.value, this.checked);">Tunneler</input></td>
-	<td><input type="checkbox" value="TurnImmunity" 	onchange="setFeature(this.value, this.checked);">Turn Immunity</input></td>
-	<td><input type="checkbox" value="TurnResistance" 	onchange="setFeature(this.value, this.checked);">Turn Resistance</input></td>
+	<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="Teleport" 				>Teleport</button></td>
+	<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="TerrainCamoflage" 		>Terrain Camoflage</button></td>
+	<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="Tunneler" 				>Tunneler</button></td>
+	<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="TurnImmunity" 			>Turn Immunity</button></td>
+	<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="TurnResistance" 			>Turn Resistance</button></td>
 </tr>
 <tr>
-	<td><input type="checkbox" value="TwoHeads" 		onchange="setFeature(this.value, this.checked);">Two Heads</input></td>
-	<td><input type="checkbox" value="UndeadFortitude"	onchange="setFeature(this.value, this.checked);"><span class="monsterFeatLabel">Undead<br>Fortitude</span></input></td>
-	<td><input type="checkbox" value="Web" 				onchange="setFeature(this.value, this.checked);">Web</input></td>
-	<td><input type="checkbox" value="WebSense"			onchange="setFeature(this.value, this.checked);">Web Sense</input></td>
-	<td><input type="checkbox" value="WebWalker"		onchange="setFeature(this.value, this.checked);">Web Walker</input></td>
+	<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="TwoHeads" 				>Two Heads</button></td>
+	<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="UndeadFortitude"			>Undead Fortitude</button></td>
+	<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="Web" 					>Web</button></td>
+	<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="WebSense"				>Web Sense</button></td>
+	<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="WebWalker"				>Web Walker</button></td>
 </tr>
 <tr>
-	<td><input type="checkbox" value="WoundedFury"		onchange="setFeature(this.value, this.checked);">Wounded Fury</input></td>
+	<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="WoundedFury"				>Wounded Fury</button></td>
 </tr>
 </table>
+
 </div>
 <br>
 <button onclick="saveMonster()">Save</button>
@@ -592,6 +595,17 @@ Offensive CR: <span id="offensiveCRDisplay">Unknown</span> <br>
 	
 	function setFeature(value, isSet) {
 		monsterFeats[value] = isSet;
+		recalcTotalCR();
+	}
+	
+	function setFeatureNEW(element) {
+		var isEnabled = element.className == "featEnabled";
+		if(isEnabled)
+			element.className = "featDisabled";
+		else
+			element.className = "featEnabled";
+					
+		monsterFeats[element.value] = !isEnabled;
 		recalcTotalCR();
 	}
 	

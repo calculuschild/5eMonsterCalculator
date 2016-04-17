@@ -2,236 +2,262 @@
 <head>
 <link rel="stylesheet" type="text/css" href="style.css">
 </head>
-<body onload="setupPage()">
-<div id="leftCol" style="float:left">
-<h1>Encounter Adjustment Calculator</h1>
-Base CR (Choose a base CR to give your monster some starting values)
-<table>
-<tr>
-	<td><button onclick="setBaseCR(0)">0</button></td>
-	<td><button onclick="setBaseCR(1/8)">1/8</button></td>
-	<td><button onclick="setBaseCR(1/4)">1/4</button></td>
-	<td><button onclick="setBaseCR(1/2)">1/2</button></td>
-</tr>
-<tr>
-	<td><button onclick="setBaseCR(1)">1</button></td>
-	<td><button onclick="setBaseCR(2)">2</button></td>
-	<td><button onclick="setBaseCR(3)">3</button></td>
-	<td><button onclick="setBaseCR(4)">4</button></td>
-	<td><button onclick="setBaseCR(5)">5</button></td>
-	<td><button onclick="setBaseCR(6)">6</button></td>
-	<td><button onclick="setBaseCR(7)">7</button></td>
-	<td><button onclick="setBaseCR(8)">8</button></td>
-	<td><button onclick="setBaseCR(9)">9</button></td>
-	<td><button onclick="setBaseCR(10)">10</button></td>
-</tr>
-<tr>
-	<td><button onclick="setBaseCR(11)">11</button></td>
-	<td><button onclick="setBaseCR(12)">12</button></td>
-	<td><button onclick="setBaseCR(13)">13</button></td>
-	<td><button onclick="setBaseCR(14)">14</button></td>
-	<td><button onclick="setBaseCR(15)">15</button></td>
-	<td><button onclick="setBaseCR(16)">16</button></td>
-	<td><button onclick="setBaseCR(17)">17</button></td>
-	<td><button onclick="setBaseCR(18)">18</button></td>
-	<td><button onclick="setBaseCR(19)">19</button></td>
-	<td><button onclick="setBaseCR(20)">20</button></td>
-</tr>
-<tr>
-	<td><button onclick="setBaseCR(21)">21</button></td>
-	<td><button onclick="setBaseCR(22)">22</button></td>
-	<td><button onclick="setBaseCR(23)">23</button></td>
-	<td><button onclick="setBaseCR(24)">24</button></td>
-	<td><button onclick="setBaseCR(25)">25</button></td>
-	<td><button onclick="setBaseCR(26)">26</button></td>
-	<td><button onclick="setBaseCR(27)">27</button></td>
-	<td><button onclick="setBaseCR(28)">28</button></td>
-	<td><button onclick="setBaseCR(29)">29</button></td>
-	<td><button onclick="setBaseCR(30)">30</button></td>
-</tr>
+<body onload="setupPage()" style="background-color:rgb(59, 56, 56);">
+<div style="font: small-caps 700 2em Libre Baskerville; color:rgb(255, 255, 255); text-align:center; margin:auto;">Encounter Adjustment Calculator</div>
+<br>
+<div id="leftCol" style="float:left; background-color: rgb(239, 184, 103); padding:10px;">
+<div style="box-shadow: 0px 4px 5px black; background-color: rgb(248, 225, 190); display: block; padding:2px;">
+Base CR<br>(Choose a base CR to give your monster some starting values)
+<table style="width:420px; margin:auto;">
+	<tr style="height:30px;">
+		<td><button class="crButton" onclick="setBaseCR(0)">0</button></td>
+		<td><button class="crButton" onclick="setBaseCR(1/8)">1/8</button></td>
+		<td><button class="crButton" onclick="setBaseCR(1/4)">1/4</button></td>
+		<td><button class="crButton" onclick="setBaseCR(1/2)">1/2</button></td>
+	</tr>
+	<tr style="height:30px;">
+		<td><button class="crButton" onclick="setBaseCR(1)">1</button></td>
+		<td><button class="crButton" onclick="setBaseCR(2)">2</button></td>
+		<td><button class="crButton" onclick="setBaseCR(3)">3</button></td>
+		<td><button class="crButton" onclick="setBaseCR(4)">4</button></td>
+		<td><button class="crButton" onclick="setBaseCR(5)">5</button></td>
+		<td><button class="crButton" onclick="setBaseCR(6)">6</button></td>
+		<td><button class="crButton" onclick="setBaseCR(7)">7</button></td>
+		<td><button class="crButton" onclick="setBaseCR(8)">8</button></td>
+		<td><button class="crButton" onclick="setBaseCR(9)">9</button></td>
+		<td><button class="crButton" onclick="setBaseCR(10)">10</button></td>
+	</tr>
+	<tr style="height:30px;">
+		<td><button class="crButton" onclick="setBaseCR(11)">11</button></td>
+		<td><button class="crButton" onclick="setBaseCR(12)">12</button></td>
+		<td><button class="crButton" onclick="setBaseCR(13)">13</button></td>
+		<td><button class="crButton" onclick="setBaseCR(14)">14</button></td>
+		<td><button class="crButton" onclick="setBaseCR(15)">15</button></td>
+		<td><button class="crButton" onclick="setBaseCR(16)">16</button></td>
+		<td><button class="crButton" onclick="setBaseCR(17)">17</button></td>
+		<td><button class="crButton" onclick="setBaseCR(18)">18</button></td>
+		<td><button class="crButton" onclick="setBaseCR(19)">19</button></td>
+		<td><button class="crButton" onclick="setBaseCR(20)">20</button></td>
+	</tr>
+	<tr style="height:30px;">
+		<td><button class="crButton" onclick="setBaseCR(21)">21</button></td>
+		<td><button class="crButton" onclick="setBaseCR(22)">22</button></td>
+		<td><button class="crButton" onclick="setBaseCR(23)">23</button></td>
+		<td><button class="crButton" onclick="setBaseCR(24)">24</button></td>
+		<td><button class="crButton" onclick="setBaseCR(25)">25</button></td>
+		<td><button class="crButton" onclick="setBaseCR(26)">26</button></td>
+		<td><button class="crButton" onclick="setBaseCR(27)">27</button></td>
+		<td><button class="crButton" onclick="setBaseCR(28)">28</button></td>
+		<td><button class="crButton" onclick="setBaseCR(29)">29</button></td>
+		<td><button class="crButton" onclick="setBaseCR(30)">30</button></td>
+	</tr>
 </table>
-
+</div>
+<br>
 <!--Defensive CR: <span id="defensiveCRDisplay">Unknown</span> <br>
 Offensive CR: <span id="offensiveCRDisplay">Unknown</span> <br>
 <b>Total CR: <span id="totalCRDisplay">Unknown</span></b> -->
 
-<div style = "box-shadow: 0px 4px 5px black; background-color: rgb(100, 0, 0); display: block;";>
+<div style="box-shadow: 0px 4px 5px black; background-color: rgb(248, 225, 190); display: block; padding:5px;">
 
 <input type="text" id="monsterName"	placeholder="Monster Name" class="monsterNameInput">
+<button class="saveButton" onclick="saveMonster()">Add to &#10152;<br>Encounter</button>
 
-<h3>Monster Statistics</h3>
 <table>
   <tr>
-	<td><img src="Skull.png" 	 alt="UpArrow"	 width="24" height="24" style="vertical-align:middle"></td>
-	<td>CR</td>
-	<td><input type="text" size=4 id="challengeRating" onchange="totalCR = eval(this.value); recalcTotalCR();"></td>
-	<td><button onclick="var element = document.getElementById('challengeRating'); element.value = nextCR(eval(element.value), 1); element.onchange();">+</button></td>
-	<td><button onclick="var element = document.getElementById('challengeRating'); element.value = nextCR(eval(element.value), -1); element.onchange();">-</button></td>
+	<td rowspan="2"><img src="Skull.png" 	 alt="UpArrow"	 width="48" height="48" style="vertical-align:middle;"></td>
+	<td style="font: bold 0.8em Noto Sans; text-align:center; color:rgb(88, 24, 13);">Challenge Rating (CR)</td>
   </tr>
   <tr>
-	<td><img src="Breastplate.png" 	 alt="UpArrow"	 width="24" height="24" style="vertical-align:middle"></td>
-	<td>Armor Class:</td>
-	<td><input type="text" size=4 id="armorClass" onchange="AC = parseInt(this.value); recalcTotalCR();"></td>
-	<td><button onclick="addValue(document.getElementById('armorClass'), 1)">+</button></td>
-	<td><button onclick="addValue(document.getElementById('armorClass'), -1)">-</button></td>
-	<td>Hit Points:</td>
-	<td><input type="text" size=4 id="hitPoints" onchange="HP = parseInt(this.value); recalcTotalCR();"></td>
-	<td><button onclick="addValue(document.getElementById('hitPoints'), 1)">+</button></td>
-	<td><button onclick="addValue(document.getElementById('hitPoints'), -1)">-</button></td>	
+	<td>
+		<div style="margin: auto">
+		<input style="float:left; box-shadow:0px 3px 5px 1px rgb(124, 104, 74) inset; border:none; background-color: rgb(243, 203, 145); font: bold 1em Noto Sans; text-align:center;" type="text" size=4 id="challengeRating" onchange="totalCR = eval(this.value); recalcTotalCR();">
+		<button class="plusButton" onclick="var element = document.getElementById('challengeRating'); element.value = nextCR(eval(element.value), 1); element.onchange();">+</button>
+		<button class="plusButton" onclick="var element = document.getElementById('challengeRating'); element.value = nextCR(eval(element.value), -1); element.onchange();">-</button>
+		</div>
+	</td>
   </tr>
   <tr>
-	<td><img src="Sword.png" 	 alt="UpArrow"	 width="24" height="24" style="vertical-align:middle"></td>
-	<td>Attack Bonus:</td>
-	<td colspan=3><span id="attackBonus"></span></td>
-	<td>Damage:</td>
-	<td colspan=3><span id="damagePerRound"></span></td>
+	<td rowspan="2"><img src="Breastplate.png" 	 alt="UpArrow"	 width="48" height="48" style="vertical-align:middle"></td>
+	<td style="font: bold 0.8em Noto Sans; text-align:center; color:rgb(88, 24, 13);">Armor Class (AC)</td>
+	<td style="font: bold 0.8em Noto Sans; text-align:center; color:rgb(88, 24, 13);">Hit Points (HP)</td>
+  </tr>
+  <tr>
+	<td>
+		<input style="float:left; box-shadow:0px 3px 5px 1px rgb(124, 104, 74) inset; border:none; background-color: rgb(243, 203, 145); font: bold 1em Noto Sans; text-align:center;" type="text" size=4 id="armorClass" onchange="AC = parseInt(this.value); recalcTotalCR();">
+		<button class="plusButton" onclick="addValue(document.getElementById('armorClass'), 1)">+</button>
+		<button class="plusButton" onclick="addValue(document.getElementById('armorClass'), -1)">-</button>
+	</td>
+	<td>
+		<input style="float:left; box-shadow:0px 3px 5px 1px rgb(124, 104, 74) inset; border:none; background-color: rgb(243, 203, 145); font: bold 1em Noto Sans; text-align:center;" type="text" size=4 id="hitPoints" onchange="HP = parseInt(this.value); recalcTotalCR();">
+		<button class="plusButton" onclick="addValue(document.getElementById('hitPoints'), 1)">+</button>
+		<button class="plusButton" onclick="addValue(document.getElementById('hitPoints'), -1)">-</button>
+	</td>
+  </tr>
+  <tr>
+	<td rowspan="2"><img src="Sword.png" 	 alt="UpArrow"	 width="48" height="48" style="vertical-align:middle"></td>
+	<td style="font: bold 0.8em Noto Sans; text-align:center; color:rgb(88, 24, 13);">Attack Bonus</td>
+	<td style="font: bold 0.8em Noto Sans; text-align:center; color:rgb(88, 24, 13);">Damage Per Round</td>
+  </tr>
+  <tr>
+	<td style="font: bold 1em Noto Sans; text-align:center;"><span id="attackBonus"></span></td>
+	<td style="font: bold 1em Noto Sans; text-align:center;"><span id="damagePerRound"></span></td>
   </tr>
 </table>
-
-<h3>Monster Features</h3>
-
-
-<table id="monsterFeatTable" style="font-size:x-small">
-<tr>
-	<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="Aggressive"				>Aggressive</button></td>
-	<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="Ambusher"				>Ambusher</button></td>
-	<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="Amorphous"				>Amorphous</button></td>
-	<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="Amphibious"				>Amphibious</button></td>
-	<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="Angelic Weapons"			>Angelic Weapons</button></td>
-</tr>
-<tr>
-	<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="AntimagicSusceptibility"	>Antimagic Susceptibility</button></td>
-	<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="Avoidance"				>Avoidance</button></td>
-	<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="BlindSenses"				>Blind Senses</button></td>
-	<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="BloodFrenzy"				>Blood Frenzy</button></td>
-	<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="BreathWeapon"			>Breath Weapon</button></td>
-</tr>
-<tr>
-	<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="Brute" 					>Brute</button></td>
-	<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="Avoidance" 				>Chameleon Skin</button></td>
-	<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="ChameleonSkin" 			>Change Shape</button></td>
-	<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="Charge" 					>Charge</button></td>
-	<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="Charm" 					>Charm</button></td>
-</tr>
-<tr>
-	<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="Constrict" 				>Constrict</button></td>
-	<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="DamageAbsorption"		>Damage Absorption</button></td>
-	<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="DamageTransfer" 			>Damage Transfer</button></td>
-	<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="DeathBurst" 				>Death Burst</button></td>
-	<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="DevilSight" 				>Devil Sight</button></td>
-</tr>
-<tr>
-	<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="Dive" 					>Dive</button></td>
-	<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="Echolocation" 			>Echolocation</button></td>
-	<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="ElementalBody" 			>Elemental Body</button></td>
-	<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="Enlarge" 				>Enlarge</button></td>
-	<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="Etherealness" 			>Etherealness</button></td>
-</tr>
-<tr>
-	<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="False Appearance" 		>False Appearance</button></td>
-	<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="FeyAncestry" 			>Fey Ancestry</button></td>
-	<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="FiendishBlessing"		>Fiendish Blessing</button></td>
-	<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="Flyby" 					>Flyby</button></td>
-	<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="FrightfulPresence"		>Frightful Presence</button></td>
-</tr>
-<tr>
-	<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="Grappler" 				>Grappler</button></td>
-	<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="HoldBreath" 				>Hold Breath</button></td>
-	<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="HorrifyingVisage" 		>Horrifying Visage</button></td>
-	<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="Illumination" 			>Illumination</button></td>
-	<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="IllusoryAppearance"		>Illusory Appearance</button></td>
-</tr>
-<tr>
-	<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="ImmutableForm" 			>Immutable Form</button></td>
-	<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="IncorporealMovement"		>Incorporeal Movement</button></td>
-	<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="InnateSpellcasting"		>Innate Spellcasting</button></td>
-	<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="Inscrutable"				>Inscrutable</button></td>
-	<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="Invisibility"			>Invisibility</button></td>
-</tr>
-<tr>
-	<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="KeenSenses" 				>Keen Senses</button></td>
-	<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="LabrynthineRecall"		>Labrynthine Recall</button></td>
-	<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="Leadership" 				>Leadership</button></td>
-	<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="LegendaryResistance" 	>Legendary Resistance</button></td>
-	<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="LifeDrain" 				>Life Drain</button></td>
-</tr>
-<tr>
-	<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="LightSensitivity" 		>Light Sensitivity</button></td>
-	<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="MagicResistance" 		>Magic Resistance</button></td>
-	<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="MagicWeapons" 			>Magic Weapons</button></td>
-	<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="MartialAdvantage" 		>Martial Advantage</button></td>
-	<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="Mimicry" 				>Mimicry</button></td>
-</tr>
-<tr>
-	<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="NimbleEscape" 			>Nimble Escape</button></td>
-	<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="OtherworldlyPerception"	>Otherworldly Perception</button></td>
-	<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="PackTactics" 			>Pack Tactics</button></td>
-	<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="Parry" 					>Parry</button></td>
-	<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="Possession" 				>Possession</button></td>
-</tr>
-<tr>
-	<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="Pounce" 					>Pounce</button></td>
-	<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="PsychicDefense" 			>Psychic Defense</button></td>
-	<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="Rampage" 				>Rampage</button></td>
-	<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="Reactive" 				>Reactive</button></td>
-	<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="ReadThoughts" 			>Read Thoughts</button></td>
-</tr>
-<tr>
-	<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="Reckless" 				>Reckless</button></td>
-	<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="RedirectAttack" 			>Redirect Attack</button></td>
-	<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="Reel" 					>Reel</button></td>
-	<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="Regeneration" 			>Regeneration</button></td>
-	<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="Rejuvenation" 			>Rejuvenation</button></td>
-</tr>
-<tr>
-	<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="Relentless" 				>Relentless</button></td>
-	<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="ShadowStealth" 			>Shadow Stealth</button></td>
-	<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="ShapeChanger" 			>Shape Changer</button></td>
-	<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="SiegeMonster" 			>Siege Monster</button></td>
-	<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="Slippery" 				>Slippery</button></td>
-</tr>
-<tr>
-	<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="Spellcasting" 			>Spellcasting</button></td>
-	<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="SpiderClimb" 			>Spider Climb</button></td>
-	<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="StandingLeap" 			>Standing Leap</button></td>
-	<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="Steadfast" 				>Steadfast</button></td>
-	<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="Stench" 					>Stench</button></td>
-<tr>
-	<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="SunlightSensitivity"		>Sunlight Sensitivity</button></td>
-	<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="SuperiorInvisibility"	>Superior Invisibility</button></td>
-	<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="SureFooted" 				>Sure-Footed</button></td>
-	<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="SurpriseAttack" 			>Surprise Attack</button></td>
-	<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="Swallow" 				>Swallow</button></td>
-</tr>
-<tr>
-	<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="Teleport" 				>Teleport</button></td>
-	<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="TerrainCamoflage" 		>Terrain Camoflage</button></td>
-	<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="Tunneler" 				>Tunneler</button></td>
-	<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="TurnImmunity" 			>Turn Immunity</button></td>
-	<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="TurnResistance" 			>Turn Resistance</button></td>
-</tr>
-<tr>
-	<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="TwoHeads" 				>Two Heads</button></td>
-	<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="UndeadFortitude"			>Undead Fortitude</button></td>
-	<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="Web" 					>Web</button></td>
-	<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="WebSense"				>Web Sense</button></td>
-	<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="WebWalker"				>Web Walker</button></td>
-</tr>
-<tr>
-	<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="WoundedFury"				>Wounded Fury</button></td>
-</tr>
-</table>
-
 </div>
 <br>
-<button onclick="saveMonster()">Save</button>
+<div style="box-shadow: 0px 4px 5px black; background-color: rgb(248, 225, 190); display: block; padding:5px;">
+	<div style="font: small-caps 700 1.2em Libre Baskerville; color:rgb(88, 24, 13); text-align:center; margin:auto;">Optional Monster Features</div>
+
+
+	<table id="monsterFeatTable" style="font-size:x-small; width:420px; margin:auto;">
+	<tr>
+		<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="Aggressive"				>Aggressive</button></td>
+		<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="Ambusher"				>Ambusher</button></td>
+		<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="Amorphous"				>Amorphous</button></td>
+		<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="Amphibious"				>Amphibious</button></td>
+		<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="Angelic Weapons"			>Angelic Weapons</button></td>
+	</tr>
+	<tr>
+		<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="AntimagicSusceptibility"	>Antimagic Susceptibility</button></td>
+		<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="Avoidance"				>Avoidance</button></td>
+		<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="BlindSenses"				>Blind Senses</button></td>
+		<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="BloodFrenzy"				>Blood Frenzy</button></td>
+		<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="BreathWeapon"			>Breath Weapon</button></td>
+	</tr>
+	<tr>
+		<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="Brute" 					>Brute</button></td>
+		<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="Avoidance" 				>Chameleon Skin</button></td>
+		<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="ChameleonSkin" 			>Change Shape</button></td>
+		<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="Charge" 					>Charge</button></td>
+		<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="Charm" 					>Charm</button></td>
+	</tr>
+	<tr>
+		<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="Constrict" 				>Constrict</button></td>
+		<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="DamageAbsorption"		>Damage Absorption</button></td>
+		<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="DamageTransfer" 			>Damage Transfer</button></td>
+		<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="DeathBurst" 				>Death Burst</button></td>
+		<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="DevilSight" 				>Devil Sight</button></td>
+	</tr>
+	<tr>
+		<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="Dive" 					>Dive</button></td>
+		<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="Echolocation" 			>Echolocation</button></td>
+		<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="ElementalBody" 			>Elemental Body</button></td>
+		<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="Enlarge" 				>Enlarge</button></td>
+		<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="Etherealness" 			>Etherealness</button></td>
+	</tr>
+	<tr>
+		<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="False Appearance" 		>False Appearance</button></td>
+		<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="FeyAncestry" 			>Fey Ancestry</button></td>
+		<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="FiendishBlessing"		>Fiendish Blessing</button></td>
+		<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="Flyby" 					>Flyby</button></td>
+		<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="FrightfulPresence"		>Frightful Presence</button></td>
+	</tr>
+	<tr>
+		<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="Grappler" 				>Grappler</button></td>
+		<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="HoldBreath" 				>Hold Breath</button></td>
+		<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="HorrifyingVisage" 		>Horrifying Visage</button></td>
+		<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="Illumination" 			>Illumination</button></td>
+		<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="IllusoryAppearance"		>Illusory Appearance</button></td>
+	</tr>
+	<tr>
+		<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="ImmutableForm" 			>Immutable Form</button></td>
+		<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="IncorporealMovement"		>Incorporeal Movement</button></td>
+		<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="InnateSpellcasting"		>Innate Spellcasting</button></td>
+		<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="Inscrutable"				>Inscrutable</button></td>
+		<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="Invisibility"			>Invisibility</button></td>
+	</tr>
+	<tr>
+		<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="KeenSenses" 				>Keen Senses</button></td>
+		<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="LabrynthineRecall"		>Labrynthine Recall</button></td>
+		<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="Leadership" 				>Leadership</button></td>
+		<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="LegendaryResistance" 	>Legendary Resistance</button></td>
+		<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="LifeDrain" 				>Life Drain</button></td>
+	</tr>
+	<tr>
+		<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="LightSensitivity" 		>Light Sensitivity</button></td>
+		<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="MagicResistance" 		>Magic Resistance</button></td>
+		<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="MagicWeapons" 			>Magic Weapons</button></td>
+		<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="MartialAdvantage" 		>Martial Advantage</button></td>
+		<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="Mimicry" 				>Mimicry</button></td>
+	</tr>
+	<tr>
+		<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="NimbleEscape" 			>Nimble Escape</button></td>
+		<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="OtherworldlyPerception"	>Otherworldly Perception</button></td>
+		<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="PackTactics" 			>Pack Tactics</button></td>
+		<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="Parry" 					>Parry</button></td>
+		<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="Possession" 				>Possession</button></td>
+	</tr>
+	<tr>
+		<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="Pounce" 					>Pounce</button></td>
+		<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="PsychicDefense" 			>Psychic Defense</button></td>
+		<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="Rampage" 				>Rampage</button></td>
+		<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="Reactive" 				>Reactive</button></td>
+		<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="ReadThoughts" 			>Read Thoughts</button></td>
+	</tr>
+	<tr>
+		<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="Reckless" 				>Reckless</button></td>
+		<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="RedirectAttack" 			>Redirect Attack</button></td>
+		<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="Reel" 					>Reel</button></td>
+		<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="Regeneration" 			>Regeneration</button></td>
+		<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="Rejuvenation" 			>Rejuvenation</button></td>
+	</tr>
+	<tr>
+		<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="Relentless" 				>Relentless</button></td>
+		<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="ShadowStealth" 			>Shadow Stealth</button></td>
+		<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="ShapeChanger" 			>Shape Changer</button></td>
+		<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="SiegeMonster" 			>Siege Monster</button></td>
+		<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="Slippery" 				>Slippery</button></td>
+	</tr>
+	<tr>
+		<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="Spellcasting" 			>Spellcasting</button></td>
+		<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="SpiderClimb" 			>Spider Climb</button></td>
+		<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="StandingLeap" 			>Standing Leap</button></td>
+		<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="Steadfast" 				>Steadfast</button></td>
+		<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="Stench" 					>Stench</button></td>
+	<tr>
+		<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="SunlightSensitivity"		>Sunlight Sensitivity</button></td>
+		<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="SuperiorInvisibility"	>Superior Invisibility</button></td>
+		<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="SureFooted" 				>Sure-Footed</button></td>
+		<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="SurpriseAttack" 			>Surprise Attack</button></td>
+		<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="Swallow" 				>Swallow</button></td>
+	</tr>
+	<tr>
+		<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="Teleport" 				>Teleport</button></td>
+		<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="TerrainCamoflage" 		>Terrain Camoflage</button></td>
+		<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="Tunneler" 				>Tunneler</button></td>
+		<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="TurnImmunity" 			>Turn Immunity</button></td>
+		<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="TurnResistance" 			>Turn Resistance</button></td>
+	</tr>
+	<tr>
+		<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="TwoHeads" 				>Two Heads</button></td>
+		<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="UndeadFortitude"			>Undead Fortitude</button></td>
+		<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="Web" 					>Web</button></td>
+		<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="WebSense"				>Web Sense</button></td>
+		<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="WebWalker"				>Web Walker</button></td>
+	</tr>
+	<tr>
+		<td><button class="featDisabled" onclick="setFeatureNEW(this);" value="WoundedFury"				>Wounded Fury</button></td>
+	</tr>
+	</table>
+
 </div>
 
-<div id="rightCol">	
-	<h3>Party Members</h3>
+</div>
+</div>
+
+<div style="float:left; width:15px;">
+ x
+</div>
+
+
+<div id="rightCol" style="float:left; background-color: rgb(239, 184, 103); padding:10px;">
+	<div style="box-shadow: 0px 4px 5px black; background-color: rgb(248, 225, 190); display: block; padding:2px;">
+	<div style="font: small-caps 700 1.2em Libre Baskerville; color:rgb(88, 24, 13); text-align:center; margin:auto;">Party Members</div>
 	<table id="partyList">
 		<tr>
-			<td>Number of Players</td><td>Player Level</td>
+			<td style="font: bold 0.8em Noto Sans; text-align:center; color:rgb(88, 24, 13);">Number of Players</td>
+			<td style="font: bold 0.8em Noto Sans; text-align:center; color:rgb(88, 24, 13);">Player Level</td>
 			<td><button onclick="addPartyRow();">Add row</button></td>
 		</tr>
 		<tr>
@@ -239,33 +265,40 @@ Offensive CR: <span id="offensiveCRDisplay">Unknown</span> <br>
 			<td><input type='text' id="partyLevel" size=10 onclick='calculatePartyThresholds();'></input></td>
 		</tr>
 	</table>
-
-	<h3>XP Difficulty Thresholds</h3>
-	<table width="300px" style="text-align: center">
-	<tr>
-		<td width="25%"><b><u>Easy</u></b></td>
-		<td width="25%"><b><u>Medium</u></b></td>
-		<td width="25%"><b><u>Hard</u></b></td>
-		<td width="25%"><b><u>Deadly</u></b></td>
-	</tr>
-	<tr>
-		<td><span id="easyThreshold"></span></td>
-		<td><span id="mediumThreshold"></span></td>
-		<td><span id="hardThreshold"></span></td>
-		<td><span id="deadlyThreshold"></span></td>
-	</tr>
-	</table>
-
-	Desired Difficulty:
-	<button onclick="adjustEncounter('Easy');">Easy</button>
-	<button onclick="adjustEncounter('Medium');">Medium</button>
-	<button onclick="adjustEncounter('Hard');">Hard</button>
-	<button onclick="adjustEncounter('Deadly');">Deadly</button>
+	</div>
 	
-	<table width="300px" style="text-align: center">
-	<tr><td>Original: <span id="encounterDifficulty">0</span> XP</td>
-		<td>Adjusted: <span id="adjustedDifficulty">0</span> XP</td>
-	</tr></table>
+	<br>
+	
+	<div style="box-shadow: 0px 4px 5px black; background-color: rgb(248, 225, 190); display: block; padding:5px;">
+		<div style="font: small-caps 700 1.2em Libre Baskerville; color:rgb(88, 24, 13); text-align:center; margin:auto;">XP Difficulty Thresholds</div>
+		<table width="300px" style="text-align: center; margin:auto;">
+		<tr>
+			<td style="font: bold 0.8em Noto Sans; text-align:center; color:rgb(88, 24, 13);" width="25%"><b><u>Easy</u></b></td>
+			<td style="font: bold 0.8em Noto Sans; text-align:center; color:rgb(88, 24, 13);" width="25%"><b><u>Medium</u></b></td>
+			<td style="font: bold 0.8em Noto Sans; text-align:center; color:rgb(88, 24, 13);" width="25%"><b><u>Hard</u></b></td>
+			<td style="font: bold 0.8em Noto Sans; text-align:center; color:rgb(88, 24, 13);" width="25%"><b><u>Deadly</u></b></td>
+		</tr>
+		<tr>
+			<td><span id="easyThreshold"></span></td>
+			<td><span id="mediumThreshold"></span></td>
+			<td><span id="hardThreshold"></span></td>
+			<td><span id="deadlyThreshold"></span></td>
+		</tr>
+		</table>
+
+		<div style="font: small-caps 700 1.2em Libre Baskerville; color:rgb(88, 24, 13); text-align:center; margin:auto;">Desired Difficulty</div>
+		<div style="margin:auto; display:block; text-align:center;">
+			<button id="easyButton" onclick="adjustEncounter('Easy');">Easy</button>
+			<button id="mediumButton" onclick="adjustEncounter('Medium');">Medium</button>
+			<button id="hardButton" onclick="adjustEncounter('Hard');">Hard</button>
+			<button id="deadlyButton" onclick="adjustEncounter('Deadly');">Deadly</button>
+		</div>
+		
+		<table width="300px" style="text-align: center">
+		<tr><td>Original: <span id="encounterDifficulty">0</span> XP</td>
+			<td>Adjusted: <span id="adjustedDifficulty">0</span> XP</td>
+		</tr></table>
+	</div>
 	
 	<h3>Monster List</h3>
 	

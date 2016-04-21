@@ -7,7 +7,7 @@
 <br>
 <div id="leftCol" style="float:left; background-color: rgb(239, 184, 103); padding:10px;">
 <div style="box-shadow: 0px 4px 5px black; background-color: rgb(248, 225, 190); display: block; padding:2px;">
-Base CR<br>(Choose a base CR to give your monster some starting values)
+	<div style="font: small-caps 700 1.2em Libre Baskerville; color:rgb(88, 24, 13); text-align:center; margin:auto;">Base Challenge Rating (optional)</div>
 <table style="width:420px; margin:auto;">
 	<tr style="height:30px;">
 		<td><button class="crButton" onclick="setBaseCR(0)">0</button></td>
@@ -65,7 +65,7 @@ Offensive CR: <span id="offensiveCRDisplay">Unknown</span> <br>
 
 <table>
   <tr>
-	<td rowspan="2"><img src="Skull.png" 	 alt="UpArrow"	 width="48" height="48" style="vertical-align:middle;"></td>
+	<td rowspan="2"><img src="Skull.png" 	 alt="UpArrow"	 width="40" height="40" style="vertical-align:middle;"></td>
 	<td style="font: bold 0.8em Noto Sans; text-align:center; color:rgb(88, 24, 13);">Challenge Rating (CR)</td>
   </tr>
   <tr>
@@ -78,7 +78,7 @@ Offensive CR: <span id="offensiveCRDisplay">Unknown</span> <br>
 	</td>
   </tr>
   <tr>
-	<td rowspan="2"><img src="Breastplate.png" 	 alt="UpArrow"	 width="48" height="48" style="vertical-align:middle"></td>
+	<td rowspan="2"><img src="Breastplate.png" 	 alt="UpArrow"	 width="40" height="40" style="vertical-align:middle"></td>
 	<td style="font: bold 0.8em Noto Sans; text-align:center; color:rgb(88, 24, 13);">Armor Class (AC)</td>
 	<td style="font: bold 0.8em Noto Sans; text-align:center; color:rgb(88, 24, 13);">Hit Points (HP)</td>
   </tr>
@@ -95,13 +95,13 @@ Offensive CR: <span id="offensiveCRDisplay">Unknown</span> <br>
 	</td>
   </tr>
   <tr>
-	<td rowspan="2"><img src="Sword.png" 	 alt="UpArrow"	 width="48" height="48" style="vertical-align:middle"></td>
-	<td style="font: bold 0.8em Noto Sans; text-align:center; color:rgb(88, 24, 13);">Attack Bonus</td>
-	<td style="font: bold 0.8em Noto Sans; text-align:center; color:rgb(88, 24, 13);">Damage Per Round</td>
+	<td rowspan="2"><img src="Sword.png" 	 alt="UpArrow"	 width="40" height="40" style="vertical-align:middle"></td>
+	<td style="font: bold 0.8em Noto Sans; text-align:center; color:rgb(88, 24, 13); padding: 0px;">Attack Bonus</td>
+	<td style="font: bold 0.8em Noto Sans; text-align:center; color:rgb(88, 24, 13); padding: 0px;">Damage Per Round</td>
   </tr>
   <tr>
-	<td style="font: bold 1em Noto Sans; text-align:center;"><span id="attackBonus"></span></td>
-	<td style="font: bold 1em Noto Sans; text-align:center;"><span id="damagePerRound"></span></td>
+	<td style="font: bold 1em Noto Sans; text-align:center; padding: 0px;"><span id="attackBonus"></span></td>
+	<td style="font: bold 1em Noto Sans; text-align:center; padding: 0px;"><span id="damagePerRound"></span></td>
   </tr>
 </table>
 </div>
@@ -246,66 +246,70 @@ Offensive CR: <span id="offensiveCRDisplay">Unknown</span> <br>
 </div>
 </div>
 
-<div style="float:left; width:15px;">
+<div style="float:left; width:15px; color:rgb(59, 56, 56);">
  x
 </div>
 
-
-<div id="rightCol" style="float:left; background-color: rgb(239, 184, 103); padding:10px;">
-	<div style="box-shadow: 0px 4px 5px black; background-color: rgb(248, 225, 190); display: block; padding:2px;">
-	<div style="font: small-caps 700 1.2em Libre Baskerville; color:rgb(88, 24, 13); text-align:center; margin:auto;">Party Members</div>
-	<table id="partyList">
-		<tr>
-			<td style="font: bold 0.8em Noto Sans; text-align:center; color:rgb(88, 24, 13);">Number of Players</td>
-			<td style="font: bold 0.8em Noto Sans; text-align:center; color:rgb(88, 24, 13);">Player Level</td>
-			<td><button onclick="addPartyRow();">Add row</button></td>
-		</tr>
-		<tr>
-			<td><input type='text' id="partySize" size=10 onclick='calculatePartyThresholds();'></input></td>
-			<td><input type='text' id="partyLevel" size=10 onclick='calculatePartyThresholds();'></input></td>
-		</tr>
-	</table>
-	</div>
-	
-	<br>
-	
-	<div style="box-shadow: 0px 4px 5px black; background-color: rgb(248, 225, 190); display: block; padding:5px;">
-		<div style="font: small-caps 700 1.2em Libre Baskerville; color:rgb(88, 24, 13); text-align:center; margin:auto;">XP Difficulty Thresholds</div>
-		<table width="300px" style="text-align: center; margin:auto;">
-		<tr>
-			<td style="font: bold 0.8em Noto Sans; text-align:center; color:rgb(88, 24, 13);" width="25%"><b><u>Easy</u></b></td>
-			<td style="font: bold 0.8em Noto Sans; text-align:center; color:rgb(88, 24, 13);" width="25%"><b><u>Medium</u></b></td>
-			<td style="font: bold 0.8em Noto Sans; text-align:center; color:rgb(88, 24, 13);" width="25%"><b><u>Hard</u></b></td>
-			<td style="font: bold 0.8em Noto Sans; text-align:center; color:rgb(88, 24, 13);" width="25%"><b><u>Deadly</u></b></td>
-		</tr>
-		<tr>
-			<td><span id="easyThreshold"></span></td>
-			<td><span id="mediumThreshold"></span></td>
-			<td><span id="hardThreshold"></span></td>
-			<td><span id="deadlyThreshold"></span></td>
-		</tr>
+<div id="rightCol" style="float:left;">
+	<div style="background-color: rgb(239, 184, 103); padding:10px;">
+		<div style="box-shadow: 0px 4px 5px black; background-color: rgb(248, 225, 190); display: block; padding:2px;">
+		<div style="font: small-caps 700 1.2em Libre Baskerville; color:rgb(88, 24, 13); text-align:center; margin:auto;">Party Members</div>
+		<table id="partyList" style="width:100%;">
+			<tr>
+				<td style="font: bold 0.8em Noto Sans; text-align:center; color:rgb(88, 24, 13);">Number of Players</td>
+				<td style="font: bold 0.8em Noto Sans; text-align:center; color:rgb(88, 24, 13);">Player Level</td>
+				<td><button class="partyButton" onclick="addPartyRow();">Add row</button></td>
+			</tr>
+			<tr>
+				<td><input style="float:left; box-shadow:0px 3px 5px 1px rgb(124, 104, 74) inset; border:none; background-color: rgb(243, 203, 145); font: bold 1em Noto Sans; text-align:center;" type='text' id="partySize" size=10 onclick='calculatePartyThresholds();'></input></td>
+				<td><input style="float:left; box-shadow:0px 3px 5px 1px rgb(124, 104, 74) inset; border:none; background-color: rgb(243, 203, 145); font: bold 1em Noto Sans; text-align:center;" type='text' id="partyLevel" size=10 onclick='calculatePartyThresholds();'></input></td>
+			</tr>
 		</table>
-
-		<div style="font: small-caps 700 1.2em Libre Baskerville; color:rgb(88, 24, 13); text-align:center; margin:auto;">Desired Difficulty</div>
-		<div style="margin:auto; display:block; text-align:center;">
-			<button id="easyButton" onclick="adjustEncounter('Easy');">Easy</button>
-			<button id="mediumButton" onclick="adjustEncounter('Medium');">Medium</button>
-			<button id="hardButton" onclick="adjustEncounter('Hard');">Hard</button>
-			<button id="deadlyButton" onclick="adjustEncounter('Deadly');">Deadly</button>
 		</div>
 		
-		<table width="300px" style="text-align: center">
-		<tr><td>Original: <span id="encounterDifficulty">0</span> XP</td>
-			<td>Adjusted: <span id="adjustedDifficulty">0</span> XP</td>
-		</tr></table>
-	</div>
-	
-	<h3>Monster List</h3>
-	
-	
+		<br>
+		
+		<div style="box-shadow: 0px 4px 5px black; background-color: rgb(248, 225, 190); display: block; padding:5px;">
+			<div style="font: small-caps 700 1.2em Libre Baskerville; color:rgb(88, 24, 13); text-align:center; margin:auto;">XP Difficulty Thresholds</div>
+			<table width="300px" style="text-align: center; margin:auto;">
+			<tr>
+				<td style="font: bold 0.8em Noto Sans; text-align:center; color:rgb(88, 24, 13);" width="25%"><b><u>Easy</u></b></td>
+				<td style="font: bold 0.8em Noto Sans; text-align:center; color:rgb(88, 24, 13);" width="25%"><b><u>Medium</u></b></td>
+				<td style="font: bold 0.8em Noto Sans; text-align:center; color:rgb(88, 24, 13);" width="25%"><b><u>Hard</u></b></td>
+				<td style="font: bold 0.8em Noto Sans; text-align:center; color:rgb(88, 24, 13);" width="25%"><b><u>Deadly</u></b></td>
+			</tr>
+			<tr>
+				<td><span id="easyThreshold"></span></td>
+				<td><span id="mediumThreshold"></span></td>
+				<td><span id="hardThreshold"></span></td>
+				<td><span id="deadlyThreshold"></span></td>
+			</tr>
+			</table>
 
-	<table id="monsterList">
-	</table>
+			<div style="font: small-caps 700 1.2em Libre Baskerville; color:rgb(88, 24, 13); text-align:center; margin:auto;">Desired Difficulty</div>
+			<div style="margin:auto; display:block; text-align:center;">
+				<button id="easyButton" onclick="adjustEncounter('Easy');">Easy</button>
+				<button id="mediumButton" onclick="adjustEncounter('Medium');">Medium</button>
+				<button id="hardButton" onclick="adjustEncounter('Hard');">Hard</button>
+				<button id="deadlyButton" onclick="adjustEncounter('Deadly');">Deadly</button>
+			</div>
+			
+			<table width="300px" style="text-align: center">
+			<tr><td>Original: <span id="encounterDifficulty">0</span> XP</td>
+				<td>Adjusted: <span id="adjustedDifficulty">0</span> XP</td>
+			</tr></table>
+		</div>
+	</div>	
+	
+	<br>		
+
+	<div style="background-color: rgb(239, 184, 103); padding:10px;">
+		<div style="box-shadow: 0px 4px 5px black; background-color: rgb(248, 225, 190); display: block; padding:2px;">	
+			<div style="font: small-caps 700 1.2em Libre Baskerville; color:rgb(88, 24, 13); text-align:center; margin:auto;">Encounter List</div>
+		</div>	
+		<table id="monsterList">
+		</table>
+	</div>
 </div>
 
 <script>
@@ -406,9 +410,15 @@ Offensive CR: <span id="offensiveCRDisplay">Unknown</span> <br>
 		
 		var k = 0;	
 		
+		var change = false;
+		
+		var currentXP;
+		var heavyMode = false;
+		
 		//SECOND STEP: RAISE OR LOWER CR OF EACH MONSTER TYPE ONE BY ONE		
 		while(calculateEncounterDifficulty(monsterArray) <= minXPThreshold || calculateEncounterDifficulty(monsterArray) > maxXPThreshold)
 		{
+			currentXP = calculateEncounterDifficulty(monsterArray);
 			if(calculateEncounterDifficulty(monsterArray) > maxXPThreshold)				//Lower CR
 			{
 				for( ; k < monsterArray.length; k++)
@@ -439,7 +449,7 @@ Offensive CR: <span id="offensiveCRDisplay">Unknown</span> <br>
 						monsterArray[k] = JSON.parse(tempMonster);		//Return to previous weaker stats
 					
 						//if(monsterArray[k]["count"] >= 2 && onlyGroups)
-						if(onlyGroups || monsterArray.length == 1)			//If just increasing CR raises it too much, try adding monsters (only if all monsters are in sets, or only one set of monsters)
+						if(onlyGroups || heavyMode || monsterArray.length == 1)			//If just increasing CR raises it too much, try adding monsters (only if all monsters are in sets, or only one set of monsters)
 							monsterArray[k]["count"] += 1;
 					}
 					else
@@ -454,6 +464,11 @@ Offensive CR: <span id="offensiveCRDisplay">Unknown</span> <br>
 				}
 			}
 			
+			if(currentXP == calculateEncounterDifficulty(monsterArray))		//If no changes could be made, allow more severe changes.
+			{
+				heavyMode = true;
+			}
+			
 			k += 1;
 			if(k >= monsterArray.length) k = 0;		//We are doing this so if we break out of the loop we don't get stuck editing the same monster.
 		}
@@ -464,20 +479,29 @@ Offensive CR: <span id="offensiveCRDisplay">Unknown</span> <br>
 		for(var i = 0; i < monsterArray.length; i++)
 		{
 			console.log(monsterArray[i]);
-			var countCell = table.rows[i * 3 + 1].cells[1];
+			var countCell = table.rows[i * 4 + 2].cells[1];
 			countCell.innerHTML = printArrows(originalMonsterArray[i], monsterArray[i], "count") + "Count: " + monsterArray[i]["count"];
-			var row = table.rows[i * 3 + 2];
+			var row = table.rows[i * 4 + 3];
 			var adjustedStatsCell = row.cells[1];
 					
 		//Fill list with details
 			adjustedStatsCell.innerHTML = "";
+			
+			adjustedStatsCell.innerHTML += printArrows(originalMonsterArray[i], monsterArray[i], "totalCR") + "<span class='subTitle'>Challenge:</span> " + monsterArray[i]["totalCR"] + "<br>"
+							+ '<svg height="5" width="140" style="fill: #922610; stroke: #922610;"><polyline points="3,1 140,2.5 3,4"></polyline></svg>'
+							+ "<table style='width: 100%; font-family: Noto Sans; border-collapse:separate; margin: 0px;'><tr>"
+							+ "<td style='padding: 0px;'>" + printArrows(originalMonsterArray[i], monsterArray[i], "armorClass") + "<span class='subTitle'>AC</span> " + monsterArray[i]["armorClass"] + "</td>"
+							+ "<td style='padding: 0px;'>" + printArrows(originalMonsterArray[i], monsterArray[i], "hitPoints") + "<span class='subTitle'>HP</span> " + monsterArray[i]["hitPoints"]  + "</td></tr><tr>"
+							+ "<td style='padding: 0px;'>" + printArrows(originalMonsterArray[i], monsterArray[i], "attackBonus") + "<span class='subTitle'>AB</span> " + monsterArray[i]["attackBonus"] + "</td>"
+							+ "<td style='padding: 0px;'>" + printArrows(originalMonsterArray[i], monsterArray[i], "damagePerRound") + "<span class='subTitle'>DPR</span> " + monsterArray[i]["damagePerRound"] + "</td></tr>"
+							+ "</table>";
 		
-			adjustedStatsCell.innerHTML += printArrows(originalMonsterArray[i], monsterArray[i], "totalCR") + "<b>Challenge:</b> " + monsterArray[i]["totalCR"] + "<br>"
+			/*adjustedStatsCell.innerHTML += printArrows(originalMonsterArray[i], monsterArray[i], "totalCR") + "<b>Challenge:</b> " + monsterArray[i]["totalCR"] + "<br>"
 								+ '<svg height="5" width="140" style="fill: #922610; stroke: #922610;"><polyline points="3,1 140,2.5 3,4"></polyline></svg>'
 								+ printArrows(originalMonsterArray[i], monsterArray[i], "armorClass") + "<b>Armor Class:</b>" + monsterArray[i]["armorClass"] + "<br>"
 								+ printArrows(originalMonsterArray[i], monsterArray[i], "hitPoints") + "<b>Hit Points:</b>" + monsterArray[i]["hitPoints"] + "<br>"
 								+ printArrows(originalMonsterArray[i], monsterArray[i], "attackBonus") + "<b>Attack Bonus:</b> " + monsterArray[i]["attackBonus"] + "<br>"
-								+ printArrows(originalMonsterArray[i], monsterArray[i], "damagePerRound") + "<b>Damage / Round:</b> " + monsterArray[i]["damagePerRound"] + "<br>";
+								+ printArrows(originalMonsterArray[i], monsterArray[i], "damagePerRound") + "<b>Damage / Round:</b> " + monsterArray[i]["damagePerRound"] + "<br>";*/
 			var atLeastOneFeat = false;
 			for(var j = 0; j < Object.keys(originalMonsterArray[i]["monsterFeats"]).length; j++)
 			{
@@ -493,12 +517,12 @@ Offensive CR: <span id="offensiveCRDisplay">Unknown</span> <br>
 					if(monsterArray[i]["monsterFeats"][feat])
 					{
 						adjustedStatsCell.innerHTML += '<img src="Transparent.png" alt="Blank" width="16" height="16" style="vertical-align:middle">';
-						adjustedStatsCell.innerHTML += "<b><i>" + feat + "</i></b>" + "<br>";
+						adjustedStatsCell.innerHTML += "<span style='font: bold italic 0.8em Noto Sans;'>" + feat + "</span><br>";
 					}
 					else
 					{	
 						adjustedStatsCell.innerHTML += '<img src="RedX.png" alt="RedX" width="16" height="16" style="vertical-align:middle">';
-						adjustedStatsCell.innerHTML += "<b><i><span style='text-decoration: line-through; color: red;'>" + feat + "</span></i></b>" + "<br>";
+						adjustedStatsCell.innerHTML += "<span style='font: bold italic 0.8em Noto Sans; text-decoration: line-through; color: red;'>" + feat + "</span><br>";
 					}
 				}
 			}
@@ -530,11 +554,11 @@ Offensive CR: <span id="offensiveCRDisplay">Unknown</span> <br>
 		var table = document.getElementById("partyList");
 		var row = table.insertRow(-1);
 		var numberCell = row.insertCell(-1);
-		numberCell.innerHTML = "<input type='text' size=10 onclick='calculatePartyThresholds();'></input>";
+		numberCell.innerHTML = "<input style='float:left; box-shadow:0px 3px 5px 1px rgb(124, 104, 74) inset; border:none; background-color: rgb(243, 203, 145); font: bold 1em Noto Sans; text-align:center;' type='text' size=10 onclick='calculatePartyThresholds();'></input>";
 		var levelCell = row.insertCell(-1);
-		levelCell.innerHTML = "<input type='text' size=10 onclick='calculatePartyThresholds();'></input>";
+		levelCell.innerHTML = "<input style='float:left; box-shadow:0px 3px 5px 1px rgb(124, 104, 74) inset; border:none; background-color: rgb(243, 203, 145); font: bold 1em Noto Sans; text-align:center;' type='text' size=10 onclick='calculatePartyThresholds();'></input>";
 		var deleteButtonCell = row.insertCell(-1);
-		deleteButtonCell.innerHTML = "<button onclick='deletePlayer(this.parentNode.parentNode.rowIndex)'>Delete</button>";
+		deleteButtonCell.innerHTML = "<button class='partyButton' onclick='deletePlayer(this.parentNode.parentNode.rowIndex)'>Delete</button>";
 	}
 	
 	function deletePlayer(playerIndex) {
@@ -890,6 +914,12 @@ Offensive CR: <span id="offensiveCRDisplay">Unknown</span> <br>
 					console.log(monsterFeatsOffensive);
 					console.log("CUT OFF AN OFFENSIVE MONSTER FEAT");
 				}
+				
+				if(DPR < 0)
+					DPR = 0;
+			
+				DPR = Math.round(DPR);
+				
 				effectiveOffensiveCR = recalcOffensiveCR(baseAB, baseDPR, baseHP, baseFeats);
 				console.log("effectiveOffensiveCR " + effectiveOffensiveCR);
 			}	//END CALCULATING OFFENSIVE CR
@@ -922,22 +952,10 @@ Offensive CR: <span id="offensiveCRDisplay">Unknown</span> <br>
 		var offensiveCR = offensiveCRStats.offensiveCR;
 		AB = offensiveCRStats.attackBonus;
 		DPR = offensiveCRStats.damagePerRound;
-		
-	//Display Defensive CR
-		//display = document.getElementById("defensiveCRDisplay");
-		//display.innerHTML = CRtoFraction(defensiveCR);
-		
-	//Display Offensive CR
-		//display = document.getElementById("offensiveCRDisplay");
-		//display.innerHTML = CRtoFraction(offensiveCR);
 	
 	//Display Offensive Stats (Attack Bonus and Damage Per Round)
 		document.getElementById("attackBonus").innerHTML = AB;
 		document.getElementById("damagePerRound").innerHTML = DPR;		
-	
-	//Display Total CR	
-		//display = document.getElementById("totalCRDisplay");
-		//display.innerHTML = CRtoFraction(totalCR);
 	}
 	
 	function CRtoFraction(CR) {
@@ -1002,9 +1020,9 @@ Offensive CR: <span id="offensiveCRDisplay">Unknown</span> <br>
 		var effectiveDPR = DPRin;
 	
 	//Add MONSTER FEAT bonuses
-		if(FEATSin["Aggressive"])			{effectiveDPR += 2; console.log("oh yeah aggressive REAL");}
-		if(FEATSin["Ambusher"])				{effectiveAB += 1; console.log("oh yeah ambusher REAL");}
-		if(FEATSin["BloodFrenzy"])			{effectiveAB += 4; console.log("oh yeah bloodfrenzy REAL");}
+		if(FEATSin["Aggressive"])			effectiveDPR += 2;
+		if(FEATSin["Ambusher"])				effectiveAB += 1;
+		if(FEATSin["BloodFrenzy"])			effectiveAB += 4;
 		if(FEATSin["Charge"])				effectiveDPR /= 3/4;
 		if(FEATSin["DamageTransfer"])		effectiveDPR += HPin/3;
 		if(FEATSin["Dive"])					effectiveDPR /= 3/4;
@@ -1066,6 +1084,11 @@ Offensive CR: <span id="offensiveCRDisplay">Unknown</span> <br>
 		if(FEATSin["Swallow"])				DPR *= 2/3;	//Increases DPR by about 50%, but varies greatly	
 		if(FEATSin["WoundedFury"])			DPR *= 3/4;	//Increases DPR of one round (to about double).  Not included in Monster DPR.
 	
+		if(DPR < 0)
+			DPR = 0;
+			
+		DPR = Math.round(DPR);
+		
 	//Return results	
 		return {offensiveCR: offensiveCR, attackBonus: AB, damagePerRound: DPR};
 	}
@@ -1203,16 +1226,16 @@ Offensive CR: <span id="offensiveCRDisplay">Unknown</span> <br>
 		
 		var monsterArray = JSON.parse(localStorage.getItem('monsterArray'));
 	
+		var nameCell;
 		var originalStatsCell;
 	
 	//Edit monster table
 		if(editing == true)		//If we are editing an existing monster, just overwrite the old table data
 		{
 			var table = document.getElementById("monsterList");
-			var nameCell = table.rows[editingMonster * 3].cells[0];
-			nameCell.innerHTML = document.getElementById("monsterName").value;
 			
-			originalStatsCell = table.rows[editingMonster * 3 + 2].cells[0];
+			nameCell = table.rows[editingMonster * 4].cells[0];
+			originalStatsCell = table.rows[editingMonster * 4 + 3].cells[0];
 						
 			monsterData["count"] = monsterArray[editingMonster]["count"];
 			
@@ -1223,61 +1246,71 @@ Offensive CR: <span id="offensiveCRDisplay">Unknown</span> <br>
 		{
 			var table = document.getElementById("monsterList");
 			table.style.width = "300px";
-			table.style = "border-collapse: separate; border-spacing: 8px 5px;";
+			table.style = "border-collapse: separate; border-spacing: 0px 0px; border: none;";
 			editingMonster = table.rows.length;
-			console.log("editingMonster " + editingMonster);
 			var monsterBlock = table.appendChild(document.createElement('tbody'));
-			monsterBlock.style = "box-shadow: 0px 4px 5px black; background-color: rgb(100, 0, 0); display: block;";
+			monsterBlock.style = "box-shadow: 0px 4px 5px black; background-color: rgb(128, 0, 0); display: block;";
 			monsterBlock.className = "monsterBlock";
 			var titleRow = monsterBlock.insertRow(-1);
 			var nameCell = titleRow.insertCell(-1);
-			nameCell.innerHTML = document.getElementById("monsterName").value;
-			nameCell.style = "font: small-caps 700 1.2em Libre Baskerville; color: white; text-shadow:0px 3px 3px rgb(0, 0, 0);";
-			var buttonsCell = titleRow.insertCell(-1);
-			buttonsCell.innerHTML = "<button onclick='editMonster  (this.parentNode.parentNode.rowIndex / 3)'>Edit</button>"
-								  + "<button onclick='deleteMonster(this.parentNode.parentNode.rowIndex / 3)'>Delete</button>";
+			nameCell.colSpan = 2;
+							   
+			nameCell.className = "nameBlock";
+			var spaceRow = table.insertRow(-1);
+			spaceRow.style = "height: 5px;";
 			var countRow = table.insertRow(-1);
 			var originalCountCell = countRow.insertCell(-1);
-			originalCountCell.innerHTML = "<table style='color: white; font: bold 1em Noto Sans;'>"
+			originalCountCell.innerHTML = "<table>"
 								+ "	 <tr>"
-								+ "    <td>Count:</td>"
+								+ "    <td style='font: small-caps 700 1.0em Libre Baskerville;'>Count:</td>"
 								+ "    <td>1</td>"
-								+ "	   <td><button onclick='changeMonsterCount(this,  1);'>+</button>"
-								+ "        <button onclick='changeMonsterCount(this, -1);'>-</button></td>"
+								+ "	   <td><button class='plusButton' onclick='changeMonsterCount(this,  1);'>+</button>"
+								+ "        <button class='plusButton' onclick='changeMonsterCount(this, -1);'>-</button></td>"
 								+ "  </tr>"
 								+ "</table>";
-			originalCountCell.style = "box-shadow: 0px 4px 5px black; background-color: rgb(190, 0, 0);";
+			originalCountCell.className = "countBlock";
 			var adjustedCountCell = countRow.insertCell(-1);
-			adjustedCountCell.style = "box-shadow: 0px 4px 5px black; background-color: rgb(190, 0, 0); color: white; font: bold 1em Noto Sans;";
-			/*adjustedCountCell.innerHTML = "<table>"
-								+ "	 <tr>"
-								+ "    <td></td>"
-								+ "    <td></td>"
-								+ "  </tr>"
-								+ "</table>";*/
+			adjustedCountCell.className = "countBlock";
+
 			var statsRow = table.insertRow(-1);
 			originalStatsCell = statsRow.insertCell(-1);
 			originalStatsCell.className = "statsBlock";
-			//originalStatsCell.style.width = "150px";
 			var adjustedStatsCell = statsRow.insertCell(-1);
 			adjustedStatsCell.className = "statsBlock";
-			//adjustedStatsCell.style.width = "150px";
 			var space = table.appendChild(document.createElement('tbody'));
 			space.className = "spaceTBody";
-			//var spaceRow = space.insertRow(-1);
 			monsterData["count"] = 1;
 			
 			monsterArray.splice(monsterArray.length, 0, monsterData);		//Append new monster to end of list
 		}
+	
+	//Fill out monster name
+		var newMonsterName;
+		if(document.getElementById("monsterName").value == "")
+			newMonsterName = "Monster #" + (document.getElementById("monsterList").rows.length / 4);
+		else
+			newMonsterName = document.getElementById("monsterName").value;
+		nameCell.innerHTML = newMonsterName
+				   + "<button class='editButton' onclick='deleteMonster(this.parentNode.parentNode.rowIndex / 4)'>Delete</button>"
+				   + "<button class='editButton' onclick='editMonster  (this.parentNode.parentNode.rowIndex / 4)'>Edit</button>";
 		
 	//Fill list with details
-		originalStatsCell.innerHTML = "<b>Challenge:</b> " + monsterData["totalCR"] + "<br>"
+		/*originalStatsCell.innerHTML = "<b>Challenge:</b> " + monsterData["totalCR"] + "<br>"
 									+ '<svg height="5" width="140" style="fill: #922610; stroke: #922610;"><polyline points="3,1 140,2.5 3,4"></polyline></svg>'
 									+ "<b>Armor Class:</b> " + monsterData["armorClass"] + "<br>"
-									+ '<div class="customHr"></div>'
 									+ "<b>Hit Points:</b> " + monsterData["hitPoints"] + "<br>"
 									+ "<b>Attack Bonus:</b> " + monsterData["attackBonus"] + "<br>"
-									+ "<b>Damage / Round:</b> " + monsterData["damagePerRound"] + "<br>";
+									+ "<b>Damage / Round:</b> " + monsterData["damagePerRound"] + "<br>";*/
+		
+		originalStatsCell.innerHTML = "<span class='subTitle'>Challenge:</span> " + monsterData["totalCR"] + "<br>"
+									+ '<svg height="5" width="140" style="fill: #922610; stroke: #922610;"><polyline points="3,1 140,2.5 3,4"></polyline></svg>'
+									+ "<table style='width: 100%; font-family: Noto Sans; border-collapse:separate; margin: 0px;'><tr>"
+									+ "<td style='padding: 0px;'><span class='subTitle'>AC</span> " + monsterData["armorClass"] + "</td>"
+									+ "<td style='padding: 0px;'><span class='subTitle'>HP</span> " + monsterData["hitPoints"]  + "</td></tr><tr>"
+									+ "<td style='padding: 0px;'><span class='subTitle'>AB</span> " + monsterData["attackBonus"] + "</td>"
+									+ "<td style='padding: 0px;'><span class='subTitle'>DPR</span> " + monsterData["damagePerRound"] + "</td></tr>"
+									+ "</table>";
+		
 		var atLeastOneFeat = false;
 		for(var i = 0; i < Object.keys(monsterData["monsterFeats"]).length; i++)
 		{
@@ -1289,7 +1322,7 @@ Offensive CR: <span id="offensiveCRDisplay">Unknown</span> <br>
 					atLeastOneFeat = true; 
 					originalStatsCell.innerHTML += '<svg height="5" width="140" style="fill: #922610; stroke: #922610;"><polyline points="3,1 140,2.5 3,4"></polyline></svg>';
 				}
-				originalStatsCell.innerHTML += "<b><i>" + feat + "</i></b><br>";
+				originalStatsCell.innerHTML += "<span style='font: bold italic 0.8em Noto Sans;'>" + feat + "</span><br>";
 			}
 		}
 		
@@ -1304,8 +1337,9 @@ Offensive CR: <span id="offensiveCRDisplay">Unknown</span> <br>
 		
 		//			Button	  Cell		Row		  Table Body   Table	 Cell		Row
 		var index = element.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.rowIndex;
+		console.log(element.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode);
 		var monsterArray = JSON.parse(localStorage.getItem('monsterArray'));
-		monsterArray[(index - 1)/3]["count"] = parseInt(countCell.innerHTML);
+		monsterArray[(index - 2)/3]["count"] = parseInt(countCell.innerHTML);
 		
 		localStorage.setItem("monsterArray", JSON.stringify(monsterArray));
 		
@@ -1344,9 +1378,9 @@ Offensive CR: <span id="offensiveCRDisplay">Unknown</span> <br>
 	function deleteMonster(monsterIndex) {
 		
 		var table = document.getElementById("monsterList");
-		table.deleteRow(monsterIndex + 2);
-		table.deleteRow(monsterIndex + 1);
-		table.deleteRow(monsterIndex);
+		console.log(monsterIndex);
+		table.removeChild(table.rows[monsterIndex * 4].parentNode.nextSibling);
+		table.removeChild(table.rows[monsterIndex * 4].parentNode);
 		
 	//Edit stored list
 		var monsterArray = JSON.parse(localStorage.getItem('monsterArray'));

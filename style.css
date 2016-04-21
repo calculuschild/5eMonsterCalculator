@@ -4,15 +4,37 @@
 @import url(https://fonts.googleapis.com/css?family=Libre+Baskerville:700);
 @import url(http://fonts.googleapis.com/css?family=Noto+Sans:400,700,400italic,700italic);
 
+.nameBlock {
+	font: small-caps 700 1.2em Libre Baskerville;
+	color: white;
+	text-shadow:0px 2px 3px rgb(0, 0, 0);
+	box-shadow: 0px 4px 5px rgb(78, 0, 0);
+	border-style: solid;
+	border-color: rgb(153, 0, 0);
+	background-color: rgb(153, 0, 0);
+	/*border-width: 0px 5px;*/
+}
+
+.countBlock {
+	font: small-caps 700 1.0em Libre Baskerville;
+	color: black;
+	box-shadow: 0px 3px 5px -2px rgb(124, 104, 74) inset;
+	background-color: rgb(239, 184, 103);
+	border-style: solid;
+	border-color: rgb(111, 0, 0);
+	border-width: 0px 5px;
+}
+
 .statsBlock {
 	border-style: solid;
-	border-radius: 4px;
-	border-color: rgb(190, 0, 0);
-	border-width: 2px;
+	border-color: rgb(111, 0, 0);
+	border-width: 0px 5px 5px 5px;
+	box-shadow: 0px 6px 5px -2px rgb(152, 138, 116) inset;/*, 0px -2px 0px 3px rgb(128, 0, 0) inset;*/
+	padding: 4px;
 	background-color: #FDF1DC;
 	display: block;
 	width: 150px;
-	font: 0.8em Noto Sans;
+	font: Noto Sans;
 }
 
 .spaceTBody {
@@ -57,8 +79,10 @@
 	color: rgb(124, 104, 74);
 }
 
-input[type='checkbox'] {
-	vertical-align: middle;
+.subTitle {
+	font-family: Noto Sans;
+	font-weight: bold;
+	color: rgb(88, 24, 13);
 }
 
 .monsterFeatLabel {
@@ -116,6 +140,36 @@ input[type='checkbox'] {
 	background-color: red;
 }
 
+.editButton {
+	float: right;
+	box-shadow: 0px 3px 5px 1px rgb(91, 0, 0);
+	border: none;
+	background-color: rgb(243, 203, 145);
+	font: bold 0.8em Noto Sans;
+	text-align: center;
+	margin: 0px 2px;
+}
+
+.editButton:active {
+	box-shadow: none;
+	background-color: red;
+}
+
+.partyButton {
+	float: right;
+	box-shadow: 0px 3px 5px 1px rgb(124, 104, 74);
+	border: none;
+	background-color: rgb(243, 203, 145);
+	font: bold 0.8em Noto Sans;
+	text-align: center;
+	margin: 0px 2px;
+}
+
+.partyButton:active {
+	box-shadow: none;
+	background-color: red;
+}
+
 .crButton {
 	margin: auto;
 	display: block;
@@ -140,6 +194,8 @@ input[type='checkbox'] {
 	font: bold 1.2em Noto Sans;
 	text-align: center;
 	width: 120px;
+	/*float: right;*/
+	margin-bottom:-20px;
 }
 
 .saveButton:active {
@@ -156,6 +212,11 @@ input[type='checkbox'] {
 	color: black;
 }
 
+#easyButton:active {
+	box-shadow: none;
+	background-color: rgb(0, 152, 206);
+}
+
 #mediumButton {
 	text-align: center;
 	box-shadow: 0px 3px 5px 1px rgb(124, 104, 74);
@@ -163,6 +224,11 @@ input[type='checkbox'] {
 	background-color: rgb(233, 194, 27);
 	font: bold 1em Noto Sans;
 	color: black;
+}
+
+#mediumButton:active {
+	box-shadow: none;
+	background-color: rgb(126, 121, 14);
 }
 
 #hardButton {
@@ -174,6 +240,11 @@ input[type='checkbox'] {
 	color: white;
 }
 
+#hardButton:active {
+	box-shadow: none;
+	background-color: rgb(115, 11, 11);
+}
+
 #deadlyButton {
 	text-align: center;
 	box-shadow: 0px 3px 5px 1px rgb(124, 104, 74);
@@ -181,6 +252,11 @@ input[type='checkbox'] {
 	background-color: rgb(0, 0, 0);
 	font: bold 1em Noto Sans;
 	color: white;
+}
+
+#deadlyButton:active {
+	box-shadow: none;
+	background-color: rgb(0, 0, 0);
 }
 
 button:focus {

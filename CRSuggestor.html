@@ -1339,7 +1339,7 @@ Offensive CR: <span id="offensiveCRDisplay">Unknown</span> <br>
 		var index = element.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.rowIndex;
 		console.log(element.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode);
 		var monsterArray = JSON.parse(localStorage.getItem('monsterArray'));
-		monsterArray[(index - 2)/3]["count"] = parseInt(countCell.innerHTML);
+		monsterArray[(index - 2)/4]["count"] = parseInt(countCell.innerHTML);
 		
 		localStorage.setItem("monsterArray", JSON.stringify(monsterArray));
 		

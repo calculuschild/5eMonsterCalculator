@@ -31,8 +31,9 @@
 	border-width: 0px 5px 5px 5px;
 	box-shadow: 0px 6px 5px -2px rgb(152, 138, 116) inset;/*, 0px -2px 0px 3px rgb(128, 0, 0) inset;*/
 	padding: 4px;
+	position: relative;
 	background-color: #FDF1DC;
-	display: block;
+	/*display: block;*/
 	width: 150px;
 	font: Noto Sans;
 }
@@ -184,6 +185,35 @@
 .crButton:active {
 	box-shadow: none;
 	background-color: red;
+}
+
+.diceButton {
+	padding: 0px;
+	display: block;
+	box-shadow: 0px 3px 5px 1px rgb(124, 104, 74);
+	border: none;
+	background-color: rgb(243, 203, 145);
+	text-align: center;
+}
+
+.diceButton:active {
+	box-shadow: none;
+	background-color: red;
+}
+
+.diceDPRPanel {
+	display:none;
+	position: absolute;
+	left:-50px;
+	top:-50px;
+	border-style: solid;
+	border-color: rgb(111, 0, 0);
+	border-width: 5px 5px 5px 5px;
+	box-shadow: 0px 4px 5px black;/*, 0px -2px 0px 3px rgb(128, 0, 0) inset;*/
+	padding: 4px;
+	background-color: rgb(248, 225, 190);
+	width: 150px;
+	font: Noto Sans;
 }
 
 .saveButton {

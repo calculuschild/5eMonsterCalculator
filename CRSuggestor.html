@@ -261,8 +261,8 @@ Offensive CR: <span id="offensiveCRDisplay">Unknown</span> <br>
 				<td><button class="partyButton" onclick="addPartyRow();">Add row</button></td>
 			</tr>
 			<tr>
-				<td><input style="float:left; box-shadow:0px 3px 5px 1px rgb(124, 104, 74) inset; border:none; background-color: rgb(243, 203, 145); font: bold 1em Noto Sans; text-align:center;" type='text' id="partySize" size=10 onclick='calculatePartyThresholds();'></input></td>
-				<td><input style="float:left; box-shadow:0px 3px 5px 1px rgb(124, 104, 74) inset; border:none; background-color: rgb(243, 203, 145); font: bold 1em Noto Sans; text-align:center;" type='text' id="partyLevel" size=10 onclick='calculatePartyThresholds();'></input></td>
+				<td><input style="float:left; box-shadow:0px 3px 5px 1px rgb(124, 104, 74) inset; border:none; background-color: rgb(243, 203, 145); font: bold 1em Noto Sans; text-align:center;" type='text' id="partySize" size=10 onchange='calculatePartyThresholds();'></input></td>
+				<td><input style="float:left; box-shadow:0px 3px 5px 1px rgb(124, 104, 74) inset; border:none; background-color: rgb(243, 203, 145); font: bold 1em Noto Sans; text-align:center;" type='text' id="partyLevel" size=10 onchange='calculatePartyThresholds();'></input></td>
 			</tr>
 		</table>
 		</div>
@@ -329,6 +329,74 @@ Offensive CR: <span id="offensiveCRDisplay">Unknown</span> <br>
 	
 	var editing = false;
 	var editingMonster = 0;
+	
+	function displayDPRDice(panel) {
+		if(panel.style.display == "block")
+			panel.style.display = "none";
+		else
+			panel.style.display = "block";
+	}
+	
+	function getDPRDiceText(DPR, modifier) {
+		var output = "<span style='font: small-caps 700 1.2em Libre Baskerville; color: rgb(100, 0, 0); text-align: center;'>Damage Dice</span><br>"
+		
+		output +="<span style='font: bold 1em Noto Sans;'>Single Attack</span><br>";
+		output += getDPRDiceCodes(DPR, modifier)  + "<br><br>";
+		
+		output += "<span style='font: bold 1em Noto Sans;'>Multiattack x2</span><br>";
+		output += getDPRDiceCodes(DPR * 0.6, modifier) + "<br>";
+		output += getDPRDiceCodes(DPR * 0.4, modifier) + "<br><br>";
+		
+		output += "<span style='font: bold 1em Noto Sans;'>Multiattack x3</span><br>";
+		output += getDPRDiceCodes(DPR * 0.45, modifier) + "<br>";
+		output += getDPRDiceCodes(DPR * 0.3, modifier) + "<br>";
+		output += getDPRDiceCodes(DPR * 0.25, modifier);
+		
+		return output;
+	}
+	
+	function getDPRDiceCodes(DPR, modifier) {
+		DPR = Math.round(DPR);
+		var diceAvg = DPR - modifier;
+		var numDice = 0;
+		var onlyDice = 0;
+		var output = "<span style='font: .8em Noto Sans;'>" + DPR + " (";
+		
+		if(diceAvg <= 10) {		//Use d4's
+			numDice = Math.round(diceAvg / 2.5);
+			output += numDice + "d4";
+			onlyDice = Math.floor(numDice * 2.5);
+		}
+		else if(diceAvg <= 21) {	//Use d6's
+			numDice = Math.round(diceAvg / 3.5);
+			output += numDice + "d6";
+			onlyDice = Math.floor(numDice * 3.5);
+		}
+		else if(diceAvg <= 36) {	//Use d8's
+			numDice = Math.round(diceAvg / 4.5);
+			output += numDice + "d8";
+			onlyDice = Math.floor(numDice * 4.5);			
+		}
+		else if(diceAvg <= 55) {	//Use d10's
+			numDice = Math.round(diceAvg / 5.5);
+			output += numDice + "d10";
+			onlyDice = Math.floor(numDice * 5.5);			
+		}
+		else if(diceAvg <= 320) {	//Use d12's
+			numDice = Math.round(diceAvg / 6.5);
+			output += numDice + "d12";
+			onlyDice = Math.floor(numDice * 6.5);			
+		}
+		
+		if(DPR - onlyDice > 0)
+		{
+			output += "+" + (DPR - onlyDice);
+		}
+		
+		output += ")</span>";
+	
+		return output;
+	}
 	
 	function adjustEncounter(difficulty) {
 		var minXPThreshold;
@@ -483,25 +551,27 @@ Offensive CR: <span id="offensiveCRDisplay">Unknown</span> <br>
 			countCell.innerHTML = printArrows(originalMonsterArray[i], monsterArray[i], "count") + "Count: " + monsterArray[i]["count"];
 			var row = table.rows[i * 4 + 3];
 			var adjustedStatsCell = row.cells[1];
-					
+			
+			var DPRDiceDiv = document.createElement('div');
+			
 		//Fill list with details
 			adjustedStatsCell.innerHTML = "";
 			
 			adjustedStatsCell.innerHTML += printArrows(originalMonsterArray[i], monsterArray[i], "totalCR") + "<span class='subTitle'>Challenge:</span> " + monsterArray[i]["totalCR"] + "<br>"
-							+ '<svg height="5" width="140" style="fill: #922610; stroke: #922610;"><polyline points="3,1 140,2.5 3,4"></polyline></svg>'
+							+ '<svg height="5" width="160" style="fill: #922610; stroke: #922610; padding: 0px; margin: 0px;"><polyline points="3,1 160,2.5 3,4"></polyline></svg>'
 							+ "<table style='width: 100%; font-family: Noto Sans; border-collapse:separate; margin: 0px;'><tr>"
 							+ "<td style='padding: 0px;'>" + printArrows(originalMonsterArray[i], monsterArray[i], "armorClass") + "<span class='subTitle'>AC</span> " + monsterArray[i]["armorClass"] + "</td>"
 							+ "<td style='padding: 0px;'>" + printArrows(originalMonsterArray[i], monsterArray[i], "hitPoints") + "<span class='subTitle'>HP</span> " + monsterArray[i]["hitPoints"]  + "</td></tr><tr>"
 							+ "<td style='padding: 0px;'>" + printArrows(originalMonsterArray[i], monsterArray[i], "attackBonus") + "<span class='subTitle'>AB</span> " + monsterArray[i]["attackBonus"] + "</td>"
-							+ "<td style='padding: 0px;'>" + printArrows(originalMonsterArray[i], monsterArray[i], "damagePerRound") + "<span class='subTitle'>DPR</span> " + monsterArray[i]["damagePerRound"] + "</td></tr>"
+							+ "<td style='padding: 0px;'>" + printArrows(originalMonsterArray[i], monsterArray[i], "damagePerRound") + "<span class='subTitle'>DPR</span> " + monsterArray[i]["damagePerRound"] + "</td>"
+							+ "<td style='padding: 0px;'>"
+							+ '<button onclick="displayDPRDice(this.nextSibling);" class="diceButton"><img src="Dice.png" 	 alt="Dice"	 width="18" height="18" style="padding: 4px; vertical-align:middle;"></button>'
+							+ '<div class="diceDPRPanel">'
+							+	getDPRDiceText(monsterArray[i]["damagePerRound"], (monsterArray[i]["attackBonus"] - PBLevels[monsterArray[i]["totalCR"]]))
+							+ '</div>'
+							+ "</td></tr>"
 							+ "</table>";
 		
-			/*adjustedStatsCell.innerHTML += printArrows(originalMonsterArray[i], monsterArray[i], "totalCR") + "<b>Challenge:</b> " + monsterArray[i]["totalCR"] + "<br>"
-								+ '<svg height="5" width="140" style="fill: #922610; stroke: #922610;"><polyline points="3,1 140,2.5 3,4"></polyline></svg>'
-								+ printArrows(originalMonsterArray[i], monsterArray[i], "armorClass") + "<b>Armor Class:</b>" + monsterArray[i]["armorClass"] + "<br>"
-								+ printArrows(originalMonsterArray[i], monsterArray[i], "hitPoints") + "<b>Hit Points:</b>" + monsterArray[i]["hitPoints"] + "<br>"
-								+ printArrows(originalMonsterArray[i], monsterArray[i], "attackBonus") + "<b>Attack Bonus:</b> " + monsterArray[i]["attackBonus"] + "<br>"
-								+ printArrows(originalMonsterArray[i], monsterArray[i], "damagePerRound") + "<b>Damage / Round:</b> " + monsterArray[i]["damagePerRound"] + "<br>";*/
 			var atLeastOneFeat = false;
 			for(var j = 0; j < Object.keys(originalMonsterArray[i]["monsterFeats"]).length; j++)
 			{
@@ -511,7 +581,7 @@ Offensive CR: <span id="offensiveCRDisplay">Unknown</span> <br>
 					if(atLeastOneFeat == false)
 					{
 						atLeastOneFeat = true; 
-						adjustedStatsCell.innerHTML += '<svg height="5" width="140" style="fill: #922610; stroke: #922610;"><polyline points="3,1 140,2.5 3,4"></polyline></svg>';
+						adjustedStatsCell.innerHTML += '<svg height="5" width="160" style="fill: #922610; stroke: #922610;"><polyline points="3,1 160,2.5 3,4"></polyline></svg>';
 					}
 				
 					if(monsterArray[i]["monsterFeats"][feat])
@@ -554,9 +624,9 @@ Offensive CR: <span id="offensiveCRDisplay">Unknown</span> <br>
 		var table = document.getElementById("partyList");
 		var row = table.insertRow(-1);
 		var numberCell = row.insertCell(-1);
-		numberCell.innerHTML = "<input style='float:left; box-shadow:0px 3px 5px 1px rgb(124, 104, 74) inset; border:none; background-color: rgb(243, 203, 145); font: bold 1em Noto Sans; text-align:center;' type='text' size=10 onclick='calculatePartyThresholds();'></input>";
+		numberCell.innerHTML = "<input style='float:left; box-shadow:0px 3px 5px 1px rgb(124, 104, 74) inset; border:none; background-color: rgb(243, 203, 145); font: bold 1em Noto Sans; text-align:center;' type='text' size=10 onchange='calculatePartyThresholds();'></input>";
 		var levelCell = row.insertCell(-1);
-		levelCell.innerHTML = "<input style='float:left; box-shadow:0px 3px 5px 1px rgb(124, 104, 74) inset; border:none; background-color: rgb(243, 203, 145); font: bold 1em Noto Sans; text-align:center;' type='text' size=10 onclick='calculatePartyThresholds();'></input>";
+		levelCell.innerHTML = "<input style='float:left; box-shadow:0px 3px 5px 1px rgb(124, 104, 74) inset; border:none; background-color: rgb(243, 203, 145); font: bold 1em Noto Sans; text-align:center;' type='text' size=10 onchange='calculatePartyThresholds();'></input>";
 		var deleteButtonCell = row.insertCell(-1);
 		deleteButtonCell.innerHTML = "<button class='partyButton' onclick='deletePlayer(this.parentNode.parentNode.rowIndex)'>Delete</button>";
 	}
@@ -1269,6 +1339,7 @@ Offensive CR: <span id="offensiveCRDisplay">Unknown</span> <br>
 								+ "  </tr>"
 								+ "</table>";
 			originalCountCell.className = "countBlock";
+			originalCountCell.style.width = "42%";
 			var adjustedCountCell = countRow.insertCell(-1);
 			adjustedCountCell.className = "countBlock";
 
@@ -1303,7 +1374,7 @@ Offensive CR: <span id="offensiveCRDisplay">Unknown</span> <br>
 									+ "<b>Damage / Round:</b> " + monsterData["damagePerRound"] + "<br>";*/
 		
 		originalStatsCell.innerHTML = "<span class='subTitle'>Challenge:</span> " + monsterData["totalCR"] + "<br>"
-									+ '<svg height="5" width="140" style="fill: #922610; stroke: #922610;"><polyline points="3,1 140,2.5 3,4"></polyline></svg>'
+									+ '<svg height="5" width="120" style="fill: #922610; stroke: #922610;"><polyline points="3,1 120,2.5 3,4"></polyline></svg>'
 									+ "<table style='width: 100%; font-family: Noto Sans; border-collapse:separate; margin: 0px;'><tr>"
 									+ "<td style='padding: 0px;'><span class='subTitle'>AC</span> " + monsterData["armorClass"] + "</td>"
 									+ "<td style='padding: 0px;'><span class='subTitle'>HP</span> " + monsterData["hitPoints"]  + "</td></tr><tr>"
@@ -1320,7 +1391,7 @@ Offensive CR: <span id="offensiveCRDisplay">Unknown</span> <br>
 				if(atLeastOneFeat == false)
 				{
 					atLeastOneFeat = true; 
-					originalStatsCell.innerHTML += '<svg height="5" width="140" style="fill: #922610; stroke: #922610;"><polyline points="3,1 140,2.5 3,4"></polyline></svg>';
+					originalStatsCell.innerHTML += '<svg height="5" width="120" style="fill: #922610; stroke: #922610;"><polyline points="3,1 120,2.5 3,4"></polyline></svg>';
 				}
 				originalStatsCell.innerHTML += "<span style='font: bold italic 0.8em Noto Sans;'>" + feat + "</span><br>";
 			}
@@ -1449,7 +1520,6 @@ Offensive CR: <span id="offensiveCRDisplay">Unknown</span> <br>
 	XPThresholdHard[3] = 225;	  XPThresholdHard[8] = 1400;	 XPThresholdHard[13] = 3400;	XPThresholdHard[18] = 6300;
 	XPThresholdHard[4] = 375;	  XPThresholdHard[9] = 1600;	 XPThresholdHard[14] = 3800;	XPThresholdHard[19] = 7300;
 	XPThresholdHard[5] = 750;	  XPThresholdHard[10] = 1900;	 XPThresholdHard[15] = 4300;	XPThresholdHard[20] = 8500;
-	
 	//XP Thresholds (DEADLY)
 	var XPThresholdDeadly = {};
 	XPThresholdDeadly[1] = 100;	  XPThresholdDeadly[6] = 1400;   XPThresholdDeadly[11] = 3600;  XPThresholdDeadly[16] = 7200;
@@ -1496,9 +1566,9 @@ Offensive CR: <span id="offensiveCRDisplay">Unknown</span> <br>
 						 ABLevels[9] = 7;	 ABLevels[19] = 10;  ABLevels[29] = 13;
 						 ABLevels[10] = 7;   ABLevels[20] = 10;  ABLevels[30] = 14;
 	
-	//Estimated Damage per Round at each level
+	//Max Damage per Round at each level
 	var DPRLevels = {};  DPRLevels[1] = 14;  DPRLevels[11] = 74;  DPRLevels[21] = 158;
-	DPRLevels[0] = 1;	DPRLevels[2] = 20;   DPRLevels[12] = 80;  DPRLevels[22] = 176;
+	DPRLevels[0]   = 1;	 DPRLevels[2] = 20;  DPRLevels[12] = 80;  DPRLevels[22] = 176;
 	DPRLevels[1/8] = 3;  DPRLevels[3] = 26;  DPRLevels[13] = 86;  DPRLevels[23] = 194;
 	DPRLevels[1/4] = 5;  DPRLevels[4] = 32;  DPRLevels[14] = 92;  DPRLevels[24] = 212;
 	DPRLevels[1/2] = 8;  DPRLevels[5] = 38;  DPRLevels[15] = 98;  DPRLevels[25] = 230;
@@ -1544,6 +1614,43 @@ Offensive CR: <span id="offensiveCRDisplay">Unknown</span> <br>
 	XPLevels[28] = 120000;
 	XPLevels[29] = 135000;
 	XPLevels[30] = 155000;
+	
+//Estimated Proficiency Bonus at each level
+	var PBLevels = {};
+	PBLevels[0] = 2;
+	PBLevels[1/8] = 2;
+	PBLevels[1/4] = 2;
+	PBLevels[1/2] = 2;
+	PBLevels[1] = 2;
+	PBLevels[2] = 2;
+	PBLevels[3] = 2;
+	PBLevels[4] = 2;
+	PBLevels[5] = 3;
+	PBLevels[6] = 3;
+	PBLevels[7] = 3;
+	PBLevels[8] = 3;
+	PBLevels[9] = 4;
+	PBLevels[10] = 4;
+	PBLevels[11] = 4;
+	PBLevels[12] = 4;
+	PBLevels[13] = 5;
+	PBLevels[14] = 5;
+	PBLevels[15] = 5;
+	PBLevels[16] = 5;
+	PBLevels[17] = 6;
+	PBLevels[18] = 6;
+	PBLevels[19] = 6;
+	PBLevels[20] = 6;
+	PBLevels[21] = 7;
+	PBLevels[22] = 7;
+	PBLevels[23] = 7;
+	PBLevels[24] = 7;
+	PBLevels[25] = 8;
+	PBLevels[26] = 8;
+	PBLevels[27] = 8;
+	PBLevels[28] = 8;
+	PBLevels[29] = 9;
+	PBLevels[30] = 9;
 </script>
 
 </body>

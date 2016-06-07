@@ -271,7 +271,7 @@ Offensive CR: <span id="offensiveCRDisplay">Unknown</span> <br>
 		
 		<div style="box-shadow: 0px 4px 5px black; background-color: rgb(248, 225, 190); display: block; padding:5px;">
 			<div style="font: small-caps 700 1.2em Libre Baskerville; color:rgb(88, 24, 13); text-align:center; margin:auto;">XP Difficulty Thresholds</div>
-			<table width="300px" style="text-align: center; margin:auto;">
+			<table width="300px" style="text-align:center; margin:auto;">
 			<tr>
 				<td style="font: bold 0.8em Noto Sans; text-align:center; color:rgb(88, 24, 13);" width="25%"><b><u>Easy</u></b></td>
 				<td style="font: bold 0.8em Noto Sans; text-align:center; color:rgb(88, 24, 13);" width="25%"><b><u>Medium</u></b></td>
@@ -286,7 +286,8 @@ Offensive CR: <span id="offensiveCRDisplay">Unknown</span> <br>
 			</tr>
 			</table>
 
-			<div style="font: small-caps 700 1.2em Libre Baskerville; color:rgb(88, 24, 13); text-align:center; margin:auto;">Desired Difficulty</div>
+			<div style="font: small-caps 700 1.2em Libre Baskerville; color:rgb(88, 24, 13); text-align:center; margin:auto;">Adjust to Desired Difficulty</div>
+			<div style="font: bold 0.8em Noto Sans; text-align:center; color:rgb(88, 24, 13);">Add at least one monster to the encounter</div>
 			<div style="margin:auto; display:block; text-align:center;">
 				<button id="easyButton" onclick="adjustEncounter('Easy');">Easy</button>
 				<button id="mediumButton" onclick="adjustEncounter('Medium');">Medium</button>
@@ -294,10 +295,16 @@ Offensive CR: <span id="offensiveCRDisplay">Unknown</span> <br>
 				<button id="deadlyButton" onclick="adjustEncounter('Deadly');">Deadly</button>
 			</div>
 			
-			<table width="300px" style="text-align: center">
-			<tr><td>Original: <span id="encounterDifficulty">0</span> XP</td>
-				<td>Adjusted: <span id="adjustedDifficulty">0</span> XP</td>
-			</tr></table>
+			<table width="300px" style="text-align:center; margin:auto;">
+			<tr><td style="font: bold 0.8em Noto Sans; text-align:center; color:rgb(88, 24, 13);"><u>Original:</u></td>
+				<td style="font: bold 0.8em Noto Sans; text-align:center; color:rgb(88, 24, 13);"><u>Adjusted:</u></td>
+				<td style="font: bold 0.8em Noto Sans; text-align:center; color:rgb(88, 24, 13);"><u>Reward:</u></td>
+			</tr>
+			<tr><td><span id="encounterDifficulty">0</span> XP</td>
+				<td><span id="adjustedDifficulty">0</span> XP</td>
+				<td><span id="rewardDifficulty">0</span> XP</td>
+			</tr>
+			</table>
 		</div>
 	</div>	
 	
@@ -362,7 +369,16 @@ Offensive CR: <span id="offensiveCRDisplay">Unknown</span> <br>
 		var onlyDice = 0;
 		var output = "<span style='font: .8em Noto Sans;'>" + DPR + " (";
 		
-		if(diceAvg <= 10) {		//Use d4's
+		if(DPR <= 1)
+		{
+			output += DPR;
+			onlyDice = 1;
+		}
+		else if(diceAvg <= 2 && DPR >= 2) {
+			output += "1d4";
+			onlyDice = 2;
+		}
+		else if(diceAvg <= 10) {	//Use d4's
 			numDice = Math.round(diceAvg / 2.5);
 			output += numDice + "d4";
 			onlyDice = Math.floor(numDice * 2.5);
@@ -598,6 +614,7 @@ Offensive CR: <span id="offensiveCRDisplay">Unknown</span> <br>
 			}
 		}
 		document.getElementById("adjustedDifficulty").innerHTML = calculateEncounterDifficulty(monsterArray);
+		document.getElementById("rewardDifficulty").innerHTML = calculateEncounterXPReward(monsterArray);
 	}
 	
 	function printArrows(originalMonster, newMonster, index) {
@@ -717,6 +734,21 @@ Offensive CR: <span id="offensiveCRDisplay">Unknown</span> <br>
 		
 		totalXP *= encounterSizeMultipliers[multiplierIndex];
 		
+		return totalXP;
+	}
+	
+	function calculateEncounterXPReward(monsterArray) {
+		var totalXP = 0;
+		
+		for(var i = 0; i < monsterArray.length; i++)
+		{
+			var monsterData = monsterArray[i];
+			var monsterCount = monsterData["count"];
+			
+			var monsterCR = monsterData["totalCR"];
+			totalXP += monsterCount * XPLevels[monsterCR]; 
+		}
+			
 		return totalXP;
 	}
 	
@@ -1397,6 +1429,15 @@ Offensive CR: <span id="offensiveCRDisplay">Unknown</span> <br>
 			}
 		}
 		
+	//Enable Desired Difficulty buttons
+		if(monsterArray.length >= 1)
+		{
+			document.getElementById("easyButton").disabled = false;
+			document.getElementById("mediumButton").disabled = false;
+			document.getElementById("hardButton").disabled = false;
+			document.getElementById("deadlyButton").disabled = false;		
+		}
+		
 	//Save changes to local storage	
 		localStorage.setItem("monsterArray", JSON.stringify(monsterArray));
 		document.getElementById("encounterDifficulty").innerHTML = calculateEncounterDifficulty(monsterArray);
@@ -1459,6 +1500,15 @@ Offensive CR: <span id="offensiveCRDisplay">Unknown</span> <br>
 		
 		console.log(monsterArray);
 	
+	//Enable Desired Difficulty buttons
+		if(monsterArray.length == 0)
+		{
+			document.getElementById("easyButton").disabled = true;
+			document.getElementById("mediumButton").disabled = true;
+			document.getElementById("hardButton").disabled = true;
+			document.getElementById("deadlyButton").disabled = true;	
+		}
+	
 	//Save changes to local storage
 		localStorage.setItem("monsterArray", JSON.stringify(monsterArray));
 		
@@ -1486,6 +1536,11 @@ Offensive CR: <span id="offensiveCRDisplay">Unknown</span> <br>
 		localStorage.setItem('encounterArray', JSON.stringify(encounterArray));
 		
 		calculatePartyThresholds();
+		
+		document.getElementById("easyButton").disabled = true;
+		document.getElementById("mediumButton").disabled = true;
+		document.getElementById("hardButton").disabled = true;
+		document.getElementById("deadlyButton").disabled = true;
 	}
 	var encounterSizeMultipliers = {}
 	encounterSizeMultipliers[0] = 0.5;
